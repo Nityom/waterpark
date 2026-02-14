@@ -2,14 +2,14 @@ import { Link } from 'react-router-dom';
 
 function Footer() {
   return (
-    <footer className="bg-[#461AA2] py-16 px-10 relative overflow-hidden">
+    <footer className="bg-[#461AA2] py-10 md:py-14 lg:py-16 px-4 md:px-8 lg:px-10 relative overflow-hidden">
       <div className="max-w-[1400px] mx-auto">
         {/* Top Section with Info */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16 relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 mb-10 md:mb-16 relative z-10">
           {/* Contact Info */}
-          <div>
-            <h3 className="text-white text-lg font-bold mb-4">Contact info</h3>
-            <div className="space-y-2 text-white text-sm">
+          <div className="text-center md:text-left">
+            <h3 className="text-white text-base md:text-lg font-bold mb-3 md:mb-4">Contact info</h3>
+            <div className="space-y-2 text-white text-xs md:text-sm">
               <p>customercare@thewaves.co.in</p>
               <p>📞Call: (+91) 89561185 71 / 72 / 73 / 74 / 76</p>
               <p className="leading-relaxed">
@@ -20,8 +20,8 @@ function Footer() {
 
           {/* Navigation */}
           <div className="text-center">
-            <h3 className="text-white text-lg font-bold mb-4">Navigation</h3>
-            <div className="space-y-2 text-white text-sm">
+            <h3 className="text-white text-base md:text-lg font-bold mb-3 md:mb-4">Navigation</h3>
+            <div className="space-y-2 text-white text-xs md:text-sm">
               <p><Link to="/about-us" className="hover:text-[#C5FA19] transition-colors">About Us</Link></p>
               <p><Link to="/contact-us" className="hover:text-[#C5FA19] transition-colors">Contact Us</Link></p>
               <p><a href="#group-events" className="hover:text-[#C5FA19] transition-colors">Group Events</a></p>
@@ -30,9 +30,9 @@ function Footer() {
           </div>
 
           {/* Social Media */}
-          <div className="text-right">
-            <h3 className="text-white text-lg font-bold mb-4">Social media</h3>
-            <div className="space-y-2 text-white text-sm">
+          <div className="text-center md:text-right">
+            <h3 className="text-white text-base md:text-lg font-bold mb-3 md:mb-4">Social media</h3>
+            <div className="space-y-2 text-white text-xs md:text-sm">
               <p><a href="https://www.instagram.com/thewaveswaterpark/" className="hover:text-[#C5FA19] transition-colors">Instagram</a></p>
               <p><a href="#" className="hover:text-[#C5FA19] transition-colors">Whatsapp</a></p>
             </div>
@@ -42,14 +42,14 @@ function Footer() {
 
         {/* Large Waves Logo Text */}
         <div className="relative">
-          <h2 className="text-[180px] md:text-[220px] lg:text-[280px] font-extrabold text-white leading-none tracking-tight opacity-90 text-center">
+          <h2 className="text-7xl sm:text-8xl md:text-[180px] lg:text-[220px] xl:text-[280px] font-extrabold text-white leading-none tracking-tight opacity-90 text-center">
             Waves
          
           </h2>
         </div>
 
         {/* Bottom Line */}
-        <div className="border-t border-white/20 mt-8 pt-6 text-center text-white text-sm opacity-70">
+        <div className="border-t border-white/20 mt-6 md:mt-8 pt-4 md:pt-6 text-center text-white text-xs md:text-sm opacity-70">
           <p>© 2026 Waves Wardha. All rights reserved.</p>
         </div>
       </div>

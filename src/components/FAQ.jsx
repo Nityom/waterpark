@@ -66,7 +66,7 @@ function FAQ() {
   ];
 
   return (
-    <section className="relative overflow-hidden bg-[#DDFBFF] py-24 px-6 md:px-12">
+    <section className="relative overflow-hidden bg-[#DDFBFF] py-12 md:py-20 lg:py-24 px-4 md:px-8 lg:px-12">
 
       {/* 🫧 FULL SECTION FLOATING BUBBLES */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
@@ -81,44 +81,44 @@ function FAQ() {
       <div className="max-w-[1400px] mx-auto relative z-10">
 
         {/* ⭐ HEADER */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-16">
-          <h2 className="text-4xl md:text-6xl font-extrabold text-black leading-tight">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 md:gap-6 mb-10 md:mb-16">
+          <h2 className="text-3xl md:text-5xl lg:text-6xl font-extrabold text-black leading-tight">
             FAQ for all your <br /> possible questions
           </h2>
 
           <button 
             onClick={() => setShowAllFAQs(!showAllFAQs)}
-            className="bg-[#461AA2] text-white px-7 py-3 rounded-full font-bold shadow-lg hover:scale-105 transition-all duration-300"
+            className="bg-[#461AA2] text-white px-5 md:px-7 py-2.5 md:py-3 rounded-full font-bold text-sm md:text-base shadow-lg hover:scale-105 transition-all duration-300"
           >
             {showAllFAQs ? "Show Less FAQ ↑" : "Read More FAQ →"}
           </button>
         </div>
 
         {/* FAQ CATEGORIES */}
-        <div className="space-y-14 mb-20">
+        <div className="space-y-8 md:space-y-14 mb-12 md:mb-20">
           {/* Always show first category */}
-          <div className="bg-white/60 rounded-3xl p-8 shadow-xl">
-            <h3 className="text-2xl font-extrabold text-black mb-8 flex items-center gap-3">
-              <span className="text-3xl">{faqCategories[0].icon}</span>
+          <div className="bg-white/60 rounded-2xl md:rounded-3xl p-5 md:p-8 shadow-xl">
+            <h3 className="text-xl md:text-2xl font-extrabold text-black mb-5 md:mb-8 flex items-center gap-2 md:gap-3">
+              <span className="text-2xl md:text-3xl">{faqCategories[0].icon}</span>
               {faqCategories[0].title}
             </h3>
-            <div className="space-y-4">
+            <div className="space-y-3 md:space-y-4">
               {faqCategories[0].questions.map((item) => (
                 <div
                   key={item.id}
-                  className="rounded-2xl border border-[#00D4D4]/50 overflow-hidden shadow-sm hover:shadow-md transition"
+                  className="rounded-xl md:rounded-2xl border border-[#00D4D4]/50 overflow-hidden shadow-sm hover:shadow-md transition"
                 >
                   <button
                     onClick={() => toggleQuestion(item.id)}
-                    className={`w-full flex justify-between items-center px-6 py-5 font-bold text-lg transition-all duration-300 ${
+                    className={`w-full flex justify-between items-center px-4 md:px-6 py-3 md:py-5 font-bold text-sm md:text-lg transition-all duration-300 ${
                       openQuestion === item.id
                         ? "bg-[#00D4D4] text-black"
                         : "bg-white text-black hover:bg-gray-50"
                     }`}
                   >
-                    <span>{item.question}</span>
+                    <span className="text-left">{item.question}</span>
                     <span
-                      className={`text-xl transition-transform duration-300 ${
+                      className={`text-lg md:text-xl transition-transform duration-300 ml-2 ${
                         openQuestion === item.id ? "rotate-180" : ""
                       }`}
                     >
@@ -132,7 +132,7 @@ function FAQ() {
                         : "max-h-0 opacity-0"
                     }`}
                   >
-                    <p className="px-6 pb-5 pt-2 text-gray-800 leading-relaxed bg-[#00D4D4]/40">
+                    <p className="px-4 md:px-6 pb-4 md:pb-5 pt-2 text-sm md:text-base text-gray-800 leading-relaxed bg-[#00D4D4]/40">
                       {item.answer}
                     </p>
                   </div>
@@ -143,33 +143,33 @@ function FAQ() {
 
           {/* Additional categories shown when expanded */}
           {showAllFAQs && faqCategories.slice(1).map((category, idx) => (
-            <div key={idx} className="bg-white/60 rounded-3xl p-8 shadow-xl">
+            <div key={idx} className="bg-white/60 rounded-2xl md:rounded-3xl p-5 md:p-8 shadow-xl">
 
               {/* Category Title */}
-              <h3 className="text-2xl font-extrabold text-black mb-8 flex items-center gap-3">
-                <span className="text-3xl">{category.icon}</span>
+              <h3 className="text-xl md:text-2xl font-extrabold text-black mb-5 md:mb-8 flex items-center gap-2 md:gap-3">
+                <span className="text-2xl md:text-3xl">{category.icon}</span>
                 {category.title}
               </h3>
 
               {/* Questions */}
-              <div className="space-y-4">
+              <div className="space-y-3 md:space-y-4">
                 {category.questions.map((item) => (
                   <div
                     key={item.id}
-                    className="rounded-2xl border border-[#00D4D4]/50 overflow-hidden shadow-sm hover:shadow-md transition"
+                    className="rounded-xl md:rounded-2xl border border-[#00D4D4]/50 overflow-hidden shadow-sm hover:shadow-md transition"
                   >
                     <button
                       onClick={() => toggleQuestion(item.id)}
-                      className={`w-full flex justify-between items-center px-6 py-5 font-bold text-lg transition-all duration-300 ${
+                      className={`w-full flex justify-between items-center px-4 md:px-6 py-3 md:py-5 font-bold text-sm md:text-lg transition-all duration-300 ${
                         openQuestion === item.id
                           ? "bg-[#00D4D4] text-black"
                           : "bg-white text-black hover:bg-gray-50"
                       }`}
                     >
-                      <span>{item.question}</span>
+                      <span className="text-left">{item.question}</span>
 
                       <span
-                        className={`text-xl transition-transform duration-300 ${
+                        className={`text-lg md:text-xl transition-transform duration-300 ml-2 ${
                           openQuestion === item.id ? "rotate-180" : ""
                         }`}
                       >
@@ -184,7 +184,7 @@ function FAQ() {
                           : "max-h-0 opacity-0"
                       }`}
                     >
-                      <p className="px-6 pb-5 pt-2 text-gray-800 leading-relaxed bg-[#00D4D4]/40">
+                      <p className="px-4 md:px-6 pb-4 md:pb-5 pt-2 text-sm md:text-base text-gray-800 leading-relaxed bg-[#00D4D4]/40">
                         {item.answer}
                       </p>
                     </div>
@@ -197,18 +197,18 @@ function FAQ() {
 
         {/* CTA CARDS */}
        {/* CTA CARDS */}
-<div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+<div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
 
   {/* Card 1 */}
-  <div className="relative bg-[#461AA2] rounded-[35px] p-10 overflow-hidden shadow-2xl hover:scale-105 transition-all duration-300">
+  <div className="relative bg-[#461AA2] rounded-[25px] md:rounded-[35px] p-6 md:p-10 overflow-hidden shadow-2xl hover:scale-105 transition-all duration-300">
 
     {/* Text */}
-    <h3 className="text-4xl font-extrabold mb-3 leading-tight relative z-10">
+    <h3 className="text-2xl md:text-3xl lg:text-4xl font-extrabold mb-2 md:mb-3 leading-tight relative z-10">
       <span className="text-white">Book your</span> <br />
       <span className="text-[#C5FA19]">adventure</span>
     </h3>
 
-    <button className="mt-6 bg-white text-[#461AA2] px-6 py-3 rounded-full font-bold hover:scale-105 transition relative z-10">
+    <button className="mt-4 md:mt-6 bg-white text-[#461AA2] px-5 md:px-6 py-2.5 md:py-3 rounded-full text-sm md:text-base font-bold hover:scale-105 transition relative z-10">
       Get Tickets →
     </button>
 
@@ -216,21 +216,21 @@ function FAQ() {
     <img
       src="/icon-4.webp"
       alt="Adventure Decoration"
-      className="absolute bottom-0 right-0 w-56 md:w-72 opacity-95 object-contain"
+      className="absolute bottom-0 right-0 w-40 sm:w-48 md:w-56 lg:w-72 opacity-95 object-contain"
     />
   </div>
 
 
   {/* Card 2 */}
-  <div className="relative bg-[#461AA2] rounded-[35px] p-10 overflow-hidden shadow-2xl hover:scale-105 transition-all duration-300">
+  <div className="relative bg-[#461AA2] rounded-[25px] md:rounded-[35px] p-6 md:p-10 overflow-hidden shadow-2xl hover:scale-105 transition-all duration-300">
 
     {/* Text */}
-    <h3 className="text-4xl font-extrabold mb-3 leading-tight relative z-10">
+    <h3 className="text-2xl md:text-3xl lg:text-4xl font-extrabold mb-2 md:mb-3 leading-tight relative z-10">
       <span className="text-white">Plan your</span> <br />
       <span className="text-[#C5FA19]">group event</span>
     </h3>
 
-    <button className="mt-6 bg-white text-[#461AA2] px-6 py-3 rounded-full font-bold hover:scale-105 transition relative z-10">
+    <button className="mt-4 md:mt-6 bg-white text-[#461AA2] px-5 md:px-6 py-2.5 md:py-3 rounded-full text-sm md:text-base font-bold hover:scale-105 transition relative z-10">
       Explore Groups →
     </button>
 
@@ -238,7 +238,7 @@ function FAQ() {
     <img
       src="/icon-5.webp"
       alt="Group Event Decoration"
-      className="absolute bottom-0 right-0 w-56 md:w-72 opacity-95 object-contain"
+      className="absolute bottom-0 right-0 w-40 sm:w-48 md:w-56 lg:w-72 opacity-95 object-contain"
     />
   </div>
 </div>

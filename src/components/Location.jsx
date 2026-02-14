@@ -8,30 +8,30 @@ function Location() {
   };
 
   return (
-    <section className="bg-[#DDFBFF] py-8 px-10 relative overflow-hidden">
+    <section className="bg-[#DDFBFF] py-8 md:py-12 px-4 md:px-8 lg:px-10 relative overflow-hidden">
       <div className="max-w-[1400px] mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 items-start">
           {/* Left Content */}
           <div className="relative">
             {/* Main Heading */}
-            <h2 className="text-4xl font-extrabold text-black leading-tight mb-4">
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-extrabold text-black leading-tight mb-3 md:mb-4">
               Where adventure meets the beach
             </h2>
             
             {/* Subtitle */}
-            <p className="text-sm text-gray-700 leading-relaxed mb-6">
+            <p className="text-xs md:text-sm text-gray-700 leading-relaxed mb-5 md:mb-6">
               At Waves Wardha, fun and convenience come together — right in the heart of JBR, surrounded by breathtaking sea views.
             </p>
 
             {/* Features List */}
-            <div className="space-y-6">
+            <div className="space-y-4 md:space-y-6">
               {/* Prime Location */}
               <div 
-                className="pb-4 cursor-pointer transition-all"
+                className="pb-3 md:pb-4 cursor-pointer transition-all"
                 onClick={() => toggleSection('prime-location')}
               >
-                <h3 className="text-xl font-bold text-black mb-2">Prime location</h3>
-                <div className="mt-4">
+                <h3 className="text-lg md:text-xl font-bold text-black mb-2">Prime location</h3>
+                <div className="mt-3 md:mt-4">
                   {activeSection === 'prime-location' ? (
                     <svg 
                       width="300" 
@@ -57,21 +57,21 @@ function Location() {
 
               {/* Easy Access */}
               <div 
-                className="pb-4 cursor-pointer transition-all"
+                className="pb-3 md:pb-4 cursor-pointer transition-all"
                 onClick={() => toggleSection('easy-access')}
               >
-                <h3 className="text-xl font-bold text-black mb-2">Easy access</h3>
+                <h3 className="text-lg md:text-xl font-bold text-black mb-2">Easy access</h3>
                 {activeSection === 'easy-access' && (
                   <div className="animate-slide-down mb-2">
-                    <p className="text-sm text-gray-700 leading-relaxed mb-2">
+                    <p className="text-xs md:text-sm text-gray-700 leading-relaxed mb-2">
                       Reach us by boat* or swim straight from The Beach (just 15 meters) — adventure starts at the moment you hit the water.
                     </p>
-                    <p className="text-sm text-gray-600 italic">
+                    <p className="text-xs md:text-sm text-gray-600 italic">
                       *boat service is 100 AED/ per person for a round trip
                     </p>
                   </div>
                 )}
-                <div className="mt-4">
+                <div className="mt-3 md:mt-4">
                   {activeSection === 'easy-access' ? (
                     <svg 
                       width="300" 
@@ -97,7 +97,7 @@ function Location() {
 
               {/* All Day Fun */}
               <div 
-                className="pb-4 cursor-pointer"
+                className="pb-3 md:pb-4 cursor-pointer"
                 onClick={() => toggleSection('all-day-fun')}
               >
                 <h3 className="text-xl font-bold text-black mb-2">All day fun</h3>

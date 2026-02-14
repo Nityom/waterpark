@@ -36,50 +36,50 @@ function Gallery() {
   ];
 
   return (
-    <section className="bg-[#DDFBFF] py-16 px-10 relative overflow-hidden">
+    <section className="bg-[#DDFBFF] py-10 md:py-16 px-4 md:px-8 lg:px-10 relative overflow-hidden">
       <div className="max-w-[1400px] mx-auto">
         {/* Header */}
-        <div className="text-center mb-10">
-          <h2 className="text-5xl font-extrabold text-black leading-tight mb-3">
+        <div className="text-center mb-8 md:mb-10">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-black leading-tight mb-2 md:mb-3 px-2">
             Capturing fun moments since 2016
           </h2>
-          <p className="text-base text-black mb-4">
+          <p className="text-sm md:text-base text-black mb-3 md:mb-4 px-4">
             Explore what our visitors sharing and tag your moments with <span className="font-bold">#havingWaves</span>
           </p>
           
           {/* Social Links */}
-          <div className="flex gap-6 justify-center items-center">
-            <a href="https://www.instagram.com/thewaveswaterpark/" className="text-black font-bold text-base hover:text-[#461AA2] transition-colors flex items-center gap-2">
+          <div className="flex flex-col sm:flex-row gap-3 md:gap-6 justify-center items-center">
+            <a href="https://www.instagram.com/thewaveswaterpark/" className="text-black font-bold text-sm md:text-base hover:text-[#461AA2] transition-colors flex items-center gap-2">
               Instagram →
             </a>
-            <a href="#" className="text-black font-bold text-base hover:text-[#461AA2] transition-colors flex items-center gap-2">
+            <a href="#" className="text-black font-bold text-sm md:text-base hover:text-[#461AA2] transition-colors flex items-center gap-2">
               Whatsapp →
             </a>
           </div>
         </div>
 
         {/* Photo Gallery */}
-        <div className="relative flex items-center justify-center min-h-[400px] mt-16 overflow-visible">
-          <div className="flex items-center justify-center lg:flex-nowrap">
+        <div className="relative flex items-center justify-center min-h-[400px] mt-8 md:mt-16 overflow-x-auto md:overflow-visible pb-4">
+          <div className="flex items-center justify-start md:justify-center gap-4 md:gap-0 px-4 md:px-0">
             {photos.map((photo, index) => (
               <div
                 key={index}
-                className={`relative bg-[#C5FA19] p-3 rounded-[20px] shadow-xl hover:scale-105 hover:z-10 transition-all duration-300 ${photo.rotation} w-64 flex-shrink-0 ${
-                  index > 0 ? '-ml-12' : ''
+                className={`relative bg-[#C5FA19] p-2 md:p-3 rounded-[15px] md:rounded-[20px] shadow-xl hover:scale-105 hover:z-10 transition-all duration-300 ${photo.rotation} w-48 md:w-64 flex-shrink-0 ${
+                  index > 0 ? 'md:-ml-12' : ''
                 }`}
                 style={{ zIndex: index }}
               >
                 {/* Photo */}
-                <div className="bg-white rounded-[15px] overflow-hidden mb-3">
+                <div className="bg-white rounded-[12px] md:rounded-[15px] overflow-hidden mb-2 md:mb-3">
                   <img 
                     src={photo.src} 
                     alt={`Gallery photo ${index + 1}`}
-                    className="w-full h-64 object-cover"
+                    className="w-full h-48 md:h-64 object-cover"
                   />
                 </div>
                 
                 {/* Caption */}
-                <p className="text-black text-xs font-medium px-2 pb-1 leading-relaxed">
+                <p className="text-black text-[10px] md:text-xs font-medium px-1 md:px-2 pb-1 leading-relaxed">
                   {photo.caption}
                 </p>
               </div>

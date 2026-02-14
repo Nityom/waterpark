@@ -8,57 +8,57 @@ function Awards() {
   };
 
   return (
-    <section className="bg-[#DDFBFF]  px-10 relative overflow-hidden">
+    <section className="bg-[#DDFBFF] py-10 md:py-12 lg:py-16 px-4 md:px-8 lg:px-10 relative overflow-hidden">
       <div className="max-w-[1400px] mx-auto">
         {/* Awards Section */}
-        <div className="mb-12">
+        <div className="mb-10 md:mb-12">
           {/* Header */}
-          <div className="mb-12">
-            <h2 className="text-5xl font-extrabold text-black leading-tight mb-3">
+          <div className="mb-8 md:mb-12">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-black leading-tight mb-2 md:mb-3">
               Fun is so good, it's record<br />
               breaking and award winning
             </h2>
-            <p className="text-base text-gray-700">
+            <p className="text-sm md:text-base text-gray-700">
               Thousands of visitors, a few awards — we're the real deal.
             </p>
           </div>
 
-          {/* Awards Grid */}
-          <div className="relative flex items-center justify-center gap-4">
+          {/* Awards Grid - Stacked on mobile, horizontal on desktop */}
+          <div className="relative flex flex-col md:flex-row items-center justify-center gap-4">
             {/* Award 1 - Traveler's Choice */}
-            <div className="bg-[#00D4D4] rounded-[25px] p-8 text-center w-48 h-48 flex flex-col items-center justify-center">
-              <div className="text-5xl mb-3">🏆</div>
+            <div className="bg-[#00D4D4] rounded-[25px] p-6 md:p-8 text-center w-full md:w-48 h-40 md:h-48 flex flex-col items-center justify-center">
+              <div className="text-4xl md:text-5xl mb-2 md:mb-3">🏆</div>
               <p className="font-bold text-black text-sm">Traveler's Choice</p>
               <p className="font-bold text-black text-sm">• 2021</p>
             </div>
 
             {/* Award 2 - JustDial 2022 */}
-            <div className="bg-[#00D4D4] rounded-[25px] p-8 text-center w-48 h-48 flex flex-col items-center justify-center">
-              <div className="text-5xl mb-3">🏆</div>
+            <div className="bg-[#00D4D4] rounded-[25px] p-6 md:p-8 text-center w-full md:w-48 h-40 md:h-48 flex flex-col items-center justify-center">
+              <div className="text-4xl md:text-5xl mb-2 md:mb-3">🏆</div>
               <p className="font-bold text-black text-sm">JustDial Awards</p>
               <p className="font-bold text-black text-sm">• 2022</p>
             </div>
 
             {/* Main JustDial Card */}
-            <div className="bg-white rounded-[25px] p-8 text-center w-72 h-48 flex flex-col items-center justify-center border-2 border-[#00D4D4] shadow-lg">
+            <div className="bg-white rounded-[25px] p-6 md:p-8 text-center w-full md:w-72 h-40 md:h-48 flex flex-col items-center justify-center border-2 border-[#00D4D4] shadow-lg">
               <p className="font-bold text-black text-sm mb-2">Waves</p>
               <div className="flex gap-1 mb-2">
-                <span className="text-2xl">⭐⭐⭐⭐⭐</span>
+                <span className="text-xl md:text-2xl">⭐⭐⭐⭐⭐</span>
               </div>
-              <p className="text-xs text-gray-600 mb-3">606 reviews</p>
+              <p className="text-xs text-gray-600 mb-2 md:mb-3">606 reviews</p>
               <div className="flex items-center gap-2">
                 <img 
                   src="/jd.png" 
                   alt="JustDial" 
-                  className="w-10 h-10 object-contain"
+                  className="w-8 md:w-10 h-8 md:h-10 object-contain"
                 />
-                <p className="font-bold text-black text-lg">JustDial</p>
+                <p className="font-bold text-black text-base md:text-lg">JustDial</p>
               </div>
             </div>
 
             {/* Award 3 - JustDial 2023 */}
-            <div className="bg-[#00D4D4] rounded-[25px] p-8 text-center w-48 h-48 flex flex-col items-center justify-center">
-              <div className="text-5xl mb-3">🏆</div>
+            <div className="bg-[#00D4D4] rounded-[25px] p-6 md:p-8 text-center w-full md:w-48 h-40 md:h-48 flex flex-col items-center justify-center">
+              <div className="text-4xl md:text-5xl mb-2 md:mb-3">🏆</div>
               <p className="font-bold text-black text-sm">JustDial Awards</p>
               <p className="font-bold text-black text-sm">• 2023</p>
             </div>
@@ -71,44 +71,44 @@ function Awards() {
               <p className="font-bold text-black text-xs">• 2022</p>
             </div> */}
 
-            {/* Starfish Decoration */}
+            {/* Starfish Decoration - hidden on mobile */}
             <img 
               src="/icon-3.webp" 
               alt="Starfish decoration" 
-              className="absolute -top-16 right-0 w-48 h-48 object-contain z-10"
+              className="hidden md:block absolute -top-16 right-0 w-32 lg:w-48 h-32 lg:h-48 object-contain z-10"
             />
           </div>
         </div>
 
         {/* Transportation Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-start">
           {/* Left - Heading */}
           <div className="relative">
-            <h2 className="text-5xl font-extrabold text-black leading-tight mb-6">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-black leading-tight mb-4 md:mb-6">
               Cars, metro, or taxis —<br />
               they all take you<br />
               to Waves
             </h2>
 
-            {/* Pool Float Decoration */}
+            {/* Pool Float Decoration - hidden on mobile */}
             <img 
               src="/icon-5.webp" 
               alt="Pool float decoration" 
-              className="absolute -bottom-20 -left-10 w-64 h-64 object-contain opacity-50"
+              className="hidden lg:block absolute -bottom-20 -left-10 w-48 lg:w-64 h-48 lg:h-64 object-contain opacity-50"
             />
           </div>
 
           {/* Right - Transport Options */}
           <div className="space-y-3">
             {/* By Car */}
-            <div className="overflow-hidden rounded-[25px] transition-all duration-300">
+            <div className="overflow-hidden rounded-[20px] md:rounded-[25px] transition-all duration-300">
               <button
                 onClick={() => toggleTransport('car')}
-                className="w-full text-left px-6 py-4 bg-[#461AA2] text-white font-bold text-lg hover:opacity-90 transition-all duration-300"
+                className="w-full text-left px-4 md:px-6 py-3 md:py-4 bg-[#461AA2] text-white font-bold text-base md:text-lg hover:opacity-90 transition-all duration-300"
               >
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <span className="text-2xl">🚗</span>
+                  <div className="flex items-center gap-2 md:gap-3">
+                    <span className="text-xl md:text-2xl">🚗</span>
                     <span>By car</span>
                   </div>
                   <span className={`transform transition-transform duration-300 ${
@@ -123,17 +123,17 @@ function Awards() {
                   openTransport === 'car' ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
                 }`}
               >
-                <div className="bg-[#461AA2] text-white px-6 pb-4">
-                  <ul className="space-y-2 text-sm">
+                <div className="bg-[#461AA2] text-white px-4 md:px-6 pb-4">
+                  <ul className="space-y-2 text-xs md:text-sm">
                     <li>• Hit the map link to get directions</li>
                     <li>• Park at The Beach JBR or nearby public parking areas</li>
                     <li>• Follow the JBR beach signs and look for the giant Waves letters!</li>
                   </ul>
-                  <div className="flex gap-4 mt-4">
-                    <a href="#" className="text-white underline text-sm flex items-center gap-1 hover:opacity-80 transition-opacity">
+                  <div className="flex flex-col sm:flex-row gap-3 md:gap-4 mt-4">
+                    <a href="#" className="text-white underline text-xs md:text-sm flex items-center gap-1 hover:opacity-80 transition-opacity">
                       Google Maps →
                     </a>
-                    <a href="#" className="text-white underline text-sm flex items-center gap-1 hover:opacity-80 transition-opacity">
+                    <a href="#" className="text-white underline text-xs md:text-sm flex items-center gap-1 hover:opacity-80 transition-opacity">
                       Apple Maps →
                     </a>
                   </div>
@@ -142,14 +142,14 @@ function Awards() {
             </div>
 
             {/* By Public Transport */}
-            <div className="overflow-hidden rounded-[25px] transition-all duration-300">
+            <div className="overflow-hidden rounded-[20px] md:rounded-[25px] transition-all duration-300">
               <button
                 onClick={() => toggleTransport('transit')}
-                className="w-full text-left px-6 py-4 bg-[#FF6B35] text-white font-bold text-lg hover:opacity-90 transition-all duration-300"
+                className="w-full text-left px-4 md:px-6 py-3 md:py-4 bg-[#FF6B35] text-white font-bold text-base md:text-lg hover:opacity-90 transition-all duration-300"
               >
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <span className="text-2xl">🚌</span>
+                  <div className="flex items-center gap-2 md:gap-3">
+                    <span className="text-xl md:text-2xl">🚌</span>
                     <span>By public transport</span>
                   </div>
                   <span className={`transform transition-transform duration-300 ${
@@ -164,8 +164,8 @@ function Awards() {
                   openTransport === 'transit' ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
                 }`}
               >
-                <div className="bg-[#FF6B35] text-white px-6 pb-4">
-                  <ul className="space-y-2 text-sm">
+                <div className="bg-[#FF6B35] text-white px-4 md:px-6 pb-4">
+                  <ul className="space-y-2 text-xs md:text-sm">
                     <li>• Take the Wardha Metro to DMCC or JBR stations</li>
                     <li>• Walk to The Beach JBR</li>
                     <li>• Follow the beach signs to Waves</li>
@@ -175,14 +175,14 @@ function Awards() {
             </div>
 
             {/* By Taxi */}
-            <div className="overflow-hidden rounded-[25px] transition-all duration-300">
+            <div className="overflow-hidden rounded-[20px] md:rounded-[25px] transition-all duration-300">
               <button
                 onClick={() => toggleTransport('taxi')}
-                className="w-full text-left px-6 py-4 bg-[#FF1493] text-white font-bold text-lg hover:opacity-90 transition-all duration-300"
+                className="w-full text-left px-4 md:px-6 py-3 md:py-4 bg-[#FF1493] text-white font-bold text-base md:text-lg hover:opacity-90 transition-all duration-300"
               >
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <span className="text-2xl">🚕</span>
+                  <div className="flex items-center gap-2 md:gap-3">
+                    <span className="text-xl md:text-2xl">🚕</span>
                     <span>By taxi</span>
                   </div>
                   <span className={`transform transition-transform duration-300 ${
@@ -197,8 +197,8 @@ function Awards() {
                   openTransport === 'taxi' ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
                 }`}
               >
-                <div className="bg-[#FF1493] text-white px-6 pb-4">
-                  <ul className="space-y-2 text-sm">
+                <div className="bg-[#FF1493] text-white px-4 md:px-6 pb-4">
+                  <ul className="space-y-2 text-xs md:text-sm">
                     <li>• Tell your driver "The Beach JBR - Waves"</li>
                     <li>• Drop-off point at The Beach parking area</li>
                     <li>• Walk to the beach to reach Waves</li>
@@ -207,11 +207,13 @@ function Awards() {
               </div>
             </div>
 
-            {/* Decorative Bubbles */}
-            <div className="absolute -top-20 -right-16 flex gap-4">
-              <div className="w-16 h-16 bg-[#C5FA19] rounded-full opacity-80"></div>
-              <div className="w-20 h-20 bg-[#C5FA19] rounded-full opacity-70 -mt-6"></div>
-              <div className="w-12 h-12 bg-[#C5FA19] rounded-full opacity-90 mt-8"></div>
+            {/* Decorative Bubbles - hidden on mobile */}
+            <div className="hidden md:block absolute -top-20 -right-16">
+              <div className="flex gap-4">
+                <div className="w-16 h-16 bg-[#C5FA19] rounded-full opacity-80"></div>
+                <div className="w-20 h-20 bg-[#C5FA19] rounded-full opacity-70 -mt-6"></div>
+                <div className="w-12 h-12 bg-[#C5FA19] rounded-full opacity-90 mt-8"></div>
+              </div>
             </div>
           </div>
         </div>
