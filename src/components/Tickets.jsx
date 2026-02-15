@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import ImageWithSkeleton from './ImageWithSkeleton';
 
 function Tickets() {
   const [activeTab, setActiveTab] = useState('single');
@@ -48,7 +49,7 @@ function Tickets() {
             {/* Left Side - Image */}
             <div className="relative">
               <div className="relative rounded-[20px] md:rounded-[30px] overflow-hidden">
-                <img 
+                <ImageWithSkeleton
                   src="/hero.png" 
                   alt="All day pass" 
                   className="w-full h-full object-cover min-h-[200px] md:min-h-[300px]"
@@ -95,13 +96,52 @@ function Tickets() {
                 </div>
               </div>
 
+              {/* Pricing Table */}
+              <div className="mb-4 md:mb-6">
+                <h4 className="text-lg md:text-xl font-bold text-[#461AA2] mb-3 md:mb-4">Ticket Prices</h4>
+                <div className="space-y-3">
+                  {/* Free Entry */}
+                  <div className="flex items-center justify-between py-2 px-3 md:px-4 bg-[#C5FA19]/20 rounded-xl">
+                    <div className="flex items-center gap-2">
+                      <span className="text-xl md:text-2xl">👶</span>
+                      <div>
+                        <p className="font-semibold text-sm md:text-base text-gray-800">Below 3ft</p>
+                        <p className="text-xs text-gray-600">Height based</p>
+                      </div>
+                    </div>
+                    <span className="text-lg md:text-xl font-bold text-[#00D4D4]">FREE</span>
+                  </div>
+
+                  {/* Child Rate */}
+                  <div className="flex items-center justify-between py-2 px-3 md:px-4 bg-[#00D4D4]/10 rounded-xl">
+                    <div className="flex items-center gap-2">
+                      <span className="text-xl md:text-2xl">🧒</span>
+                      <div>
+                        <p className="font-semibold text-sm md:text-base text-gray-800">Child Rate</p>
+                        <p className="text-xs text-gray-600">Till 4 feet</p>
+                      </div>
+                    </div>
+                    <span className="text-lg md:text-xl font-bold text-[#461AA2]">₹399</span>
+                  </div>
+
+                  {/* Adult Rate */}
+                  <div className="flex items-center justify-between py-2 px-3 md:px-4 bg-[#461AA2]/10 rounded-xl">
+                    <div className="flex items-center gap-2">
+                      <span className="text-xl md:text-2xl">👨</span>
+                      <div>
+                        <p className="font-semibold text-sm md:text-base text-gray-800">Adult Rate</p>
+                        <p className="text-xs text-gray-600">Above 4 feet</p>
+                      </div>
+                    </div>
+                    <span className="text-lg md:text-xl font-bold text-[#461AA2]">₹499</span>
+                  </div>
+                </div>
+              </div>
+
               {/* Price and CTA */}
               <div>
-                <div className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-black mb-3 md:mb-4">
-                 499 rs
-                </div>
                 <button className="bg-[#461AA2] text-white px-6 md:px-8 py-2.5 md:py-3 rounded-full text-sm md:text-base font-semibold hover:bg-[#5a2db3] transition-all shadow-lg w-full lg:w-auto">
-                  Buy You Daily Pass
+                  Buy Your Daily Pass
                 </button>
                 <p className="text-xs md:text-sm text-gray-500 mt-2 md:mt-3">
                   Guaranteed entry only when purchased on thewaves.co.in
@@ -112,7 +152,7 @@ function Tickets() {
               <img 
                 src="/icon-1.webp" 
                 alt="Life jacket" 
-                className="hidden md:block absolute bottom-6 right-6 w-32 lg:w-42 h-32 lg:h-42 object-contain"
+                className="hidden md:block absolute right-6 w-32 lg:w-42 h-32 lg:h-42 object-contain"
               />
             </div>
           </div>

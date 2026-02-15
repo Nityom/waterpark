@@ -1,6 +1,6 @@
 function CTA() {
   return (
-    <section className="relative overflow-hidden bg-gradient-to-br from-[#461AA2] via-[#3A158F] to-[#2B0F6B] py-12 md:py-20 lg:py-24 px-4 md:px-8 lg:px-12">
+    <section className="relative overflow-hidden bg-gradient-to-br from-[#461AA2] via-[#3A158F] to-[#2B0F6B] py-8 md:py-20 lg:py-24 px-4 md:px-8 lg:px-12">
       
       {/* Background Glow */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(197,250,25,0.25),transparent_60%)]"></div>
@@ -8,7 +8,7 @@ function CTA() {
       <div className="max-w-[1400px] mx-auto relative z-10">
         
         {/* Grid Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-16 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-16 items-center">
           
           {/* Left Side Text */}
           <div>
@@ -17,7 +17,7 @@ function CTA() {
               obstacles
             </h2>
 
-            <h3 className="text-3xl md:text-5xl lg:text-7xl font-extrabold text-white leading-tight mt-4 md:mt-6">
+            <h3 className="text-3xl md:text-5xl lg:text-7xl font-extrabold text-white leading-tight mt-3 md:mt-6">
               countless <br />
               laughs
             </h3>
@@ -25,7 +25,7 @@ function CTA() {
 
           {/* Right Side CTA */}
           <div>
-            <h3 className="text-2xl md:text-4xl lg:text-6xl font-extrabold leading-tight mb-6 md:mb-10">
+            <h3 className="text-2xl md:text-4xl lg:text-6xl font-extrabold leading-tight mb-5 md:mb-10">
               <span className="text-white">just </span>
               <span className="text-[#C5FA19] drop-shadow-lg">
                 waiting <br /> for you*
@@ -33,7 +33,7 @@ function CTA() {
             </h3>
 
             {/* Buttons */}
-            <div className="flex flex-col sm:flex-row flex-wrap gap-4 md:gap-5 mb-6 md:mb-8">
+            <div className="flex flex-col sm:flex-row flex-wrap gap-4 md:gap-5 mb-4 md:mb-8">
               
               {/* Primary Button */}
               <button className="bg-[#C5FA19] text-[#461AA2] px-6 md:px-10 py-3 md:py-4 rounded-full text-base md:text-lg font-bold shadow-xl hover:scale-105 hover:bg-white transition-all duration-300">

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import ImageWithSkeleton from './ImageWithSkeleton';
 
 function Awards() {
   const [openTransport, setOpenTransport] = useState('car');
@@ -47,7 +48,7 @@ function Awards() {
               </div>
               <p className="text-xs text-gray-600 mb-2 md:mb-3">606 reviews</p>
               <div className="flex items-center gap-2">
-                <img 
+                <ImageWithSkeleton
                   src="/jd.png" 
                   alt="JustDial" 
                   className="w-8 md:w-10 h-8 md:h-10 object-contain"

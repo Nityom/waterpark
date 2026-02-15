@@ -1,3 +1,5 @@
+import ImageWithSkeleton from './ImageWithSkeleton';
+
 function Hero() {
   return (
     <section className="bg-[#DDFBFF] py-8 md:py-12 lg:py-[60px] px-4 md:px-8 lg:px-10 min-h-[calc(100vh-120px)] relative">
@@ -21,10 +23,11 @@ function Hero() {
 
         {/* Hero Image Container */}
         <div className="relative max-w-[1200px] mx-auto rounded-[20px] md:rounded-[30px] overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.15)] md:shadow-[0_20px_60px_rgba(0,0,0,0.15)]">
-          <img 
+          <ImageWithSkeleton
             src="/hero-5.png" 
             alt="Inflatable water park" 
             className="w-full h-auto block object-cover max-h-[350px] md:max-h-[600px]"
+            skeletonClassName="rounded-[20px] md:rounded-[30px]"
           />
         </div>
       </div>

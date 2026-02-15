@@ -1,3 +1,5 @@
+import ImageWithSkeleton from './ImageWithSkeleton';
+
 function Info() {
   return (
     <section className="bg-[#DDFBFF] py-8 md:py-12 lg:py-16 px-4 md:px-8 lg:px-10 relative overflow-hidden">
@@ -40,10 +42,14 @@ function Info() {
                 Requirements
               </h3>
             </div>
-            <p className="text-white text-[10px] md:text-xs leading-relaxed">
-              Kids must be at least 6 years old and 115 cm tall. Ages 6-12 must
-              be with an adult.
-            </p>
+            <div className="text-white text-[10px] md:text-xs leading-relaxed space-y-1 md:space-y-1.5">
+              <p>• Must know swimming</p>
+              <p>• Age: 6+ years old</p>
+              <p>• Height: Minimum 115 cm</p>
+              <p>• Kids 6-12 need adult supervision</p>
+              <p>• Valid ID required for entry</p>
+              <p>• Pre-booking recommended</p>
+            </div>
           </div>
 
           {/* Amenities Card */}
@@ -54,9 +60,14 @@ function Info() {
                 Amenities
               </h3>
             </div>
-            <p className="text-black text-[10px] md:text-xs leading-relaxed">
-              Restrooms available, free Wi-Fi provided
-            </p>
+            <div className="text-black text-[10px] md:text-xs leading-relaxed space-y-1 md:space-y-1.5">
+              <p>• Clean restrooms & changing rooms</p>
+              <p>• Shaded seating & relaxation zones</p>
+              <p>• Secure lockers available</p>
+              <p>• Food court with variety of meals</p>
+              <p>• Ample parking space</p>
+              <p>• First aid station on-site</p>
+            </div>
           </div>
 
           {/* Safety & Rules Card */}
@@ -67,10 +78,14 @@ function Info() {
                 Safety & Rules
               </h3>
             </div>
-            <p className="text-white text-[10px] md:text-xs leading-relaxed">
-              Supervised by trained lifeguards and equipped with life jackets for
-              all ages.
-            </p>
+            <div className="text-white text-[10px] md:text-xs leading-relaxed space-y-1 md:space-y-1.5">
+              <p>• Trained lifeguards on duty</p>
+              <p>• Life jackets provided (mandatory)</p>
+              <p>• Safety briefing before entry</p>
+              <p>• No outside food/drinks allowed</p>
+              <p>• Follow lifeguard instructions</p>
+              <p>• No sharp objects or jewelry</p>
+            </div>
           </div>
         </div>
 
@@ -80,7 +95,7 @@ function Info() {
 <div className="relative rounded-[20px] md:rounded-[30px] overflow-hidden shadow-2xl">
 
   {/* Background Image - Responsive */}
-  <img
+  <ImageWithSkeleton
     src="/hero-4.png"
     alt="Aerial view of water park"
     className="w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[650px] object-cover"

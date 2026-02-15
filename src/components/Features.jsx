@@ -1,3 +1,5 @@
+import ImageWithSkeleton from './ImageWithSkeleton';
+
 function Features() {
   return (
     <section className="bg-[#DDFBFF] pb-10 md:pb-16 lg:pb-20 px-4 md:px-8 lg:px-10 relative overflow-hidden">
@@ -45,7 +47,7 @@ function Features() {
 
                 {/* Actual image */}
                 <div className="absolute bottom-0 left-0 right-0 h-full overflow-hidden rounded-t-[60px] md:rounded-t-[120px]">
-                  <img
+                  <ImageWithSkeleton
                     src="/hero-2.png"
                     alt="Water park fun"
                     className="w-full h-full object-cover scale-100"

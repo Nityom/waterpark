@@ -1,3 +1,5 @@
+import ImageWithSkeleton from './ImageWithSkeleton';
+
 function Facilities() {
   const facilities = [
     {
@@ -38,7 +40,7 @@ function Facilities() {
         
         {/* Header with Image Background */}
         <div className="relative rounded-[20px] md:rounded-[30px] overflow-hidden mb-8 md:mb-12 shadow-2xl">
-          <img
+          <ImageWithSkeleton
             src="/hero.png"
             alt="Water Park"
             className="w-full h-[250px] md:h-[350px] lg:h-[400px] object-cover"

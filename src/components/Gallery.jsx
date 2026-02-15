@@ -1,3 +1,5 @@
+import ImageWithSkeleton from './ImageWithSkeleton';
+
 function Gallery() {
   const photos = [
     {
@@ -71,7 +73,7 @@ function Gallery() {
               >
                 {/* Photo */}
                 <div className="bg-white rounded-[12px] md:rounded-[15px] overflow-hidden mb-2 md:mb-3">
-                  <img 
+                  <ImageWithSkeleton
                     src={photo.src} 
                     alt={`Gallery photo ${index + 1}`}
                     className="w-full h-48 md:h-64 object-cover"

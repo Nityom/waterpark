@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import ImageWithSkeleton from './ImageWithSkeleton';
 
 function Navbar() {
   const [showBanner, setShowBanner] = useState(true);
@@ -29,7 +30,7 @@ function Navbar() {
         <div className="max-w-[1400px] mx-auto flex justify-between items-center">
           {/* Logo */}
           <Link to="/" className="flex items-center z-50">
-            <img src="/logo.png" alt="Waves Logo" className="h-12 md:h-16 lg:h-20" />
+            <ImageWithSkeleton src="/logo.png" alt="Waves Logo" className="h-12 md:h-16 lg:h-20" />
           </Link>
 
           {/* Nav Links - Desktop */}

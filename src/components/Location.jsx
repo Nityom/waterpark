@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import ImageWithSkeleton from './ImageWithSkeleton';
 
 function Location() {
   const [activeSection, setActiveSection] = useState('easy-access');
@@ -139,7 +140,7 @@ function Location() {
           {/* Right Image */}
           <div className="relative">
             <div className="relative rounded-[30px] overflow-hidden shadow-2xl">
-              <img 
+              <ImageWithSkeleton
                 src="/hero-3.png" 
                 alt="Kid jumping at water park" 
                 className="w-full h-full object-cover min-h-[350px]"
