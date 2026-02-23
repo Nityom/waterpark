@@ -9,21 +9,23 @@ function Navbar() {
   return (
     <>
       {/* Top Banner */}
-{showBanner && (
-  <div className="bg-[#C5FA19] text-black py-3 md:py-5 px-4 md:px-10 flex items-center justify-between relative">
-    <span className="text-xs md:text-sm font-bold">
-      Open till 5:00 pm
-    </span>
+      <div 
+        className={`bg-[#C5FA19] text-black px-4 md:px-10 flex items-center justify-between relative overflow-hidden transition-all duration-500 ease-in-out ${
+          showBanner ? 'py-3 md:py-5 opacity-100 max-h-20' : 'py-0 opacity-0 max-h-0'
+        }`}
+      >
+        <span className="text-xs md:text-sm font-bold">
+          Open till 5:00 pm
+        </span>
 
-    {/* Close Button */}
-    <button 
-      className="bg-transparent border-none text-xl md:text-2xl text-black cursor-pointer p-0 w-[25px] h-[25px] md:w-[30px] md:h-[30px] flex items-center justify-center hover:opacity-70 transition-opacity"
-      onClick={() => setShowBanner(false)}
-    >
-      ✕
-    </button>
-  </div>
-)}
+        {/* Close Button */}
+        <button 
+          className="bg-transparent border-none text-xl md:text-2xl text-black cursor-pointer p-0 w-[25px] h-[25px] md:w-[30px] md:h-[30px] flex items-center justify-center hover:opacity-70 transition-opacity"
+          onClick={() => setShowBanner(false)}
+        >
+          ✕
+        </button>
+      </div>
 
       {/* Main Navbar */}
       <nav className="bg-[#461AA2] py-4 md:py-5 px-4 md:px-10">
