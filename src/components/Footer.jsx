@@ -5,7 +5,7 @@ function Footer() {
     <footer className="bg-[#461AA2] py-10 md:py-14 lg:py-16 px-4 md:px-8 lg:px-10 relative overflow-hidden">
       <div className="max-w-[1400px] mx-auto">
         {/* Top Section with Info */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 mb-10 md:mb-16 relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-8 lg:gap-10 mb-10 md:mb-16 relative z-10">
           {/* Contact Info */}
           <div className="text-center md:text-left">
             <h3 className="text-white text-base md:text-lg font-bold mb-3 md:mb-4">Contact info</h3>
@@ -19,7 +19,7 @@ function Footer() {
           </div>
 
           {/* Navigation */}
-          <div className="text-center">
+          <div className="text-center md:text-left">
             <h3 className="text-white text-base md:text-lg font-bold mb-3 md:mb-4">Navigation</h3>
             <div className="space-y-2 text-white text-xs md:text-sm">
               <p><Link to="/about-us" className="hover:text-[#C5FA19] transition-colors">About Us</Link></p>
@@ -29,12 +29,23 @@ function Footer() {
             </div>
           </div>
 
+          {/* Policies */}
+          <div className="text-center md:text-left">
+            <h3 className="text-white text-base md:text-lg font-bold mb-3 md:mb-4">Our Policies</h3>
+            <div className="space-y-2 text-white text-xs md:text-sm">
+              <p><Link to="/privacy-policy" className="hover:text-[#C5FA19] transition-colors">Privacy Policy</Link></p>
+              <p><Link to="/terms-and-conditions" className="hover:text-[#C5FA19] transition-colors">Terms & Conditions</Link></p>
+              <p><Link to="/refund-and-cancellation" className="hover:text-[#C5FA19] transition-colors">Refund & Cancellation</Link></p>
+              <p><Link to="/shipping-and-delivery" className="hover:text-[#C5FA19] transition-colors">Shipping & Delivery</Link></p>
+            </div>
+          </div>
+
           {/* Social Media */}
-          <div className="text-center md:text-right">
+          <div className="text-center md:text-left">
             <h3 className="text-white text-base md:text-lg font-bold mb-3 md:mb-4">Social media</h3>
             <div className="space-y-2 text-white text-xs md:text-sm">
-              <p><a href="https://www.instagram.com/thewaveswaterpark/" className="hover:text-[#C5FA19] transition-colors">Instagram</a></p>
-              <p><a href="#" className="hover:text-[#C5FA19] transition-colors">Whatsapp</a></p>
+              <p><a href="https://www.instagram.com/thewaveswaterpark/" target="_blank" rel="noopener noreferrer" className="hover:text-[#C5FA19] transition-colors">Instagram</a></p>
+              <p><a href="https://wa.me/+919270175795" target="_blank" rel="noopener noreferrer" className="hover:text-[#C5FA19] transition-colors">Whatsapp</a></p>
             </div>
           </div>
         </div>

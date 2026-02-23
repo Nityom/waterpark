@@ -23,13 +23,13 @@ function FAQ() {
           id: "hours",
           question: "What are the opening hours?",
           answer:
-            "We’re open daily from 9:00 AM – 6:30 PM. During summer, we close from 12:00 PM to 3:00 PM due to heat.",
+            "Water Park: Monday - Sunday, 10:00 AM - 2:00 PM. Adventure Park: Monday - Sunday, 2:00 PM - 5:00 PM.",
         },
         {
           id: "cost",
           question: "How much does a Waves ticket cost?",
           answer:
-            "Only 499rs for an all-day pass with unlimited access to all attractions.",
+            "Ticket prices start from ₹599 for adults. Check our pricing section for detailed rates and group discounts.",
         },
       ],
     },

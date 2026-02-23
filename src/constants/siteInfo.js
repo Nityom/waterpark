@@ -1,0 +1,24 @@
+export const siteInfo = {
+  brandName: 'The Waves Water Park',
+  legalName: 'Waves Wardha',
+  supportEmail: 'customercare@thewaves.co.in',
+  supportPhone: '+91 8956118571',
+  supportPhoneDisplay: '(+91) 89561185 71 / 72 / 73 / 74 / 76',
+  address: 'Nagpur Wardha Highway Between Pawnar and Selu, Wardha - 442104',
+  website: 'https://thewaves.co.in',
+  bookingNotice: 'Book tickets only on thewaves.co.in or at the park ticket counter.',
+  timings: {
+    waterPark: '10:00 AM - 2:00 PM',
+    adventurePark: '2:00 PM - 5:00 PM',
+  },
+  pricing: {
+    regular: {
+      adult: 599,
+      child: 499,
+    },
+    sunday: {
+      adult: 699,
+      child: 599,
+    },
+  },
+};

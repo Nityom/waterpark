@@ -12,7 +12,7 @@ function Navbar() {
 {showBanner && (
   <div className="bg-[#C5FA19] text-black py-3 md:py-5 px-4 md:px-10 flex items-center justify-between relative">
     <span className="text-xs md:text-sm font-bold">
-      Open till 6:30 pm
+      Open till 5:00 pm
     </span>
 
     {/* Close Button */}
@@ -47,9 +47,12 @@ function Navbar() {
           </div>
 
           {/* Buy Tickets Button */}
-          <button className="bg-white text-[#461AA2] border-none py-2 md:py-3 px-5 md:px-7 rounded-[25px] text-sm md:text-base font-semibold cursor-pointer hover:-translate-y-0.5 hover:shadow-lg transition-all mr-12 md:mr-0">
+          <a 
+            href="#tickets" 
+            className="bg-white text-[#461AA2] border-none py-2 md:py-3 px-5 md:px-7 rounded-[25px] text-sm md:text-base font-semibold cursor-pointer hover:-translate-y-0.5 hover:shadow-lg transition-all mr-12 md:mr-0 inline-block text-center no-underline"
+          >
             Buy Tickets
-          </button>
+          </a>
 
           {/* Hamburger Menu Button - Mobile Only */}
           <button 

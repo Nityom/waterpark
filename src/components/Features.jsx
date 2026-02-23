@@ -11,8 +11,7 @@ function Features() {
             One of the top-rated attractions in Wardha
           </h2>
           <p className="text-sm md:text-base text-gray-700 leading-relaxed">
-            Fly down the slides, race through the obstacles, and splash around
-            with the stunning backdrop of Wardha Marina.
+            Experience thrilling water slides, exciting rides, and endless fun at Wardha's premier water & amusement park.
           </p>
         </div>
 
@@ -66,8 +65,7 @@ function Features() {
               </h3>
             </div>
             <p className="text-black text-sm md:text-base leading-relaxed">
-              Conquer 150+ exciting obstacles and slide through 42,000 m² of pure
-              fun
+              Experience exhilarating water slides, wave pools, and fun-filled water attractions for the whole family
             </p>
           </div>
 
@@ -80,8 +78,7 @@ function Features() {
               </h3>
             </div>
             <p className="text-white text-sm md:text-base leading-relaxed">
-              Sunbathe, relax, and capture your best moments with the JBR skyline
-              in view
+              Enjoy shaded seating areas, relax in the open lawn, and capture beautiful memories with your family
             </p>
           </div>
 

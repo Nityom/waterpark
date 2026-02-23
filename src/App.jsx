@@ -4,6 +4,10 @@ import Navbar from './components/Navbar'
 import HomePage from './pages/HomePage'
 import AboutUsPage from './pages/AboutUsPage'
 import ContactUsPage from './pages/ContactUsPage'
+import PrivacyPolicyPage from './pages/PrivacyPolicyPage'
+import TermsAndConditionsPage from './pages/TermsAndConditionsPage'
+import RefundAndCancellationPage from './pages/RefundAndCancellationPage'
+import ShippingAndDeliveryPage from './pages/ShippingAndDeliveryPage'
 import Footer from './components/Footer'
 import Loader from './components/Loader'
 import './App.css'
@@ -31,6 +35,10 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/about-us" element={<AboutUsPage />} />
         <Route path="/contact-us" element={<ContactUsPage />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
+        <Route path="/terms-and-conditions" element={<TermsAndConditionsPage />} />
+        <Route path="/refund-and-cancellation" element={<RefundAndCancellationPage />} />
+        <Route path="/shipping-and-delivery" element={<ShippingAndDeliveryPage />} />
       </Routes>
       <Footer/>
     </Router>

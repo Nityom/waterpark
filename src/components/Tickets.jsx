@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import ImageWithSkeleton from './ImageWithSkeleton';
+import { siteInfo } from '../constants/siteInfo';
 
 function Tickets() {
   const [activeTab, setActiveTab] = useState('single');
 
   return (
-    <section className="bg-[#461AA2] py-8 md:py-12 lg:py-16 px-4 md:px-8 lg:px-10 relative overflow-hidden">
+    <section id="tickets" className="bg-[#461AA2] py-8 md:py-12 lg:py-16 px-4 md:px-8 lg:px-10 relative overflow-hidden">
       <div className="max-w-[1200px] mx-auto">
         {/* Header */}
         <div className="text-center mb-6 md:mb-8">
@@ -121,7 +122,10 @@ function Tickets() {
                         <p className="text-xs text-gray-600">Till 4 feet</p>
                       </div>
                     </div>
-                    <span className="text-lg md:text-xl font-bold text-[#461AA2]">₹399</span>
+                    <div className="text-right">
+                      <span className="text-lg md:text-xl font-bold text-[#461AA2]">₹{siteInfo.pricing.regular.child}</span>
+                      <p className="text-xs text-gray-600">₹{siteInfo.pricing.sunday.child} on Sunday</p>
+                    </div>
                   </div>
 
                   {/* Adult Rate */}
@@ -133,7 +137,10 @@ function Tickets() {
                         <p className="text-xs text-gray-600">Above 4 feet</p>
                       </div>
                     </div>
-                    <span className="text-lg md:text-xl font-bold text-[#461AA2]">₹499</span>
+                    <div className="text-right">
+                      <span className="text-lg md:text-xl font-bold text-[#461AA2]">₹{siteInfo.pricing.regular.adult}</span>
+                      <p className="text-xs text-gray-600">₹{siteInfo.pricing.sunday.adult} on Sunday</p>
+                    </div>
                   </div>
                 </div>
               </div>

@@ -151,7 +151,7 @@ function ContactUs() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
               <div className="bg-[#C5FA19] rounded-2xl p-4 md:p-6 text-center">
                 <p className="text-base md:text-lg font-bold text-[#461AA2] mb-2">Regular Hours</p>
-                <p className="text-xl md:text-2xl font-extrabold text-[#461AA2]">9:00 AM - 6:30 PM</p>
+                <p className="text-xl md:text-2xl font-extrabold text-[#461AA2]">10:00 AM - 5:00 PM</p>
                 <p className="text-xs md:text-sm text-gray-700 mt-2">7 days a week</p>
               </div>
 

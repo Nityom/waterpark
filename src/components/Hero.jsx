@@ -11,14 +11,14 @@ function Hero() {
 
         {/* Main Heading */}
         <h1 className="text-3xl md:text-5xl lg:text-6xl font-extrabold leading-[1.2] md:leading-[1.1] mx-auto mb-4 md:mb-[30px] max-w-[1200px] text-black px-2">
-          Jump into the world's largest{' '} 
-          <span className="text-[#461AA2]">inflatable water park</span>
+          Explore the slides of your favorite<br />
+          <span className="text-[#461AA2]">Water Park</span>
         </h1>
 
         {/* Subtitle */}
         <p className="text-sm md:text-base leading-relaxed text-[#333] mx-auto mb-8 md:mb-[50px] max-w-[800px] px-4">
-          A giant floating playground, with 150+ obstacles<br className="hidden md:block" />
-          <span className="md:hidden"> </span>for families, kids and thrill-seekers right off Wardha's JBR Beach.
+          Welcome to The Waves, Wardha's most exciting water & amusement park!<br className="hidden md:block" />
+          <span className="md:hidden"> </span>Thrill-packed rides & fun-filled family adventure, just 10 km from Wardha on Nagpur Highway.
         </p>
 
         {/* Hero Image Container */}
