@@ -3,7 +3,7 @@ import ImageWithSkeleton from './ImageWithSkeleton';
 function Gallery() {
   const photos = [
     {
-      src: "/hero-2.png",
+      src: "/test.png",
       caption: "Family day turned into a full adventure 😍",
       rotation: "-rotate-3"
     },
@@ -13,7 +13,7 @@ function Gallery() {
       rotation: "rotate-2"
     },
     {
-      src: "/test-2.png",
+      src: "/test-2.jpg",
       caption: "Wet, tired, sun-kissed, and happy",
       rotation: "-rotate-1"
     },
@@ -23,12 +23,12 @@ function Gallery() {
       rotation: "rotate-3"
     },
       {
-      src: "/test-3.png",
+      src: "/test-4.jpg",
       caption: "Family day turned into a full-on water adventure 😊",
       rotation: "rotate-3"
     },
       {
-      src: "/test-3.png",
+      src: "/test-5.png",
       caption: "Family day turned into a full-on water adventure 😊",
       rotation: "rotate-3"
     },
