@@ -51,7 +51,7 @@ function Tickets() {
             <div className="relative">
               <div className="relative rounded-[20px] md:rounded-[30px] overflow-hidden">
                 <ImageWithSkeleton
-                  src="/hero.png" 
+                  src="/hero.jpg" 
                   alt="All day pass" 
                   className="w-full h-full object-cover min-h-[200px] md:min-h-[300px]"
                 />

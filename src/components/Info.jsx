@@ -96,7 +96,7 @@ function Info() {
 
   {/* Background Image - Responsive */}
   <ImageWithSkeleton
-    src="/hero-4.png"
+    src="/hero-4.jpg"
     alt="Aerial view of water park"
     className="w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[650px] object-cover"
   />

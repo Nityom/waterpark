@@ -3,12 +3,12 @@ import ImageWithSkeleton from './ImageWithSkeleton';
 function Gallery() {
   const photos = [
     {
-      src: "/test.png",
+      src: "/test.jpg",
       caption: "Family day turned into a full adventure 😍",
       rotation: "-rotate-3"
     },
     {
-      src: "/test-1.png",
+      src: "/test-1.jpg",
       caption: "Having fun with friends at Waves. Park is so cooool",
       rotation: "rotate-2"
     },
@@ -18,7 +18,7 @@ function Gallery() {
       rotation: "-rotate-1"
     },
     {
-      src: "/test-3.png",
+      src: "/test-3.jpg",
       caption: "Family day turned into a full-on water adventure 😊",
       rotation: "rotate-3"
     },
@@ -28,7 +28,7 @@ function Gallery() {
       rotation: "rotate-3"
     },
       {
-      src: "/test-5.png",
+      src: "/test-5.jpg",
       caption: "Family day turned into a full-on water adventure 😊",
       rotation: "rotate-3"
     },

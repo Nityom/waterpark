@@ -4,27 +4,27 @@ function Facilities() {
   const facilities = [
     {
       name: "Water Slide",
-      image: "/hero.png",
+      image: "/hero.jpg",
       color: "bg-[#00D4D4]"
     },
     {
       name: "Amusement Park",
-      image: "/hero-3.png",
+      image: "/hero-3.jpg",
       color: "bg-[#461AA2]"
     },
     {
       name: "Family Pool",
-      image: "/test-3.png",
+      image: "/test-3.jpg",
       color: "bg-[#C5FA19]"
     },
     {
       name: "Adventure Area",
-      image: "/kids.png",
+      image: "/kids.jpg",
       color: "bg-[#FF6B35]"
     },
     {
       name: "Rain Dance",
-      image: "/rain_dance.png",
+      image: "/rain_dance.jpg",
       color: "bg-[#00D4D4]"
     },
     {
@@ -34,12 +34,12 @@ function Facilities() {
     },
     {
       name: "School Picnic",
-      image: "/picnic.png",
+      image: "/picnic.jpg",
       color: "bg-[#C5FA19]"
     },
     {
       name: "Destination Wedding",
-      image: "/wedding.png",
+      image: "/wedding.jpg",
       color: "bg-[#00D4D4]"
     }
   ];
@@ -51,7 +51,7 @@ function Facilities() {
         {/* Header with Image Background */}
         <div className="relative rounded-[20px] md:rounded-[30px] overflow-hidden mb-10 md:mb-14 lg:mb-16 shadow-2xl max-w-[1200px] mx-auto">
           <ImageWithSkeleton
-            src="/hero.png"
+            src="/hero.jpg"
             alt="Water Park"
             className="w-full h-[220px] md:h-[300px] lg:h-[350px] object-cover"
           />

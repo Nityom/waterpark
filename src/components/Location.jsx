@@ -151,7 +151,7 @@ function Location() {
           <div className="relative">
             <div className="relative rounded-[30px] overflow-hidden shadow-2xl">
               <ImageWithSkeleton
-                src="/hero-3.png" 
+                src="/hero-3.jpg" 
                 alt="Kid jumping at water park" 
                 className="w-full h-full object-cover min-h-[350px]"
               />

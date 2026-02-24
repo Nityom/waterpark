@@ -24,7 +24,7 @@ function Hero() {
         {/* Hero Image Container */}
         <div className="relative max-w-[1200px] mx-auto rounded-[20px] md:rounded-[30px] overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.15)] md:shadow-[0_20px_60px_rgba(0,0,0,0.15)]">
           <ImageWithSkeleton
-            src="/waves.png" 
+            src="/waves.jpg" 
             alt="Inflatable water park" 
             className="w-full h-auto block object-cover max-h-[350px] md:max-h-[600px]"
             skeletonClassName="rounded-[20px] md:rounded-[30px]"
