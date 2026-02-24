@@ -10,7 +10,7 @@ import RefundAndCancellationPage from './pages/RefundAndCancellationPage'
 import ShippingAndDeliveryPage from './pages/ShippingAndDeliveryPage'
 import Footer from './components/Footer'
 import Loader from './components/Loader'
-import WhatsAppButton from './components/WhatsAppButton'
+import ScrollToTopButton from './components/ScrollToTopButton'
 import './App.css'
 
 function App() {
@@ -42,7 +42,7 @@ function App() {
         <Route path="/shipping-and-delivery" element={<ShippingAndDeliveryPage />} />
       </Routes>
       <Footer/>
-      <WhatsAppButton/>
+      <ScrollToTopButton/>
     </Router>
   )
 }

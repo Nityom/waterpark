@@ -2,7 +2,7 @@ import ImageWithSkeleton from './ImageWithSkeleton';
 
 function Features() {
   return (
-    <section className="bg-[#DDFBFF] pb-10 md:pb-16 lg:pb-20 px-4 md:px-8 lg:px-10 relative overflow-hidden">
+    <section className="bg-[#DDFBFF] pt-0 pb-10 md:pb-16 lg:pb-20 px-4 md:px-8 lg:px-10 relative overflow-hidden">
       <div className="max-w-[1000px] mx-auto">
         
         {/* Header */}

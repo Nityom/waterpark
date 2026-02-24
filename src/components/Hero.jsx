@@ -2,7 +2,7 @@ import ImageWithSkeleton from './ImageWithSkeleton';
 
 function Hero() {
   return (
-    <section className="bg-[#DDFBFF] py-8 md:py-12 lg:py-[60px] px-4 md:px-8 lg:px-10 min-h-[calc(100vh-120px)] relative">
+    <section className="bg-[#DDFBFF] pt-8 pb-4 md:py-12 lg:py-[60px] px-4 md:px-8 lg:px-10 md:min-h-[calc(100vh-120px)] relative">
       <div className="max-w-[1400px] mx-auto text-center relative">
         {/* Top Badge */}
         <div className="inline-block bg-[#C5FA19] text-black py-2 md:py-2.5 px-4 md:px-6 rounded-[25px] text-[10px] md:text-xs mb-6 md:mb-10 font-medium">
