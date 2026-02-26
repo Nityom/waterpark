@@ -86,7 +86,7 @@ function Awards() {
           {/* Left - Heading */}
           <div className="relative">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-black leading-tight mb-4 md:mb-6">
-              Cars, metro, or taxis —<br />
+              Cars, autos, or buses —<br />
               they all take you<br />
               to Waves
             </h2>
@@ -126,35 +126,27 @@ function Awards() {
               >
                 <div className="bg-[#461AA2] text-white px-4 md:px-6 pb-4">
                   <ul className="space-y-2 text-xs md:text-sm">
-                    <li>• Hit the map link to get directions</li>
-                    <li>• Park at The Beach JBR or nearby public parking areas</li>
-                    <li>• Follow the JBR beach signs and look for the giant Waves letters!</li>
+                    <li>• Follow the directions to Waves</li>
+                    <li>• Parking available near the entrance</li>
+                    <li>• Get directions: <a href="https://www.google.com/maps/dir//The+Waves+Amusement+and+Water+Park+Seloo,+Maharashtra+442104/@20.8056463,78.6808138,16z/data=!4m5!4m4!1m0!1m2!1m1!1s0x3bd48136c3370ae5:0x40c3fe4a79592727" className="underline text-white hover:opacity-80 transition-opacity">Google Maps →</a></li>
                   </ul>
-                  <div className="flex flex-col sm:flex-row gap-3 md:gap-4 mt-4">
-                    <a href="#" className="text-white underline text-xs md:text-sm flex items-center gap-1 hover:opacity-80 transition-opacity">
-                      Google Maps →
-                    </a>
-                    <a href="#" className="text-white underline text-xs md:text-sm flex items-center gap-1 hover:opacity-80 transition-opacity">
-                      Apple Maps →
-                    </a>
-                  </div>
                 </div>
               </div>
             </div>
 
-            {/* By Public Transport */}
+            {/* By Auto */}
             <div className="overflow-hidden rounded-[20px] md:rounded-[25px] transition-all duration-300">
               <button
-                onClick={() => toggleTransport('transit')}
+                onClick={() => toggleTransport('auto')}
                 className="w-full text-left px-4 md:px-6 py-3 md:py-4 bg-[#FF6B35] text-white font-bold text-base md:text-lg hover:opacity-90 transition-all duration-300"
               >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2 md:gap-3">
-                    <span className="text-xl md:text-2xl">🚌</span>
-                    <span>By public transport</span>
+                    <span className="text-xl md:text-2xl">🛺</span>
+                    <span>By auto</span>
                   </div>
                   <span className={`transform transition-transform duration-300 ${
-                    openTransport === 'transit' ? 'rotate-180' : ''
+                    openTransport === 'auto' ? 'rotate-180' : ''
                   }`}>
                     ▲
                   </span>
@@ -162,32 +154,31 @@ function Awards() {
               </button>
               <div
                 className={`overflow-hidden transition-all duration-500 ease-in-out ${
-                  openTransport === 'transit' ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+                  openTransport === 'auto' ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
                 }`}
               >
                 <div className="bg-[#FF6B35] text-white px-4 md:px-6 pb-4">
                   <ul className="space-y-2 text-xs md:text-sm">
-                    <li>• Take the Wardha Metro to DMCC or JBR stations</li>
-                    <li>• Walk to The Beach JBR</li>
-                    <li>• Follow the beach signs to Waves</li>
+                    <li>• Ask the driver to drop you at Waves</li>
+                    <li>• Entry is near the main gate</li>
                   </ul>
                 </div>
               </div>
             </div>
 
-            {/* By Taxi */}
+            {/* By Bus */}
             <div className="overflow-hidden rounded-[20px] md:rounded-[25px] transition-all duration-300">
               <button
-                onClick={() => toggleTransport('taxi')}
+                onClick={() => toggleTransport('bus')}
                 className="w-full text-left px-4 md:px-6 py-3 md:py-4 bg-[#FF1493] text-white font-bold text-base md:text-lg hover:opacity-90 transition-all duration-300"
               >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2 md:gap-3">
-                    <span className="text-xl md:text-2xl">🚕</span>
-                    <span>By taxi</span>
+                    <span className="text-xl md:text-2xl">🚌</span>
+                    <span>By bus</span>
                   </div>
                   <span className={`transform transition-transform duration-300 ${
-                    openTransport === 'taxi' ? 'rotate-180' : ''
+                    openTransport === 'bus' ? 'rotate-180' : ''
                   }`}>
                     ▲
                   </span>
@@ -195,14 +186,13 @@ function Awards() {
               </button>
               <div
                 className={`overflow-hidden transition-all duration-500 ease-in-out ${
-                  openTransport === 'taxi' ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+                  openTransport === 'bus' ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
                 }`}
               >
                 <div className="bg-[#FF1493] text-white px-4 md:px-6 pb-4">
                   <ul className="space-y-2 text-xs md:text-sm">
-                    <li>• Tell your driver "The Beach JBR - Waves"</li>
-                    <li>• Drop-off point at The Beach parking area</li>
-                    <li>• Walk to the beach to reach Waves</li>
+                    <li>• Ask the local bus to stop at Waves</li>
+                    <li>• Entry is a short walk from the road</li>
                   </ul>
                 </div>
               </div>

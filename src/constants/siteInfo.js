@@ -3,7 +3,7 @@ export const siteInfo = {
   legalName: 'Waves Wardha',
   supportEmail: 'customercare@thewaves.co.in',
   supportPhone: '+91 8956118571',
-  supportPhoneDisplay: '(+91) 89561185 71 / 72 / 73 / 74 / 76',
+  supportPhoneDisplay: '(+91) 89561185 71 / 72',
   address: 'Nagpur Wardha Highway Between Pawnar and Selu, Wardha - 442104',
   website: 'https://thewaves.co.in',
   bookingNotice: 'Book tickets only on thewaves.co.in or at the park ticket counter.',
@@ -13,12 +13,12 @@ export const siteInfo = {
   },
   pricing: {
     regular: {
-      adult: 599,
-      child: 499,
+      adult: 499,
+      child: 399,
     },
     sunday: {
-      adult: 699,
-      child: 599,
+      adult: 599,
+      child: 499,
     },
   },
 };

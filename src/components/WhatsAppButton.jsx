@@ -1,6 +1,6 @@
 function WhatsAppButton() {
   const handleClick = () => {
-    const phoneNumber = '919270175795';
+    const phoneNumber = '918956118571';
     const message = 'Hello! I would like to inquire about The Waves Water Park.';
     window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`, '_blank');
   };

@@ -43,7 +43,7 @@ function Gallery() {
         {/* Header */}
         <div className="text-center mb-8 md:mb-10">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-black leading-tight mb-2 md:mb-3 px-2">
-            Capturing fun moments since 2016
+            Capturing fun moments since 2023
           </h2>
           <p className="text-sm md:text-base text-black mb-3 md:mb-4 px-4">
             Explore what our visitors sharing and tag your moments with <span className="font-bold">#havingWaves</span>

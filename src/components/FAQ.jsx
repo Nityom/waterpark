@@ -29,7 +29,7 @@ function FAQ() {
           id: "cost",
           question: "How much does a Waves ticket cost?",
           answer:
-            "Ticket prices start from ₹599 for adults. Check our pricing section for detailed rates and group discounts.",
+            "Ticket prices start from ₹499 for adults. Check our pricing section for detailed rates and group discounts.",
         },
       ],
     },

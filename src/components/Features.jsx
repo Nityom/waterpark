@@ -8,10 +8,10 @@ function Features() {
         {/* Header */}
         <div className="mb-8 md:mb-12 max-w-[600px]">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold mb-4 md:mb-6 text-black leading-tight">
-            One of the top-rated attractions in Wardha
+            One of the top-rated attractions in Vidarbha
           </h2>
           <p className="text-sm md:text-base text-gray-700 leading-relaxed">
-            Experience thrilling water slides, exciting rides, and endless fun at Wardha's premier water & amusement park.
+            Experience thrilling water slides, exciting rides, and endless fun at Vidarbha's premier water & amusement park.
           </p>
         </div>
 

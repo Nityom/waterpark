@@ -22,7 +22,7 @@ function ContactUs() {
     const whatsappMessage = `*New Contact Form Submission*%0A%0A*Name:* ${formData.name}%0A*Email:* ${formData.email}%0A*Phone:* ${formData.phone}%0A*Message:* ${formData.message}`;
     
     // WhatsApp number
-    const phoneNumber = '919270175795';
+    const phoneNumber = '918956118571';
     
     // Open WhatsApp with pre-filled message
     window.open(`https://wa.me/${phoneNumber}?text=${whatsappMessage}`, '_blank');
@@ -81,7 +81,7 @@ function ContactUs() {
                 <h4 className="text-lg md:text-xl font-bold text-[#461AA2]">Call Us</h4>
               </div>
               <p className="text-base md:text-lg font-semibold text-gray-800 ml-0 md:ml-11">
-                (+91) 89561185 71 / 72 / 73 / 74 / 76
+                (+91) 89561185 71 / 72
               </p>
             </div>
 

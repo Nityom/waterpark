@@ -43,9 +43,8 @@ function Info() {
               </h3>
             </div>
             <div className="text-white text-[10px] md:text-xs leading-relaxed space-y-1 md:space-y-1.5">
-              <p>• Must know swimming</p>
-              <p>• Age: 6+ years old</p>
-              <p>• Height: Minimum 115 cm</p>
+              <p>• Age: 6 months to 100+ years</p>
+              <p>• Height: Minimum 4 ft</p>
               <p>• Kids 6-12 need adult supervision</p>
               <p>• Valid ID required for entry</p>
               <p>• Pre-booking recommended</p>
@@ -65,6 +64,7 @@ function Info() {
               <p>• Shaded seating & relaxation zones</p>
               <p>• Secure lockers available</p>
               <p>• Food court with variety of meals</p>
+              <p>• Green room / feeding room</p>
               <p>• Ample parking space</p>
               <p>• First aid station on-site</p>
             </div>
@@ -116,9 +116,7 @@ function Info() {
       {/* Text - Responsive */}
       <div className="absolute top-1/2 left-4 md:left-8 transform -translate-y-1/2 z-10">
         <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-extrabold text-white leading-tight">
-          Largest <br />
-          inflatable park <br />
-          in the world
+          Unleash the Splash <br /> at the Ultimate Water Destination, Where Every Slide, Wave, and Drop Is Designed for Non-Stop Thrill and Family Fun.
         </h3>
       </div>
     </div>

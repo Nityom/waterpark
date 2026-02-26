@@ -11,7 +11,7 @@ function Footer() {
             <h3 className="text-white text-base md:text-lg font-bold mb-3 md:mb-4">Contact info</h3>
             <div className="space-y-2 text-white text-xs md:text-sm">
               <p>customercare@thewaves.co.in</p>
-              <p>📞Call: (+91) 89561185 71 / 72 / 73 / 74 / 76</p>
+              <p>📞Call: (+91) 89561185 71 / 72</p>
               <p className="leading-relaxed">
                 📍Nagpur Wardha Highway Between Pawnar and Selu, Wardha - 442104
               </p>
@@ -45,7 +45,7 @@ function Footer() {
             <h3 className="text-white text-base md:text-lg font-bold mb-3 md:mb-4">Social media</h3>
             <div className="space-y-2 text-white text-xs md:text-sm">
               <p><a href="https://www.instagram.com/thewaveswaterpark/" target="_blank" rel="noopener noreferrer" className="hover:text-[#C5FA19] transition-colors">Instagram</a></p>
-              <p><a href="https://wa.me/919270175795" target="_blank" rel="noopener noreferrer" className="hover:text-[#C5FA19] transition-colors">Whatsapp</a></p>
+              <p><a href="https://wa.me/918956118571" target="_blank" rel="noopener noreferrer" className="hover:text-[#C5FA19] transition-colors">Whatsapp</a></p>
             </div>
           </div>
         </div>
