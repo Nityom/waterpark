@@ -5,7 +5,7 @@ function GalleryPage() {
     const [selectedImageIndex, setSelectedImageIndex] = useState(null);
     const images = [
         // Hero images
-        '/hero-2.png', '/hero-3.jpg', '/hero-4.jpg', '/hero-5.jpg', '/hero.jpg',
+        '/hero-2.png', '/hero-3.jpg', '/hero-4.jpg', '/hero-5.jpg',
         // Activity and general images
         '/kids.jpg', '/picnic.jpg', '/rain_dance.jpg', '/stay.jpeg', '/waves.png', '/wedding.jpg',
         // Test images
