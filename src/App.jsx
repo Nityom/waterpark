@@ -9,6 +9,7 @@ import TermsAndConditionsPage from './pages/TermsAndConditionsPage'
 import RefundAndCancellationPage from './pages/RefundAndCancellationPage'
 import ShippingAndDeliveryPage from './pages/ShippingAndDeliveryPage'
 import Footer from './components/Footer'
+import GalleryPage from './pages/GalleryPage'
 import Loader from './components/Loader'
 import ScrollToTopButton from './components/ScrollToTopButton'
 import './App.css'
@@ -31,18 +32,19 @@ function App() {
 
   return (
     <Router>
-      <Navbar/>
+      <Navbar />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/about-us" element={<AboutUsPage />} />
+        <Route path="/gallery" element={<GalleryPage />} />
         <Route path="/contact-us" element={<ContactUsPage />} />
         <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
         <Route path="/terms-and-conditions" element={<TermsAndConditionsPage />} />
         <Route path="/refund-and-cancellation" element={<RefundAndCancellationPage />} />
         <Route path="/shipping-and-delivery" element={<ShippingAndDeliveryPage />} />
       </Routes>
-      <Footer/>
-      <ScrollToTopButton/>
+      <Footer />
+      <ScrollToTopButton />
     </Router>
   )
 }

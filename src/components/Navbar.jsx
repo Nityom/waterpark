@@ -9,17 +9,16 @@ function Navbar() {
   return (
     <>
       {/* Top Banner */}
-      <div 
-        className={`bg-[#C5FA19] text-black px-4 md:px-10 flex items-center justify-between relative overflow-hidden transition-all duration-500 ease-in-out ${
-          showBanner ? 'py-3 md:py-5 opacity-100 max-h-20' : 'py-0 opacity-0 max-h-0'
-        }`}
+      <div
+        className={`bg-[#C5FA19] text-black px-4 md:px-10 flex items-center justify-between relative overflow-hidden transition-all duration-500 ease-in-out ${showBanner ? 'py-3 md:py-5 opacity-100 max-h-20' : 'py-0 opacity-0 max-h-0'
+          }`}
       >
         <span className="text-xs md:text-sm font-bold">
           Open till 5:00 pm
         </span>
 
         {/* Close Button */}
-        <button 
+        <button
           className="bg-transparent border-none text-xl md:text-2xl text-black cursor-pointer p-0 w-[25px] h-[25px] md:w-[30px] md:h-[30px] flex items-center justify-center hover:opacity-70 transition-opacity"
           onClick={() => setShowBanner(false)}
         >
@@ -43,21 +42,24 @@ function Navbar() {
             <Link to="/about-us" className="text-white no-underline text-base font-medium hover:opacity-80 transition-opacity">
               About Us
             </Link>
+            <Link to="/gallery" className="text-white no-underline text-base font-medium hover:opacity-80 transition-opacity">
+              Gallery
+            </Link>
             <Link to="/contact-us" className="text-white no-underline text-base font-medium hover:opacity-80 transition-opacity">
               Contact Us
             </Link>
           </div>
 
           {/* Buy Tickets Button */}
-          <a 
-            href="#tickets" 
+          <a
+            href="#tickets"
             className="bg-white text-[#461AA2] border-none py-2 md:py-3 px-5 md:px-7 rounded-[25px] text-sm md:text-base font-semibold cursor-pointer hover:-translate-y-0.5 hover:shadow-lg transition-all mr-12 md:mr-0 inline-block text-center no-underline"
           >
             Buy Tickets
           </a>
 
           {/* Hamburger Menu Button - Mobile Only */}
-          <button 
+          <button
             className="md:hidden flex flex-col gap-1.5 z-50 p-2 absolute right-4"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label="Toggle menu"
@@ -71,22 +73,29 @@ function Navbar() {
         {/* Mobile Menu */}
         <div className={`md:hidden fixed inset-0 bg-[#461AA2] z-40 transition-transform duration-300 ${mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
           <div className="flex flex-col items-center justify-center h-full gap-8">
-            <Link 
-              to="/" 
+            <Link
+              to="/"
               className="text-white no-underline text-2xl font-medium hover:text-[#C5FA19] transition-colors"
               onClick={() => setMobileMenuOpen(false)}
             >
               Home
             </Link>
-            <Link 
-              to="/about-us" 
+            <Link
+              to="/about-us"
               className="text-white no-underline text-2xl font-medium hover:text-[#C5FA19] transition-colors"
               onClick={() => setMobileMenuOpen(false)}
             >
               About Us
             </Link>
-            <Link 
-              to="/contact-us" 
+            <Link
+              to="/gallery"
+              className="text-white no-underline text-2xl font-medium hover:text-[#C5FA19] transition-colors"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Gallery
+            </Link>
+            <Link
+              to="/contact-us"
               className="text-white no-underline text-2xl font-medium hover:text-[#C5FA19] transition-colors"
               onClick={() => setMobileMenuOpen(false)}
             >

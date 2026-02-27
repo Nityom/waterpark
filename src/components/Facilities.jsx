@@ -4,12 +4,12 @@ function Facilities() {
   const facilities = [
     {
       name: "Water Slide",
-      image: "/hero.jpg",
+      image: "/hero-3.jpg",
       color: "bg-[#00D4D4]"
     },
     {
       name: "Amusement Park",
-      image: "/hero-3.jpg",
+       image: "/gallery/image-4.jpeg",
       color: "bg-[#461AA2]"
     },
     {
@@ -29,7 +29,7 @@ function Facilities() {
     },
     {
       name: "Accommodation",
-      image: "/stay.jpeg",
+      image: "/gallery/image-5.jpeg",
       color: "bg-[#461AA2]"
     },
     {

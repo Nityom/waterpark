@@ -1,11 +1,11 @@
 import { useState } from 'react';
 
-function ImageWithSkeleton({ src, alt, className = '', skeletonClassName = '' }) {
+function ImageWithSkeleton({ src, alt, className = '', skeletonClassName = '', wrapperClassName = 'w-full h-full' }) {
   const [isLoaded, setIsLoaded] = useState(false);
   const [hasError, setHasError] = useState(false);
 
   return (
-    <div className="relative">
+    <div className={`relative ${wrapperClassName}`}>
       {/* Skeleton Loader */}
       {!isLoaded && !hasError && (
         <div className={`absolute inset-0 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 animate-pulse ${skeletonClassName}`}>
@@ -16,7 +16,7 @@ function ImageWithSkeleton({ src, alt, className = '', skeletonClassName = '' })
           </div>
         </div>
       )}
-      
+
       {/* Actual Image */}
       <img
         src={src}
