@@ -7,12 +7,12 @@ function GalleryPage() {
         // Hero images
         '/hero-2.png', '/hero-3.jpg', '/hero-4.jpg', '/hero-5.jpg',
         // Activity and general images
-        '/kids.jpg', '/picnic.jpg', '/rain_dance.jpg', '/stay.jpeg', '/waves.png', '/wedding.jpg',
+        '/kids.jpg', '/picnic.jpg', '/rain_dance.jpg', '/stay.jpeg', '/waves.jpg', '/wedding.jpg',
         // Test images
         '/test-1.jpg', '/test-2.jpg', '/test-3.jpg', '/test-4.jpg', '/test-5.jpg', '/test.jpg',
         // Gallery folder images
         '/gallery/image-1.jpeg', '/gallery/image-2.jpeg', '/gallery/image-3.jpeg',
-        '/gallery/image-4.jpeg', '/gallery/image-5.jpeg', '/gallery/image-6.png',
+        '/gallery/image-4.jpg', '/gallery/image-5.jpeg', '/gallery/image-6.png',
         '/gallery/image-7.jpeg', '/gallery/image-8.jpeg', '/gallery/image-9.jpeg',
         '/gallery/image-10.jpeg', '/gallery/image-11.jpeg'
     ];
