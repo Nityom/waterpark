@@ -1,13 +1,82 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/logo.png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>The Waves</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/logo.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="Looking for the best waterpark in Wardha? Waves Waterpark offers thrilling water slides, kids splash zone, family rides & food. Book tickets online today!" />
+  <title>Waves Waterpark Wardha | Best Amusement Park & Water Rides</title>
+
+  <!-- Local Business Schema -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "AmusementPark",
+      "name": "Waves Waterpark",
+      "image": "https://thewaves.co.in/hero.jpg",
+      "url": "https://thewaves.co.in",
+      "telephone": "+918956118571",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Nagpur-Wardha Highway, Between Pawnar and Selu",
+        "addressLocality": "Wardha",
+        "postalCode": "442104",
+        "addressRegion": "Maharashtra",
+        "addressCountry": "IN"
+      },
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+          "Sunday"
+        ],
+        "opens": "10:00",
+        "closes": "17:00"
+      }
+    }
+    </script>
+
+  <!-- FAQ Schema -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [{
+        "@type": "Question",
+        "name": "What is the ticket price for Waves Waterpark in Wardha?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Our standard ticket prices start at ₹499 for kids and ₹599 for adults on weekdays."
+        }
+      }, {
+        "@type": "Question",
+        "name": "How far is Waves Waterpark from Nagpur?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "We are conveniently located just 70 km from Nagpur on the Nagpur-Wardha Highway."
+        }
+      }, {
+        "@type": "Question",
+        "name": "What are the timings of the waterpark?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Waves Waterpark is open every day from 10:00 AM to 6:00 PM."
+        }
+      }]
+    }
+    </script>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="module" src="/src/main.jsx"></script>
+</body>
+
 </html>
