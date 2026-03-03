@@ -1,20 +1,20 @@
 function AboutUs() {
   return (
     <section id="about-us" className="bg-gradient-to-b from-[#DDFBFF] to-[#C5FA19]/30 py-10 md:py-16 px-4 md:px-10 relative overflow-hidden">
-      
+
       {/* Floating Decorative Icons */}
-      <img src="/icon-1.webp" alt="" className="hidden md:block absolute top-32 left-16 w-20 h-20 animate-bounce z-20" style={{animationDuration: '3s'}} />
+      <img src="/icon-1.webp" alt="" className="hidden md:block absolute top-32 left-16 w-20 h-20 animate-bounce z-20" style={{ animationDuration: '3s' }} />
       <img src="/icon-2.webp" alt="" className="hidden md:block absolute top-20 right-12 w-24 h-24 z-20" />
-      <img src="/icon-3.webp" alt="" className="hidden md:block absolute top-[500px] left-8 w-20 h-20 animate-bounce z-20" style={{animationDuration: '4s'}} />
+      <img src="/icon-3.webp" alt="" className="hidden md:block absolute top-[500px] left-8 w-20 h-20 animate-bounce z-20" style={{ animationDuration: '4s' }} />
       <img src="/icon-4.webp" alt="" className="hidden md:block absolute top-[600px] right-16 w-32 h-32 z-20" />
       <img src="/icon-5.webp" alt="" className="hidden md:block absolute bottom-96 left-24 w-28 h-28 z-20" />
-      <img src="/icon-6.webp" alt="" className="hidden md:block absolute bottom-64 right-20 w-22 h-22 animate-bounce z-20" style={{animationDuration: '5s'}} />
+      <img src="/icon-6.webp" alt="" className="hidden md:block absolute bottom-64 right-20 w-22 h-22 animate-bounce z-20" style={{ animationDuration: '5s' }} />
       <img src="/icon-7.webp" alt="" className="hidden md:block absolute bottom-32 left-40 w-24 h-24 z-20" />
       <img src="/icon-8.webp" alt="" className="hidden md:block absolute top-[800px] right-32 w-18 h-18 z-20" />
       <img src="/icon-9.webp" alt="" className="hidden md:block absolute bottom-48 right-48 w-20 h-20 z-20" />
-      
+
       <div className="max-w-[1400px] mx-auto relative z-10">
-        
+
         {/* Header */}
         <div className="text-center mb-8 md:mb-12">
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-[#461AA2] leading-tight mb-4">
@@ -27,7 +27,7 @@ function AboutUs() {
 
         {/* Main Content Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 mb-8 md:mb-12">
-          
+
           {/* Story Card */}
           <div className="bg-white/80 backdrop-blur-sm rounded-[30px] p-6 md:p-8 shadow-xl border-4 border-[#461AA2]/20">
             <div className="flex items-center gap-3 mb-4">
@@ -95,7 +95,7 @@ function AboutUs() {
 
         {/* Features Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-6 md:mb-8">
-          
+
           {/* Parking Card */}
           <div className="bg-[#C5FA19] rounded-[25px] p-4 md:p-6 shadow-lg">
             <div className="text-3xl md:text-4xl mb-3 text-center">🚗</div>
@@ -131,7 +131,8 @@ function AboutUs() {
             Ready for an Unforgettable Adventure?
           </h3>
           <p className="text-lg md:text-xl text-[#C5FA19] font-bold mb-4 md:mb-6 relative z-10">
-            📞 For Booking: 08956118571 / 72
+            📞 For Booking: +91 9699755795 / +91 9270175795<br />
+            <span className="text-sm font-normal">Secondary: (+91) 89561185 71 / 72</span>
           </p>
           <p className="text-white text-base md:text-lg mb-4 md:mb-6 relative z-10 italic">
             "Life is more fun if you come to the water park"
