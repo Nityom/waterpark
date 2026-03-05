@@ -4,32 +4,32 @@ function Gallery() {
   const photos = [
     {
       src: "/test.jpg",
-      caption: "Making a splash with the whole family! 🌊",
+      caption: "Making a splash with the whole family!",
       rotation: "-rotate-3"
     },
     {
       src: "/test-1.jpg",
-      caption: "Having a blast with friends at Waves. Best day ever! 😎",
+      caption: "Having a blast with friends at Waves. Best day ever!",
       rotation: "rotate-2"
     },
     {
       src: "/test-2.jpg",
-      caption: "Wet, tired, sun-kissed, and incredibly happy! ☀️",
+      caption: "Wet, tired, sun-kissed, and incredibly happy!",
       rotation: "-rotate-1"
     },
     {
       src: "/test-3.jpg",
-      caption: "Chasing thrills and catching waves all day long 🏄‍♂️",
+      caption: "Chasing thrills and catching waves all day long",
       rotation: "rotate-3"
     },
     {
       src: "/test-4.jpg",
-      caption: "Floating down the lazy river, zero worries attached �",
+      caption: "Floating down the lazy river, zero worries attached",
       rotation: "rotate-3"
     },
     {
       src: "/test-5.jpg",
-      caption: "The perfect escape from the summer heat! �",
+      caption: "The perfect escape from the summer heat!",
       rotation: "rotate-3"
     },
   ];

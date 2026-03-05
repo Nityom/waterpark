@@ -30,14 +30,14 @@ function Awards() {
             <div className="bg-[#00D4D4] rounded-[25px] p-6 md:p-8 text-center w-full md:w-48 h-40 md:h-48 flex flex-col items-center justify-center">
               <div className="text-4xl md:text-5xl mb-2 md:mb-3">🏆</div>
               <p className="font-bold text-black text-sm">Traveler's Choice</p>
-              <p className="font-bold text-black text-sm">• 2021</p>
+              <p className="font-bold text-black text-sm">• 2024</p>
             </div>
 
             {/* Award 2 - JustDial 2022 */}
             <div className="bg-[#00D4D4] rounded-[25px] p-6 md:p-8 text-center w-full md:w-48 h-40 md:h-48 flex flex-col items-center justify-center">
               <div className="text-4xl md:text-5xl mb-2 md:mb-3">🏆</div>
               <p className="font-bold text-black text-sm">JustDial Awards</p>
-              <p className="font-bold text-black text-sm">• 2022</p>
+              <p className="font-bold text-black text-sm">• 2023</p>
             </div>
 
             {/* Main JustDial Card */}
@@ -49,8 +49,8 @@ function Awards() {
               <p className="text-xs text-gray-600 mb-2 md:mb-3">606 reviews</p>
               <div className="flex items-center gap-2">
                 <ImageWithSkeleton
-                  src="/jd.png" 
-                  alt="JustDial" 
+                  src="/jd.png"
+                  alt="JustDial"
                   className="w-8 md:w-10 h-8 md:h-10 object-contain"
                 />
                 <p className="font-bold text-black text-base md:text-lg">JustDial</p>
@@ -61,7 +61,7 @@ function Awards() {
             <div className="bg-[#00D4D4] rounded-[25px] p-6 md:p-8 text-center w-full md:w-48 h-40 md:h-48 flex flex-col items-center justify-center">
               <div className="text-4xl md:text-5xl mb-2 md:mb-3">🏆</div>
               <p className="font-bold text-black text-sm">JustDial Awards</p>
-              <p className="font-bold text-black text-sm">• 2023</p>
+              <p className="font-bold text-black text-sm">• 2024</p>
             </div>
 
             {/* Award 4 - Guinness World Record
@@ -73,9 +73,9 @@ function Awards() {
             </div> */}
 
             {/* Starfish Decoration - hidden on mobile */}
-            <img 
-              src="/icon-3.webp" 
-              alt="Starfish decoration" 
+            <img
+              src="/icon-3.webp"
+              alt="Starfish decoration"
               className="hidden md:block absolute -top-16 right-0 w-32 lg:w-48 h-32 lg:h-48 object-contain z-10"
             />
           </div>
@@ -92,9 +92,9 @@ function Awards() {
             </h2>
 
             {/* Pool Float Decoration - hidden on mobile */}
-            <img 
-              src="/icon-5.webp" 
-              alt="Pool float decoration" 
+            <img
+              src="/icon-5.webp"
+              alt="Pool float decoration"
               className="hidden lg:block absolute -bottom-20 -left-10 w-48 lg:w-64 h-48 lg:h-64 object-contain opacity-50"
             />
           </div>
@@ -112,17 +112,15 @@ function Awards() {
                     <span className="text-xl md:text-2xl">🚗</span>
                     <span>By car</span>
                   </div>
-                  <span className={`transform transition-transform duration-300 ${
-                    openTransport === 'car' ? 'rotate-180' : ''
-                  }`}>
+                  <span className={`transform transition-transform duration-300 ${openTransport === 'car' ? 'rotate-180' : ''
+                    }`}>
                     ▲
                   </span>
                 </div>
               </button>
               <div
-                className={`overflow-hidden transition-all duration-500 ease-in-out ${
-                  openTransport === 'car' ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
-                }`}
+                className={`overflow-hidden transition-all duration-500 ease-in-out ${openTransport === 'car' ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+                  }`}
               >
                 <div className="bg-[#461AA2] text-white px-4 md:px-6 pb-4">
                   <ul className="space-y-2 text-xs md:text-sm">
@@ -145,17 +143,15 @@ function Awards() {
                     <span className="text-xl md:text-2xl">🛺</span>
                     <span>By auto</span>
                   </div>
-                  <span className={`transform transition-transform duration-300 ${
-                    openTransport === 'auto' ? 'rotate-180' : ''
-                  }`}>
+                  <span className={`transform transition-transform duration-300 ${openTransport === 'auto' ? 'rotate-180' : ''
+                    }`}>
                     ▲
                   </span>
                 </div>
               </button>
               <div
-                className={`overflow-hidden transition-all duration-500 ease-in-out ${
-                  openTransport === 'auto' ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
-                }`}
+                className={`overflow-hidden transition-all duration-500 ease-in-out ${openTransport === 'auto' ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+                  }`}
               >
                 <div className="bg-[#FF6B35] text-white px-4 md:px-6 pb-4">
                   <ul className="space-y-2 text-xs md:text-sm">
@@ -177,17 +173,15 @@ function Awards() {
                     <span className="text-xl md:text-2xl">🚌</span>
                     <span>By bus</span>
                   </div>
-                  <span className={`transform transition-transform duration-300 ${
-                    openTransport === 'bus' ? 'rotate-180' : ''
-                  }`}>
+                  <span className={`transform transition-transform duration-300 ${openTransport === 'bus' ? 'rotate-180' : ''
+                    }`}>
                     ▲
                   </span>
                 </div>
               </button>
               <div
-                className={`overflow-hidden transition-all duration-500 ease-in-out ${
-                  openTransport === 'bus' ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
-                }`}
+                className={`overflow-hidden transition-all duration-500 ease-in-out ${openTransport === 'bus' ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+                  }`}
               >
                 <div className="bg-[#FF1493] text-white px-4 md:px-6 pb-4">
                   <ul className="space-y-2 text-xs md:text-sm">
