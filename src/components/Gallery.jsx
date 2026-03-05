@@ -4,37 +4,34 @@ function Gallery() {
   const photos = [
     {
       src: "/test.jpg",
-      caption: "Family day turned into a full adventure 😍",
+      caption: "Making a splash with the whole family! 🌊",
       rotation: "-rotate-3"
     },
     {
       src: "/test-1.jpg",
-      caption: "Having fun with friends at Waves. Park is so cooool",
+      caption: "Having a blast with friends at Waves. Best day ever! 😎",
       rotation: "rotate-2"
     },
     {
       src: "/test-2.jpg",
-      caption: "Wet, tired, sun-kissed, and happy",
+      caption: "Wet, tired, sun-kissed, and incredibly happy! ☀️",
       rotation: "-rotate-1"
     },
     {
       src: "/test-3.jpg",
-      caption: "Family day turned into a full-on water adventure 😊",
+      caption: "Chasing thrills and catching waves all day long 🏄‍♂️",
       rotation: "rotate-3"
     },
-      {
+    {
       src: "/test-4.jpg",
-      caption: "Family day turned into a full-on water adventure 😊",
+      caption: "Floating down the lazy river, zero worries attached �",
       rotation: "rotate-3"
     },
-      {
+    {
       src: "/test-5.jpg",
-      caption: "Family day turned into a full-on water adventure 😊",
+      caption: "The perfect escape from the summer heat! �",
       rotation: "rotate-3"
     },
-     
-    
-
   ];
 
   return (
@@ -48,7 +45,7 @@ function Gallery() {
           <p className="text-sm md:text-base text-black mb-3 md:mb-4 px-4">
             Explore what our visitors sharing and tag your moments with <span className="font-bold">#havingWaves</span>
           </p>
-          
+
           {/* Social Links */}
           <div className="flex flex-col sm:flex-row gap-3 md:gap-6 justify-center items-center">
             <a href="https://www.instagram.com/thewaveswaterpark/" className="text-black font-bold text-sm md:text-base hover:text-[#461AA2] transition-colors flex items-center gap-2">
@@ -66,20 +63,19 @@ function Gallery() {
             {photos.map((photo, index) => (
               <div
                 key={index}
-                className={`relative bg-[#C5FA19] p-2 md:p-3 rounded-[15px] md:rounded-[20px] shadow-xl hover:scale-105 hover:z-10 transition-all duration-300 ${photo.rotation} w-48 md:w-64 flex-shrink-0 ${
-                  index > 0 ? 'md:-ml-12' : ''
-                }`}
+                className={`relative bg-[#C5FA19] p-2 md:p-3 rounded-[15px] md:rounded-[20px] shadow-xl hover:scale-105 hover:z-10 transition-all duration-300 ${photo.rotation} w-48 md:w-64 flex-shrink-0 ${index > 0 ? 'md:-ml-12' : ''
+                  }`}
                 style={{ zIndex: index }}
               >
                 {/* Photo */}
                 <div className="bg-white rounded-[12px] md:rounded-[15px] overflow-hidden mb-2 md:mb-3">
                   <ImageWithSkeleton
-                    src={photo.src} 
+                    src={photo.src}
                     alt={`Gallery photo ${index + 1}`}
                     className="w-full h-48 md:h-64 object-cover"
                   />
                 </div>
-                
+
                 {/* Caption */}
                 <p className="text-black text-[10px] md:text-xs font-medium px-1 md:px-2 pb-1 leading-relaxed">
                   {photo.caption}

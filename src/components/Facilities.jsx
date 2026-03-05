@@ -9,7 +9,7 @@ function Facilities() {
     },
     {
       name: "Amusement Park",
-      image: "/gallery/image-4.jpg",
+      image: "/kids.jpg",
       color: "bg-[#461AA2]"
     },
     {
@@ -19,7 +19,7 @@ function Facilities() {
     },
     {
       name: "Adventure Area",
-      image: "/kids.jpg",
+      image: "/gallery/image-4.jpg",
       color: "bg-[#FF6B35]"
     },
     {
