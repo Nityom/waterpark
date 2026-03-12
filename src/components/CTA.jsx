@@ -39,13 +39,19 @@ function CTA() {
             {/* Buttons */}
             <div className="flex flex-col sm:flex-row flex-wrap gap-4 md:gap-5 mb-4 md:mb-8">
 
-              <button className="bg-[#C5FA19] text-[#461AA2] px-6 md:px-10 py-3 md:py-4 rounded-full text-base md:text-lg font-bold shadow-xl hover:scale-105 hover:bg-white transition-all duration-300">
+              <a
+                href="/book-tickets"
+                className="inline-flex items-center justify-center bg-[#C5FA19] text-[#461AA2] px-6 md:px-10 py-3 md:py-4 rounded-full text-base md:text-lg font-bold shadow-xl hover:scale-105 hover:bg-white transition-all duration-300"
+              >
                 Buy Your Day Pass
-              </button>
+              </a>
 
-              <button className="border-2 border-white text-white px-6 md:px-10 py-3 md:py-4 rounded-full text-base md:text-lg font-bold hover:bg-white hover:text-[#461AA2] hover:scale-105 transition-all duration-300">
+              <a
+                href="/contact-us"
+                className="inline-flex items-center justify-center border-2 border-white text-white px-6 md:px-10 py-3 md:py-4 rounded-full text-base md:text-lg font-bold hover:bg-white hover:text-[#461AA2] hover:scale-105 transition-all duration-300"
+              >
                 Plan Group Event
-              </button>
+              </a>
 
             </div>
 

@@ -28,10 +28,11 @@ function Tickets() {
         <div className="flex flex-col sm:flex-row gap-2 md:gap-3 justify-center mb-6 px-4">
           <button
             onClick={() => setActiveTab("single")}
-            className={`flex items-center justify-center gap-2 px-4 md:px-6 py-2.5 md:py-3 rounded-full text-sm md:text-base font-semibold transition-all ${activeTab === "single"
+            className={`flex items-center justify-center gap-2 px-4 md:px-6 py-2.5 md:py-3 rounded-full text-sm md:text-base font-semibold transition-all ${
+              activeTab === "single"
                 ? "bg-white text-[#461AA2]"
                 : "bg-[#5a2db3] text-white hover:bg-[#6835c4]"
-              }`}
+            }`}
           >
             <span className="text-base md:text-lg">👤</span>
             Single Ticket
@@ -39,10 +40,11 @@ function Tickets() {
 
           <button
             onClick={() => setActiveTab("group")}
-            className={`flex items-center justify-center gap-2 px-4 md:px-6 py-2.5 md:py-3 rounded-full text-sm md:text-base font-semibold transition-all ${activeTab === "group"
+            className={`flex items-center justify-center gap-2 px-4 md:px-6 py-2.5 md:py-3 rounded-full text-sm md:text-base font-semibold transition-all ${
+              activeTab === "group"
                 ? "bg-white text-[#461AA2]"
                 : "bg-[#5a2db3] text-white hover:bg-[#6835c4]"
-              }`}
+            }`}
           >
             <span className="text-base md:text-lg">👥</span>
             Group Events
