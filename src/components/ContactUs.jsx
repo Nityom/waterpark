@@ -1,3 +1,4 @@
+"use client";
 import { useState } from 'react';
 
 function ContactUs() {
@@ -278,3 +279,4 @@ function ContactUs() {
 }
 
 export default ContactUs;
+

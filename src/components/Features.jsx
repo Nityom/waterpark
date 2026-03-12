@@ -4,7 +4,7 @@ function Features() {
   return (
     <section className="bg-[#DDFBFF] pt-0 pb-10 md:pb-16 lg:pb-20 px-4 md:px-8 lg:px-10 relative overflow-hidden">
       <div className="max-w-[1000px] mx-auto">
-        
+
         {/* Header */}
         <div className="mb-8 md:mb-12 max-w-[600px]">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold mb-4 md:mb-6 text-black leading-tight">
@@ -17,7 +17,7 @@ function Features() {
 
         {/* Bento Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mb-4 md:mb-6 relative">
-          
+
           {/* Large Pink Card - Left Side */}
           <div className="md:row-span-2 bg-[#FF1493] rounded-[20px] md:rounded-[30px] p-6 md:p-10 relative overflow-hidden min-h-[400px] md:min-h-[600px]">
             <h3 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-white mb-4 md:mb-6 leading-tight relative z-10">
@@ -33,7 +33,7 @@ function Features() {
             {/* Image */}
             <div className="absolute bottom-0 left-0 right-0 h-[55%] z-10">
               <div className="relative w-full h-full">
-                
+
                 {/* Blob shape mask */}
                 <div
                   className="absolute inset-0 overflow-hidden"
@@ -83,14 +83,14 @@ function Features() {
           </div>
 
           {/* Floating icon - hidden on mobile */}
-     <img
-  src="/icon-5.webp"
-  alt="Inflatable decoration"
-  className="hidden md:block absolute top-1/2 right-6 
+          <img
+            src="/icon-5.webp"
+            alt="Inflatable decoration"
+            className="hidden md:block absolute top-1/2 right-6 
              -translate-y-1/2
              w-24 lg:w-36 h-24 lg:h-36 object-contain
              z-40"
-/>
+          />
 
         </div>
 

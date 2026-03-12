@@ -1,0 +1,12 @@
+{
+  "/_global-error/page": "/_global-error",
+  "/_not-found/page": "/_not-found",
+  "/about-us/page": "/about-us",
+  "/contact-us/page": "/contact-us",
+  "/gallery/page": "/gallery",
+  "/page": "/",
+  "/privacy-policy/page": "/privacy-policy",
+  "/refund-and-cancellation/page": "/refund-and-cancellation",
+  "/shipping-and-delivery/page": "/shipping-and-delivery",
+  "/terms-and-conditions/page": "/terms-and-conditions"
+}

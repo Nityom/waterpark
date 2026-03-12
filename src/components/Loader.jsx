@@ -1,3 +1,5 @@
+"use client";
+
 function Loader() {
   return (
     <div className="fixed inset-0 bg-[#DDFBFF] flex items-center justify-center z-[9999]">

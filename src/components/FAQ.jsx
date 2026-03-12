@@ -1,3 +1,4 @@
+"use client";
 import { useState } from "react";
 
 function FAQ() {
@@ -275,3 +276,4 @@ function FAQ() {
 }
 
 export default FAQ;
+

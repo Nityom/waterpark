@@ -1,0 +1,13 @@
+:HL["/_next/static/chunks/6afcd41ded00ed3f.css","style"]
+:HL["/_next/static/media/5d52bd6c4cb3f315-s.p.610fd2a3.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/_next/static/media/f06bf9da926bae75-s.p.c68a79fb.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/icon-1.webp","image"]
+:HL["/icon-2.webp","image"]
+:HL["/icon-3.webp","image"]
+:HL["/icon-4.webp","image"]
+:HL["/icon-5.webp","image"]
+:HL["/icon-6.webp","image"]
+:HL["/icon-7.webp","image"]
+:HL["/icon-8.webp","image"]
+:HL["/icon-9.webp","image"]
+0:{"buildId":"LtPtwsZWFPLrVMSDpfzvT","tree":{"name":"","paramType":null,"paramKey":"","hasRuntimePrefetch":false,"slots":{"children":{"name":"about-us","paramType":null,"paramKey":"about-us","hasRuntimePrefetch":false,"slots":{"children":{"name":"__PAGE__","paramType":null,"paramKey":"__PAGE__","hasRuntimePrefetch":false,"slots":null,"isRootLayout":false}},"isRootLayout":false}},"isRootLayout":true},"staleTime":300}

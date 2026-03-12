@@ -1,4 +1,5 @@
-import { Link } from 'react-router-dom';
+"use client";
+import Link from 'next/link';
 
 function Footer() {
   return (
@@ -23,8 +24,8 @@ function Footer() {
           <div className="text-center md:text-left">
             <h3 className="text-white text-base md:text-lg font-bold mb-3 md:mb-4">Navigation</h3>
             <div className="space-y-2 text-white text-xs md:text-sm">
-              <p><Link to="/about-us" className="hover:text-[#C5FA19] transition-colors" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>About Us</Link></p>
-              <p><Link to="/contact-us" className="hover:text-[#C5FA19] transition-colors" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>Contact Us</Link></p>
+              <p><Link href="/about-us" className="hover:text-[#C5FA19] transition-colors" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>About Us</Link></p>
+              <p><Link href="/contact-us" className="hover:text-[#C5FA19] transition-colors" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>Contact Us</Link></p>
               <p><a href="#group-events" className="hover:text-[#C5FA19] transition-colors">Group Events</a></p>
               <p><a href="#faq" className="hover:text-[#C5FA19] transition-colors">FAQ</a></p>
             </div>
@@ -34,10 +35,10 @@ function Footer() {
           <div className="text-center md:text-left">
             <h3 className="text-white text-base md:text-lg font-bold mb-3 md:mb-4">Our Policies</h3>
             <div className="space-y-2 text-white text-xs md:text-sm">
-              <p><Link to="/privacy-policy" className="hover:text-[#C5FA19] transition-colors" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>Privacy Policy</Link></p>
-              <p><Link to="/terms-and-conditions" className="hover:text-[#C5FA19] transition-colors" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>Terms & Conditions</Link></p>
-              <p><Link to="/refund-and-cancellation" className="hover:text-[#C5FA19] transition-colors" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>Refund & Cancellation</Link></p>
-              <p><Link to="/shipping-and-delivery" className="hover:text-[#C5FA19] transition-colors" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>Shipping & Delivery</Link></p>
+              <p><Link href="/privacy-policy" className="hover:text-[#C5FA19] transition-colors" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>Privacy Policy</Link></p>
+              <p><Link href="/terms-and-conditions" className="hover:text-[#C5FA19] transition-colors" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>Terms & Conditions</Link></p>
+              <p><Link href="/refund-and-cancellation" className="hover:text-[#C5FA19] transition-colors" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>Refund & Cancellation</Link></p>
+              <p><Link href="/shipping-and-delivery" className="hover:text-[#C5FA19] transition-colors" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>Shipping & Delivery</Link></p>
             </div>
           </div>
 
@@ -70,3 +71,4 @@ function Footer() {
 }
 
 export default Footer;
+

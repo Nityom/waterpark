@@ -1,4 +1,6 @@
-import ImageWithSkeleton from './ImageWithSkeleton';
+"use client";
+
+import Image from "next/image";
 
 function Info() {
   return (
@@ -15,10 +17,10 @@ function Info() {
           </p>
         </div>
 
-        {/* Info Cards Grid */}
+        {/* Info Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mb-8 md:mb-10">
 
-          {/* Opening Hours Card */}
+          {/* Opening Hours */}
           <div className="bg-[#C5FA19] rounded-[20px] md:rounded-[25px] p-4 md:p-5 min-h-[160px] md:min-h-[180px] flex flex-col">
             <div className="flex items-center gap-2 mb-2 md:mb-3">
               <span className="text-xl md:text-2xl">⏰</span>
@@ -26,15 +28,17 @@ function Info() {
                 Opening hours
               </h3>
             </div>
+
             <div className="text-black text-[10px] md:text-xs leading-relaxed space-y-1.5 md:space-y-2">
               <p className="font-semibold">Water Park</p>
               <p>Monday - Sunday: 10AM - 2PM</p>
+
               <p className="font-semibold mt-2 md:mt-3">Adventure Park</p>
               <p>Monday - Sunday: 2PM - 5PM</p>
             </div>
           </div>
 
-          {/* Requirements Card */}
+          {/* Requirements */}
           <div className="bg-[#461AA2] rounded-[20px] md:rounded-[25px] p-4 md:p-5 min-h-[160px] md:min-h-[180px] flex flex-col">
             <div className="flex items-center gap-2 mb-2 md:mb-3">
               <span className="text-xl md:text-2xl">🎫</span>
@@ -42,7 +46,8 @@ function Info() {
                 Requirements
               </h3>
             </div>
-            <div className="text-white text-[10px] md:text-xs leading-relaxed space-y-1 md:space-y-1.5">
+
+            <div className="text-white text-[10px] md:text-xs space-y-1 md:space-y-1.5">
               <p>• Age: 6 months to 100+ years</p>
               <p>• Height: Minimum 4 ft</p>
               <p>• Kids 6-12 need adult supervision</p>
@@ -51,7 +56,7 @@ function Info() {
             </div>
           </div>
 
-          {/* Amenities Card */}
+          {/* Amenities */}
           <div className="bg-[#00D4D4] rounded-[20px] md:rounded-[25px] p-4 md:p-5 min-h-[160px] md:min-h-[180px] flex flex-col">
             <div className="flex items-center gap-2 mb-2 md:mb-3">
               <span className="text-xl md:text-2xl">📶</span>
@@ -59,7 +64,8 @@ function Info() {
                 Amenities
               </h3>
             </div>
-            <div className="text-black text-[10px] md:text-xs leading-relaxed space-y-1 md:space-y-1.5">
+
+            <div className="text-black text-[10px] md:text-xs space-y-1 md:space-y-1.5">
               <p>• Clean restrooms & changing rooms</p>
               <p>• Shaded seating & relaxation zones</p>
               <p>• Secure lockers available</p>
@@ -70,7 +76,7 @@ function Info() {
             </div>
           </div>
 
-          {/* Safety & Rules Card */}
+          {/* Safety */}
           <div className="bg-[#FF6B35] rounded-[20px] md:rounded-[25px] p-4 md:p-5 min-h-[160px] md:min-h-[180px] flex flex-col">
             <div className="flex items-center gap-2 mb-2 md:mb-3">
               <span className="text-xl md:text-2xl">📢</span>
@@ -78,7 +84,8 @@ function Info() {
                 Safety & Rules
               </h3>
             </div>
-            <div className="text-white text-[10px] md:text-xs leading-relaxed space-y-1 md:space-y-1.5">
+
+            <div className="text-white text-[10px] md:text-xs space-y-1 md:space-y-1.5">
               <p>• Trained lifeguards on duty</p>
               <p>• Life jackets provided (mandatory)</p>
               <p>• Safety briefing before entry</p>
@@ -87,55 +94,68 @@ function Info() {
               <p>• No sharp objects or jewelry</p>
             </div>
           </div>
+
         </div>
 
-
-
-        {/* Large Map Section */}
+        {/* Large Image Section */}
         <div className="relative rounded-[20px] md:rounded-[30px] overflow-hidden shadow-2xl">
 
-          {/* Background Image - Responsive */}
-          <ImageWithSkeleton
-            src="/hero-4.jpg"
-            alt="Aerial view of water park"
-            className="w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[650px] object-cover"
-          />
+          {/* Background Image */}
+          <div className="relative w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[650px]">
 
-          {/* Pink Blob Overlay */}
+            <Image
+              src="/hero-4.jpg"
+              alt="Aerial view of water park"
+              fill
+              priority
+              className="object-cover"
+            />
+
+          </div>
+
+          {/* Pink Overlay */}
           <div className="absolute top-0 left-0 w-[55%] sm:w-[50%] md:w-[45%] h-full">
             <div className="relative w-full h-full">
 
-              {/* Bigger Pink Shape */}
               <div
                 className="absolute inset-0 bg-[#FF1493]"
-                style={{
-                  clipPath: "ellipse(75% 60% at 30% 50%)",
-                }}
-              ></div>
+                style={{ clipPath: "ellipse(75% 60% at 30% 50%)" }}
+              />
 
-              {/* Text - Responsive */}
               <div className="absolute top-1/2 left-4 md:left-8 transform -translate-y-1/2 z-10">
                 <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-extrabold text-white leading-tight">
-                  Unleash the Splash at the <br /> Ultimate Water Destination <br /> Where Every Slide Brings Pure Fun. 🌊
+                  Unleash the Splash at the <br />
+                  Ultimate Water Destination <br />
+                  Where Every Slide Brings Pure Fun. 🌊
                 </h3>
               </div>
+
             </div>
           </div>
 
-          {/* Decorative Elements - Responsive */}
-          <img
-            src="/icon-4.webp"
-            alt="Life jacket"
-            className="absolute bottom-0 left-0 w-24 sm:w-32 md:w-40 lg:w-50 h-24 sm:h-32 md:h-40 lg:h-50 object-contain z-20"
-          />
+          {/* Decorations */}
 
-          <img
+          <div className="absolute bottom-0 left-0 w-16 sm:w-24 md:w-32 lg:w-40 z-20">
+            <Image
+              src="/icon-4.webp"
+              alt="Life jacket"
+              width={200}
+              height={200}
+              className="w-full h-auto object-contain"
+              unoptimized
+            />
+          </div>
+
+          <Image
             src="/icon-5.webp"
             alt="Unicorn float"
-            className="hidden sm:block absolute top-0 right-0 w-20 sm:w-24 md:w-28 lg:w-36 h-20 sm:h-24 md:h-28 lg:h-36 object-contain z-20"
+            width={140}
+            height={140}
+            className="hidden sm:block absolute top-0 right-0 object-contain z-20"
+            unoptimized
           />
-        </div>
 
+        </div>
 
       </div>
     </section>

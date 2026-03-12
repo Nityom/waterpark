@@ -1,5 +1,6 @@
+"use client";
 import { useState } from 'react';
-import ImageWithSkeleton from './ImageWithSkeleton';
+import Image from "next/image";
 
 function Location() {
   const [activeSection, setActiveSection] = useState('easy-access');
@@ -18,7 +19,7 @@ function Location() {
             <h2 className="text-2xl md:text-3xl lg:text-4xl font-extrabold text-black leading-tight mb-3 md:mb-4">
               Where adventure meets convenience
             </h2>
-            
+
             {/* Subtitle */}
             <p className="text-xs md:text-sm text-gray-700 leading-relaxed mb-5 md:mb-6">
               At The Waves Wardha, fun and convenience come together — strategically located on Nagpur-Wardha Highway with easy access from major cities.
@@ -27,7 +28,7 @@ function Location() {
             {/* Features List */}
             <div className="space-y-4 md:space-y-6">
               {/* Prime Location */}
-              <div 
+              <div
                 className="pb-3 md:pb-4 cursor-pointer transition-all"
                 onClick={() => toggleSection('prime-location')}
               >
@@ -44,18 +45,18 @@ function Location() {
                 )}
                 <div className="mt-3 md:mt-4">
                   {activeSection === 'prime-location' ? (
-                    <svg 
-                      width="300" 
-                      height="20" 
-                      viewBox="0 0 300 20" 
-                      fill="none" 
+                    <svg
+                      width="300"
+                      height="20"
+                      viewBox="0 0 300 20"
+                      fill="none"
                       xmlns="http://www.w3.org/2000/svg"
                       className="w-full max-w-[300px] animate-wave"
                     >
-                      <path 
-                        d="M0 10 Q 15 0, 30 10 T 60 10 T 90 10 T 120 10 T 150 10 T 180 10 T 210 10 T 240 10 T 270 10 T 300 10" 
-                        stroke="#461AA2" 
-                        strokeWidth="6" 
+                      <path
+                        d="M0 10 Q 15 0, 30 10 T 60 10 T 90 10 T 120 10 T 150 10 T 180 10 T 210 10 T 240 10 T 270 10 T 300 10"
+                        stroke="#461AA2"
+                        strokeWidth="6"
                         fill="none"
                         strokeLinecap="round"
                       />
@@ -67,7 +68,7 @@ function Location() {
               </div>
 
               {/* Easy Access */}
-              <div 
+              <div
                 className="pb-3 md:pb-4 cursor-pointer transition-all"
                 onClick={() => toggleSection('easy-access')}
               >
@@ -84,18 +85,18 @@ function Location() {
                 )}
                 <div className="mt-3 md:mt-4">
                   {activeSection === 'easy-access' ? (
-                    <svg 
-                      width="300" 
-                      height="20" 
-                      viewBox="0 0 300 20" 
-                      fill="none" 
+                    <svg
+                      width="300"
+                      height="20"
+                      viewBox="0 0 300 20"
+                      fill="none"
                       xmlns="http://www.w3.org/2000/svg"
                       className="w-full max-w-[300px] animate-wave"
                     >
-                      <path 
-                        d="M0 10 Q 15 0, 30 10 T 60 10 T 90 10 T 120 10 T 150 10 T 180 10 T 210 10 T 240 10 T 270 10 T 300 10" 
-                        stroke="#461AA2" 
-                        strokeWidth="6" 
+                      <path
+                        d="M0 10 Q 15 0, 30 10 T 60 10 T 90 10 T 120 10 T 150 10 T 180 10 T 210 10 T 240 10 T 270 10 T 300 10"
+                        stroke="#461AA2"
+                        strokeWidth="6"
                         fill="none"
                         strokeLinecap="round"
                       />
@@ -107,7 +108,7 @@ function Location() {
               </div>
 
               {/* All Day Fun */}
-              <div 
+              <div
                 className="pb-3 md:pb-4 cursor-pointer"
                 onClick={() => toggleSection('all-day-fun')}
               >
@@ -121,18 +122,18 @@ function Location() {
                 )}
                 <div className="mt-4">
                   {activeSection === 'all-day-fun' ? (
-                    <svg 
-                      width="300" 
-                      height="20" 
-                      viewBox="0 0 300 20" 
-                      fill="none" 
+                    <svg
+                      width="300"
+                      height="20"
+                      viewBox="0 0 300 20"
+                      fill="none"
                       xmlns="http://www.w3.org/2000/svg"
                       className="w-full max-w-[300px] animate-wave"
                     >
-                      <path 
-                        d="M0 10 Q 15 0, 30 10 T 60 10 T 90 10 T 120 10 T 150 10 T 180 10 T 210 10 T 240 10 T 270 10 T 300 10" 
-                        stroke="#461AA2" 
-                        strokeWidth="6" 
+                      <path
+                        d="M0 10 Q 15 0, 30 10 T 60 10 T 90 10 T 120 10 T 150 10 T 180 10 T 210 10 T 240 10 T 270 10 T 300 10"
+                        stroke="#461AA2"
+                        strokeWidth="6"
                         fill="none"
                         strokeLinecap="round"
                       />
@@ -144,23 +145,24 @@ function Location() {
               </div>
             </div>
 
-           
+
           </div>
 
           {/* Right Image */}
           <div className="relative">
-            <div className="relative rounded-[30px] overflow-hidden shadow-2xl">
-              <ImageWithSkeleton
-                src="/hero-3.jpg" 
-                alt="Kid jumping at water park" 
-                className="w-full h-full object-cover min-h-[350px]"
+            <div className="relative w-full min-h-[350px]">
+              <Image
+                src="/hero-3.jpg"
+                alt="Kid jumping at water park"
+                fill
+                className="object-cover"
               />
             </div>
 
             {/* Cyan Splash Decoration */}
-            <img 
-              src="/icon-4.webp" 
-              alt="Fun splash decoration" 
+            <img
+              src="/icon-4.webp"
+              alt="Fun splash decoration"
               className="absolute -top-12 -right-6 w-40 h-40 object-contain z-10"
             />
           </div>
@@ -171,3 +173,4 @@ function Location() {
 }
 
 export default Location;
+
