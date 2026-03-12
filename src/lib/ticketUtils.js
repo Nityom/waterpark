@@ -13,14 +13,21 @@ export function getTicketVerificationUrl(orderId) {
 export async function getTicketDetails(orderId) {
   const Cashfree = configureCashfree();
 
-  const [orderResponse, paymentsResponse, redeemedRecord] = await Promise.all([
+  const [orderResult, paymentsResult, redeemedResult] = await Promise.allSettled([
     Cashfree.PGFetchOrder(orderId),
     Cashfree.PGOrderFetchPayments(orderId),
     getRedeemedTicket(orderId),
   ]);
 
-  const order = orderResponse.data;
-  const payments = paymentsResponse.data;
+  if (paymentsResult.status !== "fulfilled") {
+    throw paymentsResult.reason;
+  }
+
+  const order =
+    orderResult.status === "fulfilled" ? orderResult.value.data : null;
+  const payments = paymentsResult.value.data;
+  const redeemedRecord =
+    redeemedResult.status === "fulfilled" ? redeemedResult.value : null;
   const successfulPayment = payments.find(
     (payment) => payment.payment_status === "SUCCESS"
   );
@@ -37,18 +44,19 @@ export async function getTicketDetails(orderId) {
   }
 
   return {
-    orderId: order.order_id,
-    amount: order.order_amount,
-    currency: order.order_currency,
-    note: order.order_note || "Day Pass",
-    customerName: order.customer_details?.customer_name || "Guest User",
-    customerEmail: order.customer_details?.customer_email || "Not provided",
-    customerPhone: order.customer_details?.customer_phone || "Not provided",
+    orderId: order?.order_id || orderId,
+    amount: order?.order_amount ?? successfulPayment?.payment_amount ?? 0,
+    currency: order?.order_currency || "INR",
+    note: order?.order_note || "Day Pass",
+    customerName: order?.customer_details?.customer_name || "Guest User",
+    customerEmail: order?.customer_details?.customer_email || "Not provided",
+    customerPhone: order?.customer_details?.customer_phone || "Not provided",
     status,
     redeemedAt: redeemedRecord?.redeemedAt || null,
     paymentTime:
       successfulPayment?.payment_completion_time ||
       successfulPayment?.payment_time ||
-      order.created_at,
+      order?.created_at ||
+      null,
   };
 }
