@@ -1,5 +1,8 @@
 import Link from "next/link";
-import { configureCashfree } from "../../lib/cashfree";
+import DownloadTicketButton from "../../components/DownloadTicketButton";
+import TicketQrCard from "../../components/TicketQrCard";
+import TicketStatusBadge from "../../components/TicketStatusBadge";
+import { getTicketDetails, getTicketVerificationUrl } from "../../lib/ticketUtils";
 
 export default async function PaymentSuccess({ searchParams }) {
   const { order_id } = await searchParams;
@@ -18,22 +21,17 @@ export default async function PaymentSuccess({ searchParams }) {
     );
   }
 
+  let ticket = null;
   let statusMessage = "Payment Pending";
   let isSuccess = false;
 
   try {
-    const Cashfree = configureCashfree();
+    ticket = await getTicketDetails(order_id);
 
-    const response = await Cashfree.PGOrderFetchPayments(order_id);
-    const payments = response.data;
-
-    const successfulPayment = payments.find(p => p.payment_status === "SUCCESS");
-    const pendingPayment = payments.find(p => p.payment_status === "PENDING");
-
-    if (successfulPayment) {
+    if (ticket.status === "verified" || ticket.status === "redeemed") {
       statusMessage = "Payment Successful";
       isSuccess = true;
-    } else if (pendingPayment) {
+    } else if (ticket.status === "pending") {
       statusMessage = "Payment Pending";
     } else {
       statusMessage = "Payment Failed";
@@ -44,34 +42,124 @@ export default async function PaymentSuccess({ searchParams }) {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
-      <div className="bg-white p-8 rounded-2xl shadow-lg max-w-md w-full text-center">
-        <div className={`w-16 h-16 mx-auto mb-6 rounded-full flex items-center justify-center ${
-          isSuccess ? 'bg-green-100 text-green-500' : 'bg-red-100 text-red-500'
-        }`}>
-          {isSuccess ? (
-            <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-            </svg>
-          ) : (
-            <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          )}
+    <main className="min-h-screen bg-[linear-gradient(180deg,#EEF7F1_0%,#FFFFFF_42%,#F7F9FF_100%)] p-4 md:p-8">
+      <div className="mx-auto max-w-5xl">
+        <div className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
+          <section className="rounded-[32px] bg-white p-6 shadow-[0_20px_70px_rgba(16,24,40,0.08)] md:p-8">
+            <div className={`mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full ${
+              isSuccess ? "bg-green-100 text-green-500" : "bg-red-100 text-red-500"
+            }`}>
+              {isSuccess ? (
+                <svg className="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+              ) : (
+                <svg className="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              )}
+            </div>
+
+            <div className="text-center">
+              {ticket ? <TicketStatusBadge status={ticket.status} /> : null}
+              <h1 className="mt-4 text-3xl font-extrabold text-gray-900">{statusMessage}</h1>
+              <p className="mt-2 text-gray-500">
+                Order ID: <span className="font-mono text-sm text-gray-800">{order_id}</span>
+              </p>
+            </div>
+
+            {ticket ? (
+              <div className="mt-8 overflow-hidden rounded-[28px] border border-[#D4F0DB] bg-[linear-gradient(135deg,#123B2A_0%,#0F766E_55%,#D7F5DD_100%)] p-[1px]">
+                <div className="rounded-[27px] bg-[linear-gradient(135deg,#0F172A_0%,#1F2937_55%,#1B4332_100%)] p-6 text-white">
+                  <div className="flex flex-wrap items-start justify-between gap-4">
+                    <div>
+                      <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#86EFAC]">
+                        Entry Ticket
+                      </p>
+                      <h2 className="mt-3 text-2xl font-extrabold md:text-3xl">
+                        {ticket.note}
+                      </h2>
+                      <p className="mt-2 text-sm text-white/75">
+                        Show this ticket at the gate for verification.
+                      </p>
+                    </div>
+
+                    <div className="rounded-full border border-white/15 bg-white/10 px-4 py-2 text-right">
+                      <p className="text-xs uppercase tracking-[0.14em] text-white/60">Amount</p>
+                      <p className="text-xl font-bold">
+                        {ticket.currency} {ticket.amount}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="mt-8 grid gap-4 md:grid-cols-2">
+                    <div className="rounded-3xl bg-white/8 p-5 backdrop-blur">
+                      <p className="text-xs font-bold uppercase tracking-[0.14em] text-white/60">
+                        Guest Name
+                      </p>
+                      <p className="mt-2 text-xl font-bold">{ticket.customerName}</p>
+                      <p className="mt-4 text-xs font-bold uppercase tracking-[0.14em] text-white/60">
+                        Mobile
+                      </p>
+                      <p className="mt-2 text-base font-semibold">{ticket.customerPhone}</p>
+                      <p className="mt-4 text-xs font-bold uppercase tracking-[0.14em] text-white/60">
+                        Email
+                      </p>
+                      <p className="mt-2 break-all text-sm font-semibold">{ticket.customerEmail}</p>
+                    </div>
+
+                    <div className="rounded-3xl bg-white/8 p-5 backdrop-blur">
+                      <p className="text-xs font-bold uppercase tracking-[0.14em] text-white/60">
+                        Payment Time
+                      </p>
+                      <p className="mt-2 text-lg font-bold">
+                        {ticket.paymentTime ? new Date(ticket.paymentTime).toLocaleString("en-IN") : "Unavailable"}
+                      </p>
+                      <p className="mt-4 text-xs font-bold uppercase tracking-[0.14em] text-white/60">
+                        Order Reference
+                      </p>
+                      <p className="mt-2 break-all font-mono text-sm">{ticket.orderId}</p>
+                    </div>
+                  </div>
+
+                  <div className="mt-8 flex flex-wrap gap-3">
+                    <Link
+                      href={getTicketVerificationUrl(ticket.orderId)}
+                      className="inline-flex items-center justify-center rounded-full bg-[#86EFAC] px-5 py-3 text-sm font-bold text-[#0B3B2D] transition hover:bg-white"
+                    >
+                      Open Verification Page
+                    </Link>
+                    <DownloadTicketButton />
+                    <Link
+                      href="/"
+                      className="inline-flex items-center justify-center rounded-full border border-white/20 px-5 py-3 text-sm font-bold text-white transition hover:bg-white/10"
+                    >
+                      Return Home
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            ) : null}
+          </section>
+
+          <aside className="space-y-6">
+            {ticket ? (
+              <TicketQrCard
+                verificationUrl={getTicketVerificationUrl(ticket.orderId)}
+                customerName={ticket.customerName}
+              />
+            ) : null}
+
+            <div className="rounded-[28px] bg-white p-6 shadow-[0_18px_45px_rgba(24,34,69,0.08)]">
+              <h2 className="text-lg font-bold text-[#101828]">Gate Verification</h2>
+              <p className="mt-3 text-sm text-gray-600">
+                Scan the QR at entry. The verification page will show the customer
+                details and a green verified tick when the payment is successful.
+              </p>
+            </div>
+          </aside>
         </div>
-        
-        <h1 className="text-2xl font-bold text-gray-900 mb-2">{statusMessage}</h1>
-        <p className="text-gray-500 mb-8">
-          Order ID: <span className="font-mono text-sm text-gray-800">{order_id}</span>
-        </p>
-        
-        <Link 
-          href="/" 
-          className="inline-block w-full px-6 py-3 bg-blue-600 text-white font-medium rounded-xl hover:bg-blue-700 transition"
-        >
-          Return to Home
-        </Link>
       </div>
-    </div>
+    </main>
   );
 }
