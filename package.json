@@ -12,6 +12,7 @@
   "dependencies": {
     "@tailwindcss/postcss": "^4.2.1",
     "cashfree-pg": "^5.1.0",
+    "convex": "^1.33.0",
     "eslint-config-next": "^16.1.6",
     "next": "^16.1.6",
     "postcss": "^8.5.8",

@@ -1,8 +1,10 @@
 import { configureCashfree, getCashfreeMode } from "../../../lib/cashfree";
+import { createConvexClient, getConvexHttpActionsUrl } from "../../../lib/convex";
 
 export async function POST(req) {
   try {
     const Cashfree = configureCashfree();
+    const convex = createConvexClient();
     const body = await req.json();
 
     const {
@@ -52,25 +54,40 @@ export async function POST(req) {
       .replace(/[^a-zA-Z0-9 ]/g, "")
       .replace(/\s+/g, " ");
 
+    const orderMeta = {
+      return_url: `${normalizedBaseUrl}/payment-success?order_id={order_id}`,
+      notify_url: `${getConvexHttpActionsUrl()}/cashfree/webhook`,
+    };
+
     const orderRequest = {
       order_amount: numericAmount,
       order_currency: "INR",
-      order_id: order_id,
-
+      order_id,
       customer_details: {
         customer_id,
         customer_name: sanitizedCustomerName || "Guest User",
         customer_email,
         customer_phone,
       },
-
-      order_meta: {
-        return_url: `${normalizedBaseUrl}/payment-success?order_id={order_id}`,
-      },
+      order_meta: orderMeta,
       order_note: `${ticketLabel} x${ticketQuantity} (${dayLabel})`,
     };
 
     const response = await Cashfree.PGCreateOrder(orderRequest);
+
+    await convex.mutation("orders:createOrder", {
+      order_id,
+      customer_name: sanitizedCustomerName || "Guest User",
+      email: customer_email,
+      phone: customer_phone,
+      amount: numericAmount,
+      currency: "INR",
+      order_note: orderRequest.order_note,
+      day_type,
+      ticket_type,
+      quantity: ticketQuantity,
+      gateway_order_id: response.data.order_id,
+    });
 
     return Response.json({
       success: true,
@@ -78,7 +95,6 @@ export async function POST(req) {
       order_id: response.data.order_id,
       mode: getCashfreeMode(),
     });
-
   } catch (error) {
     const cashfreeError = error?.response?.data;
 
