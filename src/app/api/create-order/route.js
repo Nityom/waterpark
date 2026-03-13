@@ -20,6 +20,8 @@ export async function POST(req) {
       ticket_type,
       visit_date,
       quantity,
+      adult_quantity,
+      child_quantity,
     } = body;
 
     if (
@@ -54,10 +56,25 @@ export async function POST(req) {
     }
 
     const ticketQuantity = Number(quantity || 1);
+    const adultQuantity = Number(adult_quantity || 0);
+    const childQuantity = Number(child_quantity || 0);
 
     if (!Number.isInteger(ticketQuantity) || ticketQuantity <= 0) {
       return Response.json(
         { error: "Invalid ticket quantity" },
+        { status: 400 }
+      );
+    }
+
+    if (
+      !Number.isInteger(adultQuantity) ||
+      !Number.isInteger(childQuantity) ||
+      adultQuantity < 0 ||
+      childQuantity < 0 ||
+      adultQuantity + childQuantity !== ticketQuantity
+    ) {
+      return Response.json(
+        { error: "Invalid adult/child ticket split" },
         { status: 400 }
       );
     }
@@ -67,8 +84,19 @@ export async function POST(req) {
     const customer_id = `CUST_${Date.now()}`;
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || req.nextUrl.origin;
     const normalizedBaseUrl = baseUrl.replace(/\/$/, "");
+    const ticketParts = [];
+
+    if (adultQuantity > 0) {
+      ticketParts.push(`Adult Ticket x${adultQuantity}`);
+    }
+
+    if (childQuantity > 0) {
+      ticketParts.push(`Child Ticket x${childQuantity}`);
+    }
+
     const ticketLabel =
-      ticket_type === "child" ? "Child Ticket" : "Adult Ticket";
+      ticketParts.join(" + ") ||
+      (ticket_type === "child" ? "Child Ticket" : "Adult Ticket");
     const dayLabel = day_type === "sunday" ? "Sunday" : "Regular";
     const formattedVisitDate = formatShortDate(visit_date);
     const sanitizedCustomerName = customer_name
