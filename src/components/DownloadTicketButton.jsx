@@ -23,18 +23,35 @@ function loadImageAsDataUrl(url) {
   });
 }
 
-function drawLabelValue(pdf, label, value, x, y, width) {
+function drawField(pdf, { label, value, x, y, width, valueSize = 12 }) {
   pdf.setFont("helvetica", "bold");
-  pdf.setFontSize(10);
-  pdf.setTextColor(110, 118, 138);
+  pdf.setFontSize(9);
+  pdf.setTextColor(83, 92, 116);
   pdf.text(label, x, y);
 
   pdf.setFont("helvetica", "normal");
-  pdf.setFontSize(13);
+  pdf.setFontSize(valueSize);
   pdf.setTextColor(16, 24, 40);
   const lines = pdf.splitTextToSize(String(value || "-"), width);
   pdf.text(lines, x, y + 14);
-  return y + 14 + lines.length * 14;
+  return y + 14 + lines.length * (valueSize + 2);
+}
+
+function drawInfoCard(pdf, x, y, width, height, fields) {
+  pdf.setFillColor(247, 248, 252);
+  pdf.roundedRect(x, y, width, height, 16, 16, "F");
+
+  let cursorY = y + 20;
+
+  for (const field of fields) {
+    cursorY = drawField(pdf, {
+      ...field,
+      x: x + 16,
+      y: cursorY,
+      width: width - 32,
+    });
+    cursorY += 12;
+  }
 }
 
 export default function DownloadTicketButton({
@@ -60,103 +77,113 @@ export default function DownloadTicketButton({
 
       const pageWidth = pdf.internal.pageSize.getWidth();
       const pageHeight = pdf.internal.pageSize.getHeight();
-      const margin = 32;
+      const margin = 28;
       const cardX = margin;
-      const cardY = 34;
+      const cardY = 28;
       const cardWidth = pageWidth - margin * 2;
       const cardHeight = pageHeight - margin * 2;
       const qrDataUrl = qrSource ? await loadImageAsDataUrl(qrSource) : null;
+      const paidAt = ticket.paymentTime
+        ? new Date(ticket.paymentTime).toLocaleString("en-IN")
+        : "Unavailable";
+      const ticketStatus = ticket.status === "redeemed" ? "Redeemed" : "Valid for Entry";
 
-      pdf.setFillColor(243, 247, 241);
+      pdf.setFillColor(241, 245, 249);
       pdf.rect(0, 0, pageWidth, pageHeight, "F");
 
-      pdf.setFillColor(18, 59, 42);
-      pdf.roundedRect(cardX, cardY, cardWidth, cardHeight, 22, 22, "F");
+      pdf.setFillColor(255, 255, 255);
+      pdf.roundedRect(cardX, cardY, cardWidth, cardHeight, 24, 24, "F");
 
-      pdf.setFillColor(15, 23, 42);
-      pdf.roundedRect(cardX + 8, cardY + 8, cardWidth - 16, cardHeight - 16, 20, 20, "F");
+      pdf.setDrawColor(23, 92, 66);
+      pdf.setLineWidth(4);
+      pdf.roundedRect(cardX + 2, cardY + 2, cardWidth - 4, cardHeight - 4, 22, 22, "S");
+
+      pdf.setFillColor(12, 27, 61);
+      pdf.roundedRect(cardX + 18, cardY + 18, cardWidth - 36, 124, 20, 20, "F");
 
       pdf.setFont("helvetica", "bold");
       pdf.setFontSize(11);
       pdf.setTextColor(134, 239, 172);
-      pdf.text("ENTRY TICKET", cardX + 28, cardY + 40);
+      pdf.text("ENTRY TICKET", cardX + 34, cardY + 44);
 
-      pdf.setFontSize(22);
+      pdf.setFontSize(20);
       pdf.setTextColor(255, 255, 255);
-      const noteLines = pdf.splitTextToSize(ticket.note || "Day Pass", 280);
-      pdf.text(noteLines, cardX + 28, cardY + 72);
+      const noteLines = pdf.splitTextToSize(ticket.note || "Day Pass", cardWidth - 210);
+      pdf.text(noteLines, cardX + 34, cardY + 72);
 
       pdf.setFont("helvetica", "normal");
       pdf.setFontSize(10);
-      pdf.setTextColor(210, 218, 231);
-      pdf.text("Show this ticket at the gate for verification.", cardX + 28, cardY + 118);
+      pdf.setTextColor(219, 234, 254);
+      pdf.text("Show this ticket at the gate for verification.", cardX + 34, cardY + 116);
 
       pdf.setFillColor(255, 255, 255);
-      pdf.setDrawColor(255, 255, 255);
-      pdf.setGState(new pdf.GState({ opacity: 0.12 }));
-      pdf.roundedRect(cardX + cardWidth - 146, cardY + 28, 110, 42, 18, 18, "F");
+      pdf.setGState(new pdf.GState({ opacity: 0.14 }));
+      pdf.roundedRect(cardX + cardWidth - 140, cardY + 36, 88, 38, 16, 16, "F");
       pdf.setGState(new pdf.GState({ opacity: 1 }));
       pdf.setFont("helvetica", "bold");
-      pdf.setFontSize(9);
-      pdf.setTextColor(184, 193, 208);
-      pdf.text("AMOUNT", cardX + cardWidth - 124, cardY + 44);
-      pdf.setFontSize(16);
+      pdf.setFontSize(8);
+      pdf.setTextColor(227, 232, 240);
+      pdf.text("AMOUNT", cardX + cardWidth - 122, cardY + 50);
+      pdf.setFontSize(15);
       pdf.setTextColor(255, 255, 255);
-      pdf.text(`${ticket.currency || "INR"} ${ticket.amount || 0}`, cardX + cardWidth - 124, cardY + 63);
+      pdf.text(`${ticket.currency || "INR"} ${ticket.amount || 0}`, cardX + cardWidth - 122, cardY + 68);
 
-      const leftX = cardX + 28;
-      const topY = cardY + 160;
-      const columnWidth = 215;
-      const boxHeight = 188;
-      const gap = 18;
+      const contentTop = cardY + 166;
+      const leftWidth = 250;
+      const middleWidth = 170;
+      const gap = 16;
+      const qrWidth = 116;
 
+      drawInfoCard(pdf, cardX + 24, contentTop, leftWidth, 182, [
+        { label: "GUEST NAME", value: ticket.customerName, valueSize: 15 },
+        { label: "MOBILE", value: ticket.customerPhone },
+        { label: "EMAIL", value: ticket.customerEmail, valueSize: 11 },
+      ]);
+
+      drawInfoCard(pdf, cardX + 24 + leftWidth + gap, contentTop, middleWidth, 182, [
+        { label: "PAYMENT TIME", value: paidAt, valueSize: 11 },
+        { label: "ORDER REFERENCE", value: ticket.orderId, valueSize: 10 },
+        { label: "TICKET ID", value: ticket.ticketId, valueSize: 10 },
+        { label: "TICKET STATUS", value: ticketStatus, valueSize: 12 },
+      ]);
+
+      const qrCardX = cardX + cardWidth - qrWidth - 32;
+      const qrCardY = contentTop;
+      pdf.setFillColor(247, 248, 252);
+      pdf.roundedRect(qrCardX, qrCardY, qrWidth, 182, 16, 16, "F");
       pdf.setFillColor(255, 255, 255);
-      pdf.setGState(new pdf.GState({ opacity: 0.08 }));
-      pdf.roundedRect(leftX, topY, columnWidth, boxHeight, 20, 20, "F");
-      pdf.roundedRect(leftX + columnWidth + gap, topY, columnWidth, boxHeight, 20, 20, "F");
-      pdf.setGState(new pdf.GState({ opacity: 1 }));
-
-      let y1 = drawLabelValue(pdf, "GUEST NAME", ticket.customerName, leftX + 18, topY + 24, columnWidth - 36);
-      y1 = drawLabelValue(pdf, "MOBILE", ticket.customerPhone, leftX + 18, y1 + 12, columnWidth - 36);
-      drawLabelValue(pdf, "EMAIL", ticket.customerEmail, leftX + 18, y1 + 12, columnWidth - 36);
-
-      let y2 = drawLabelValue(
-        pdf,
-        "PAYMENT TIME",
-        ticket.paymentTime ? new Date(ticket.paymentTime).toLocaleString("en-IN") : "Unavailable",
-        leftX + columnWidth + gap + 18,
-        topY + 24,
-        columnWidth - 36
-      );
-      y2 = drawLabelValue(pdf, "ORDER REFERENCE", ticket.orderId, leftX + columnWidth + gap + 18, y2 + 12, columnWidth - 36);
-      y2 = drawLabelValue(pdf, "TICKET ID", ticket.ticketId, leftX + columnWidth + gap + 18, y2 + 12, columnWidth - 36);
-      drawLabelValue(
-        pdf,
-        "TICKET STATUS",
-        ticket.status === "redeemed" ? "Redeemed" : "Valid for Entry",
-        leftX + columnWidth + gap + 18,
-        y2 + 12,
-        columnWidth - 36
-      );
-
-      const qrBoxX = cardX + cardWidth - 194;
-      const qrBoxY = cardY + 160;
-      const qrBoxSize = 162;
-      pdf.setFillColor(255, 255, 255);
-      pdf.roundedRect(qrBoxX, qrBoxY, qrBoxSize, qrBoxSize, 18, 18, "F");
+      pdf.roundedRect(qrCardX + 12, qrCardY + 14, qrWidth - 24, qrWidth - 24, 14, 14, "F");
 
       if (qrDataUrl) {
-        pdf.addImage(qrDataUrl, "PNG", qrBoxX + 14, qrBoxY + 14, qrBoxSize - 28, qrBoxSize - 28);
+        pdf.addImage(qrDataUrl, "PNG", qrCardX + 20, qrCardY + 22, qrWidth - 40, qrWidth - 40);
       }
 
       pdf.setFont("helvetica", "bold");
-      pdf.setFontSize(11);
-      pdf.setTextColor(207, 252, 197);
-      pdf.text("Scan to verify this ticket", qrBoxX - 6, qrBoxY + qrBoxSize + 22);
+      pdf.setFontSize(10);
+      pdf.setTextColor(23, 92, 66);
+      pdf.text("Scan to verify", qrCardX + 18, qrCardY + 142);
       pdf.setFont("helvetica", "normal");
-      pdf.setFontSize(9);
-      pdf.setTextColor(210, 218, 231);
-      pdf.text("Opens the live ticket verification page.", qrBoxX - 2, qrBoxY + qrBoxSize + 38);
+      pdf.setFontSize(8);
+      pdf.setTextColor(83, 92, 116);
+      pdf.text("Use this QR at entry or open", qrCardX + 12, qrCardY + 158);
+      pdf.text("the live ticket verification page.", qrCardX + 12, qrCardY + 170);
+
+      pdf.setDrawColor(226, 232, 240);
+      pdf.setLineWidth(1);
+      pdf.line(cardX + 24, cardY + cardHeight - 122, cardX + cardWidth - 24, cardY + cardHeight - 122);
+
+      pdf.setFont("helvetica", "bold");
+      pdf.setFontSize(11);
+      pdf.setTextColor(23, 92, 66);
+      pdf.text("Verification Instructions", cardX + 24, cardY + cardHeight - 96);
+      pdf.setFont("helvetica", "normal");
+      pdf.setFontSize(10);
+      pdf.setTextColor(71, 85, 105);
+      const footerLines = pdf.splitTextToSize(
+        "Present this ticket at the gate. The QR code opens the live verification page, where staff can confirm whether the ticket is valid or already redeemed.",
+        cardWidth - 48
+      );
+      pdf.text(footerLines, cardX + 24, cardY + cardHeight - 76);
 
       pdf.save(fileName);
     } catch (error) {
