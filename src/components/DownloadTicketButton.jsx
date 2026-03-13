@@ -275,7 +275,7 @@ export default function DownloadTicketButton({
       const pillH   = 26;
       const pillY   = badgeY + badgeH + 10;
       // Reduce font until text fits in badge width
-      const pillLabel = isRedeemed ? "● REDEEMED" : "✓ VALID FOR ENTRY";
+      const pillLabel = isRedeemed ? "● REDEEMED" : "VALID FOR ENTRY";
       pdf.setFont("helvetica","bold");
       let pillFontSize = 9;
       pdf.setFontSize(pillFontSize);
@@ -356,7 +356,7 @@ export default function DownloadTicketButton({
       // ─── Left column ──────────────────────────────────────────────────────
       let ly = bodyTop;
       ly = infoRow("Guest Name", ticket.customerName, col1X, ly, col1W,
-                   { size:17, bold:true, color:VIOLET });
+                   { size:12, bold:true, color:VIOLET });
       ly += 20;
       ly = infoRow("Mobile", ticket.customerPhone, col1X, ly, col1W, { size:11 });
       ly += 16;
