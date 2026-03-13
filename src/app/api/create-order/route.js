@@ -1,8 +1,7 @@
 import { configureCashfree, getCashfreeMode } from "../../../lib/cashfree";
 import {
-  getTodayInIndia,
+  getDayTypeForVisitDate,
   getVisitDateValidationMessage,
-  isSameDayBookingClosed,
 } from "../../../lib/bookingTime";
 import { createConvexClient, getConvexHttpActionsUrl } from "../../../lib/convex";
 
@@ -18,7 +17,6 @@ export async function POST(req) {
       customer_email,
       customer_phone,
       ticket_type,
-      day_type,
       visit_date,
       quantity,
     } = body;
@@ -63,6 +61,7 @@ export async function POST(req) {
       );
     }
 
+    const day_type = getDayTypeForVisitDate(visit_date);
     const order_id = `ORDER_${Date.now()}_${Math.floor(Math.random() * 1000)}`;
     const customer_id = `CUST_${Date.now()}`;
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || req.nextUrl.origin;
@@ -74,13 +73,6 @@ export async function POST(req) {
       .trim()
       .replace(/[^a-zA-Z0-9 ]/g, "")
       .replace(/\s+/g, " ");
-
-    if (visit_date === getTodayInIndia() && isSameDayBookingClosed(visit_date)) {
-      return Response.json(
-        { error: "Same-day booking closes at 5:00 PM." },
-        { status: 400 }
-      );
-    }
 
     const orderMeta = {
       return_url: `${normalizedBaseUrl}/payment-success?order_id={order_id}`,

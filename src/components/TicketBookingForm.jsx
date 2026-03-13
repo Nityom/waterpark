@@ -4,13 +4,13 @@ import { useState } from "react";
 import PaymentButton from "./PaymentButton";
 import { siteInfo } from "../constants/siteInfo";
 import {
+  getDayTypeForVisitDate,
   getTodayInIndia,
   getVisitDateValidationMessage,
   isSameDayBookingClosed,
 } from "../lib/bookingTime";
 
 function TicketBookingForm() {
-  const [dayType, setDayType] = useState("regular");
   const [visitDate, setVisitDate] = useState(getTodayInIndia);
   const [adultQuantity, setAdultQuantity] = useState(1);
   const [childQuantity, setChildQuantity] = useState(0);
@@ -20,6 +20,7 @@ function TicketBookingForm() {
     phone: "",
   });
 
+  const dayType = getDayTypeForVisitDate(visitDate);
   const pricing = siteInfo.pricing[dayType];
   const totalAmount =
     pricing.adult * adultQuantity + pricing.child * childQuantity;
@@ -116,14 +117,12 @@ function TicketBookingForm() {
           <label className="mb-1.5 block text-sm font-semibold text-[#461AA2]">
             Visit Day
           </label>
-          <select
-            value={dayType}
-            onChange={(event) => setDayType(event.target.value)}
-            className="w-full rounded-2xl border border-[#D4C7F2] bg-white px-4 py-3 text-sm text-gray-900 outline-none focus:border-[#5123B6]"
-          >
-            <option value="regular">Regular</option>
-            <option value="sunday">Sunday</option>
-          </select>
+          <input
+            type="text"
+            value={dayType === "sunday" ? "Sunday" : "Regular"}
+            readOnly
+            className="w-full rounded-2xl border border-[#D4C7F2] bg-[#F8F5FF] px-4 py-3 text-sm font-semibold text-[#461AA2] outline-none"
+          />
         </div>
 
         <div>
@@ -169,10 +168,11 @@ function TicketBookingForm() {
         <div className="flex items-start justify-between gap-4">
           <div className="space-y-1 text-sm text-gray-700">
             <p>Visit date: {visitDate || "Select a date"}</p>
+            <p>Visit day: {dayType === "sunday" ? "Sunday" : "Regular"}</p>
             <p>Adult ticket x {adultQuantity}</p>
             <p>Child ticket x {childQuantity}</p>
             <p className="text-xs text-gray-500">
-              {dayType === "sunday" ? "Sunday pricing" : "Regular pricing"}
+              {dayType === "sunday" ? "Sunday pricing applied automatically" : "Regular pricing applied automatically"}
             </p>
             {sameDayClosed ? (
               <p className="text-xs font-semibold text-red-600">

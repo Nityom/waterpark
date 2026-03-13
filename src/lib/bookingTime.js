@@ -29,6 +29,15 @@ export function getTodayInIndia(now = new Date()) {
   return getTimeParts(now).today;
 }
 
+export function getDayTypeForVisitDate(visitDate) {
+  if (!visitDate) {
+    return "regular";
+  }
+
+  const visitDay = new Date(`${visitDate}T00:00:00+05:30`).getUTCDay();
+  return visitDay === 0 ? "sunday" : "regular";
+}
+
 export function isPastVisitDate(visitDate, now = new Date()) {
   if (!visitDate) {
     return false;
