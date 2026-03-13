@@ -183,8 +183,9 @@ export default async function PaymentSuccess({ searchParams }) {
             {shouldShowTicket ? (
               <div className="mt-8 flex flex-wrap gap-3">
                 <DownloadTicketButton
-                  targetId="ticket-download-card"
                   fileName={`${ticket.ticketId || ticket.orderId || "ticket"}.pdf`}
+                  qrSource={qrSource}
+                  ticket={ticket}
                 />
                 <Link
                   href="/"
