@@ -4,6 +4,7 @@ import {
   getVisitDateValidationMessage,
 } from "../../../lib/bookingTime";
 import { createConvexClient, getConvexHttpActionsUrl } from "../../../lib/convex";
+import { formatShortDate } from "../../../lib/dateFormat";
 
 export async function POST(req) {
   try {
@@ -69,6 +70,7 @@ export async function POST(req) {
     const ticketLabel =
       ticket_type === "child" ? "Child Ticket" : "Adult Ticket";
     const dayLabel = day_type === "sunday" ? "Sunday" : "Regular";
+    const formattedVisitDate = formatShortDate(visit_date);
     const sanitizedCustomerName = customer_name
       .trim()
       .replace(/[^a-zA-Z0-9 ]/g, "")
@@ -90,7 +92,7 @@ export async function POST(req) {
         customer_phone,
       },
       order_meta: orderMeta,
-      order_note: `${ticketLabel} x${ticketQuantity} (${dayLabel}) - Visit ${visit_date}`,
+      order_note: `${ticketLabel} x${ticketQuantity} (${dayLabel}) - Visit ${formattedVisitDate}`,
     };
 
     const response = await Cashfree.PGCreateOrder(orderRequest);

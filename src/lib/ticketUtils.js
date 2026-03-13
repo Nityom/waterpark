@@ -1,5 +1,6 @@
-import { configureCashfree } from "./cashfree";
+﻿import { configureCashfree } from "./cashfree";
 import { createConvexClient } from "./convex";
+import { formatShortDate } from "./dateFormat";
 
 function mapTicketStatus(order) {
   if (!order) {
@@ -47,6 +48,13 @@ function normalizePaymentId(value) {
   }
 
   return String(value);
+}
+
+function normalizeOrderNote(value) {
+  return String(value || "Day Pass").replace(
+    /\b(\d{4}-\d{2}-\d{2})\b/g,
+    (match) => formatShortDate(match)
+  );
 }
 
 function getLatestPayment(payments) {
@@ -125,10 +133,11 @@ export async function getTicketDetails(orderId) {
     ticketId: syncedOrder?.ticket_id || null,
     amount: syncedOrder?.amount ?? 0,
     currency: syncedOrder?.currency || "INR",
-    note: syncedOrder?.order_note || "Day Pass",
+    note: normalizeOrderNote(syncedOrder?.order_note),
     customerName: syncedOrder?.customer_name || "Guest User",
     customerEmail: syncedOrder?.email || "Not provided",
     customerPhone: syncedOrder?.phone || "Not provided",
+    visitDate: syncedOrder?.visit_date || null,
     status,
     paymentStatus: syncedOrder?.payment_status || "FAILED",
     redeemedAt: syncedOrder?.redeemed_at || null,
@@ -136,3 +145,4 @@ export async function getTicketDetails(orderId) {
       syncedOrder?.payment_confirmed_at || syncedOrder?._creationTime || null,
   };
 }
+

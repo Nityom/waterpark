@@ -9,6 +9,7 @@ import {
   getVisitDateValidationMessage,
   isSameDayBookingClosed,
 } from "../lib/bookingTime";
+import { formatShortDate } from "../lib/dateFormat";
 
 function TicketBookingForm() {
   const [visitDate, setVisitDate] = useState(getTodayInIndia);
@@ -167,7 +168,7 @@ function TicketBookingForm() {
       <div className="rounded-[24px] bg-[#F1ECF9] px-4 py-4">
         <div className="flex items-start justify-between gap-4">
           <div className="space-y-1 text-sm text-gray-700">
-            <p>Visit date: {visitDate || "Select a date"}</p>
+            <p>Visit date: {visitDate ? formatShortDate(visitDate) : "Select a date"}</p>
             <p>Visit day: {dayType === "sunday" ? "Sunday" : "Regular"}</p>
             <p>Adult ticket x {adultQuantity}</p>
             <p>Child ticket x {childQuantity}</p>

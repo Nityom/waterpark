@@ -1,8 +1,9 @@
-import { mutationGeneric, queryGeneric } from "convex/server";
+﻿import { mutationGeneric, queryGeneric } from "convex/server";
 import { v } from "convex/values";
 
 const mutation = mutationGeneric;
 const query = queryGeneric;
+const ADMIN_PAGE_SIZE = 10;
 
 function buildTicketId(orderId) {
   const suffix = Math.random().toString(36).slice(2, 8).toUpperCase();
@@ -13,6 +14,47 @@ function parseDateOnly(value) {
   const [year, month, day] = String(value || "").split("-").map(Number);
   const date = new Date(Date.UTC(year, (month || 1) - 1, day || 1));
   return Number.isNaN(date.getTime()) ? null : date;
+}
+
+function formatShortDate(value) {
+  const date = parseDateOnly(value);
+
+  if (!date) {
+    return "";
+  }
+
+  const day = String(date.getUTCDate()).padStart(2, "0");
+  const month = String(date.getUTCMonth() + 1).padStart(2, "0");
+  const year = String(date.getUTCFullYear()).slice(-2);
+  return `${day}-${month}-${year}`;
+}
+
+function formatDateTimeShort(value) {
+  if (!value) {
+    return "";
+  }
+
+  const date = typeof value === "number" ? new Date(value) : new Date(value);
+
+  if (Number.isNaN(date.getTime())) {
+    return "";
+  }
+
+  const parts = new Intl.DateTimeFormat("en-GB", {
+    timeZone: "Asia/Kolkata",
+    day: "2-digit",
+    month: "2-digit",
+    year: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  }).formatToParts(date);
+
+  const values = Object.fromEntries(
+    parts.filter((part) => part.type !== "literal").map((part) => [part.type, part.value])
+  );
+
+  return `${values.day}-${values.month}-${values.year} ${values.hour}:${values.minute}`;
 }
 
 function buildRange(filterType, referenceDate, fromDate, toDate) {
@@ -78,6 +120,10 @@ function getOrderTime(order) {
   return Number.isNaN(parsed) ? 0 : parsed;
 }
 
+function normalizeSearchTerm(value) {
+  return String(value || "").trim().toLowerCase();
+}
+
 function buildChartSeries(filteredOrders) {
   const buckets = new Map();
 
@@ -105,6 +151,67 @@ function buildChartSeries(filteredOrders) {
   };
 }
 
+function matchesSearch(order, searchTerm) {
+  if (!searchTerm) {
+    return true;
+  }
+
+  const createdAt = order.payment_confirmed_at || order._creationTime;
+  const haystack = [
+    order.order_id,
+    order.customer_name,
+    order.email,
+    order.phone,
+    order.visit_date,
+    formatShortDate(order.visit_date),
+    order.ticket_id,
+    order.payment_status,
+    order.order_status,
+    formatDateTimeShort(createdAt),
+  ]
+    .filter(Boolean)
+    .join(" ")
+    .toLowerCase();
+
+  return haystack.includes(searchTerm);
+}
+
+function mapOrderForAdmin(order) {
+  return {
+    order_id: order.order_id,
+    customer_name: order.customer_name,
+    phone: order.phone,
+    amount: order.amount,
+    payment_status: order.payment_status,
+    order_status: order.order_status,
+    visit_date: order.visit_date || null,
+    ticket_id: order.ticket_id || null,
+    ticket_generated: order.ticket_generated,
+    redeemed_at: order.redeemed_at || null,
+    created_at: order.payment_confirmed_at || order._creationTime,
+  };
+}
+
+function paginate(items, page) {
+  const safePage = Number.isInteger(page) && page > 0 ? page : 1;
+  const totalItems = items.length;
+  const totalPages = Math.max(1, Math.ceil(totalItems / ADMIN_PAGE_SIZE));
+  const currentPage = Math.min(safePage, totalPages);
+  const startIndex = (currentPage - 1) * ADMIN_PAGE_SIZE;
+
+  return {
+    items: items.slice(startIndex, startIndex + ADMIN_PAGE_SIZE),
+    pagination: {
+      page: currentPage,
+      totalPages,
+      totalItems,
+      pageSize: ADMIN_PAGE_SIZE,
+      hasPreviousPage: currentPage > 1,
+      hasNextPage: currentPage < totalPages,
+    },
+  };
+}
+
 export const getOrderById = query({
   args: {
     orderId: v.string(),
@@ -128,6 +235,11 @@ export const getAdminDashboardData = query({
     referenceDate: v.string(),
     fromDate: v.optional(v.string()),
     toDate: v.optional(v.string()),
+    searchTerm: v.optional(v.string()),
+    visitDate: v.optional(v.string()),
+    visitorsSearchTerm: v.optional(v.string()),
+    recentPage: v.optional(v.number()),
+    ticketsPage: v.optional(v.number()),
   },
   handler: async (ctx, args) => {
     const orders = await ctx.db.query("orders").collect();
@@ -137,11 +249,17 @@ export const getAdminDashboardData = query({
       args.fromDate,
       args.toDate
     );
+
+    const searchTerm = normalizeSearchTerm(args.searchTerm);
+    const visitorsSearchTerm = normalizeSearchTerm(args.visitorsSearchTerm);
+    const selectedVisitDate = args.visitDate || args.referenceDate;
+
     const filteredOrders = orders
       .filter((order) => {
         const orderTime = getOrderTime(order);
         return orderTime >= start.getTime() && orderTime < end.getTime();
       })
+      .filter((order) => matchesSearch(order, searchTerm))
       .sort((a, b) => getOrderTime(b) - getOrderTime(a));
 
     const summary = filteredOrders.reduce(
@@ -184,24 +302,27 @@ export const getAdminDashboardData = query({
 
     const charts = buildChartSeries(filteredOrders);
 
+    const ticketsForSelectedDate = orders
+      .filter((order) => order.visit_date === selectedVisitDate)
+      .filter((order) => matchesSearch(order, visitorsSearchTerm))
+      .sort((a, b) => getOrderTime(a) - getOrderTime(b))
+      .map(mapOrderForAdmin);
+
+    const paginatedTickets = paginate(ticketsForSelectedDate, Math.trunc(args.ticketsPage || 1));
+    const paginatedRecentOrders = paginate(filteredOrders.map(mapOrderForAdmin), Math.trunc(args.recentPage || 1));
+
     return {
       filterType: args.filterType,
       referenceDate: label,
+      selectedVisitDate,
+      searchTerm: args.searchTerm || "",
+      visitorsSearchTerm: args.visitorsSearchTerm || "",
       summary,
       charts,
-      recentOrders: filteredOrders.slice(0, 12).map((order) => ({
-        order_id: order.order_id,
-        customer_name: order.customer_name,
-        phone: order.phone,
-        amount: order.amount,
-        payment_status: order.payment_status,
-        order_status: order.order_status,
-        visit_date: order.visit_date || null,
-        ticket_id: order.ticket_id || null,
-        ticket_generated: order.ticket_generated,
-        redeemed_at: order.redeemed_at || null,
-        created_at: order.payment_confirmed_at || order._creationTime,
-      })),
+      selectedVisitDateTickets: paginatedTickets.items,
+      selectedVisitDateTicketsPagination: paginatedTickets.pagination,
+      recentOrders: paginatedRecentOrders.items,
+      recentOrdersPagination: paginatedRecentOrders.pagination,
     };
   },
 });
@@ -369,3 +490,4 @@ export const redeemTicket = mutation({
     };
   },
 });
+
