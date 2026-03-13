@@ -22,24 +22,42 @@ export default async function PaymentSuccess({ searchParams }) {
   }
 
   let ticket = null;
-  let statusMessage = "Payment Pending";
+  let statusMessage = "Your payment is currently being processed.";
+  let detailMessage =
+    "If the amount has been deducted, please wait a few minutes while we confirm the transaction. Your ticket will be generated automatically once the payment is confirmed. If the ticket is not generated after some time, please contact our support team.";
   let isSuccess = false;
 
   try {
     ticket = await getTicketDetails(order_id);
 
     if (ticket.status === "verified" || ticket.status === "redeemed") {
-      statusMessage = "Payment Successful";
       isSuccess = true;
-    } else if (ticket.status === "pending") {
-      statusMessage = "Payment Pending";
+      statusMessage =
+        "Payment Successful. Your ticket has been generated successfully.";
+      detailMessage = `Ticket ID: ${ticket.ticketId}. You will receive the ticket details shortly.`;
+    } else if (ticket.paymentStatus === "PENDING") {
+      statusMessage = "Your payment is currently being processed.";
+      detailMessage =
+        "If the amount has been deducted, please wait a few minutes while we confirm the transaction. Your ticket will be generated automatically once the payment is confirmed. If the ticket is not generated after some time, please contact our support team.";
+    } else if (ticket.paymentStatus === "USER_DROPPED") {
+      statusMessage = "The payment was not completed or was cancelled.";
+      detailMessage =
+        "No ticket has been generated. You can retry the payment to complete your booking.";
     } else {
-      statusMessage = "Payment Failed";
+      statusMessage = "Payment Failed. Your ticket has not been generated.";
+      detailMessage =
+        "If the amount was deducted from your bank account, please contact our support team with your payment details so we can investigate the issue.";
     }
   } catch (error) {
     console.error("Error verifying payment:", error.response?.data || error.message);
-    statusMessage = "Payment Verification Failed";
+    statusMessage = "Payment Failed. Your ticket has not been generated.";
+    detailMessage =
+      "If the amount was deducted from your bank account, please contact our support team with your payment details so we can investigate the issue.";
   }
+
+  const shouldShowTicket = Boolean(
+    ticket && (ticket.status === "verified" || ticket.status === "redeemed")
+  );
 
   return (
     <main className="min-h-screen bg-[linear-gradient(180deg,#EEF7F1_0%,#FFFFFF_42%,#F7F9FF_100%)] p-4 md:p-8">
@@ -66,9 +84,12 @@ export default async function PaymentSuccess({ searchParams }) {
               <p className="mt-2 text-gray-500">
                 Order ID: <span className="font-mono text-sm text-gray-800">{order_id}</span>
               </p>
+              <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-gray-600 md:text-base">
+                {detailMessage}
+              </p>
             </div>
 
-            {ticket ? (
+            {shouldShowTicket ? (
               <div className="mt-8 overflow-hidden rounded-[28px] border border-[#D4F0DB] bg-[linear-gradient(135deg,#123B2A_0%,#0F766E_55%,#D7F5DD_100%)] p-[1px]">
                 <div className="rounded-[27px] bg-[linear-gradient(135deg,#0F172A_0%,#1F2937_55%,#1B4332_100%)] p-6 text-white">
                   <div className="flex flex-wrap items-start justify-between gap-4">
@@ -119,6 +140,10 @@ export default async function PaymentSuccess({ searchParams }) {
                         Order Reference
                       </p>
                       <p className="mt-2 break-all font-mono text-sm">{ticket.orderId}</p>
+                      <p className="mt-4 text-xs font-bold uppercase tracking-[0.14em] text-white/60">
+                        Ticket ID
+                      </p>
+                      <p className="mt-2 break-all font-mono text-sm">{ticket.ticketId}</p>
                     </div>
                   </div>
 
@@ -143,7 +168,7 @@ export default async function PaymentSuccess({ searchParams }) {
           </section>
 
           <aside className="space-y-6">
-            {ticket ? (
+            {shouldShowTicket ? (
               <TicketQrCard
                 verificationUrl={getTicketVerificationUrl(ticket.orderId)}
                 customerName={ticket.customerName}

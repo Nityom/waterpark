@@ -34,17 +34,32 @@ export async function getTicketDetails(orderId) {
   const pendingPayment = payments.find(
     (payment) => payment.payment_status === "PENDING"
   );
+  const droppedPayment = payments.find(
+    (payment) => payment.payment_status === "USER_DROPPED"
+  );
+  const failedPayment = payments.find(
+    (payment) => payment.payment_status === "FAILED"
+  );
 
   let status = "failed";
+  let paymentStatus = failedPayment?.payment_status || "FAILED";
+  let ticketId = null;
 
   if (successfulPayment) {
     status = redeemedRecord ? "redeemed" : "verified";
+    paymentStatus = successfulPayment.payment_status;
+    ticketId = order?.order_id || orderId;
   } else if (pendingPayment) {
     status = "pending";
+    paymentStatus = pendingPayment.payment_status;
+  } else if (droppedPayment) {
+    status = "cancelled";
+    paymentStatus = droppedPayment.payment_status;
   }
 
   return {
     orderId: order?.order_id || orderId,
+    ticketId,
     amount: order?.order_amount ?? successfulPayment?.payment_amount ?? 0,
     currency: order?.order_currency || "INR",
     note: order?.order_note || "Day Pass",
@@ -52,6 +67,7 @@ export async function getTicketDetails(orderId) {
     customerEmail: order?.customer_details?.customer_email || "Not provided",
     customerPhone: order?.customer_details?.customer_phone || "Not provided",
     status,
+    paymentStatus,
     redeemedAt: redeemedRecord?.redeemedAt || null,
     paymentTime:
       successfulPayment?.payment_completion_time ||
