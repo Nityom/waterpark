@@ -25,6 +25,16 @@ function getTimeParts(now = new Date()) {
   };
 }
 
+function getVisitWeekday(visitDate) {
+  const [year, month, day] = visitDate.split("-").map(Number);
+
+  if (!year || !month || !day) {
+    return null;
+  }
+
+  return new Date(Date.UTC(year, month - 1, day)).getUTCDay();
+}
+
 export function getTodayInIndia(now = new Date()) {
   return getTimeParts(now).today;
 }
@@ -34,7 +44,7 @@ export function getDayTypeForVisitDate(visitDate) {
     return "regular";
   }
 
-  const visitDay = new Date(`${visitDate}T00:00:00+05:30`).getUTCDay();
+  const visitDay = getVisitWeekday(visitDate);
   return visitDay === 0 ? "sunday" : "regular";
 }
 
