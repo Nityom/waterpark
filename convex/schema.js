@@ -10,6 +10,7 @@ export default defineSchema({
     amount: v.number(),
     currency: v.string(),
     order_note: v.string(),
+    visit_date: v.optional(v.string()),
     payment_status: v.string(),
     order_status: v.string(),
     ticket_generated: v.boolean(),

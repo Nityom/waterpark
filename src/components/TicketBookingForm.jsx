@@ -3,9 +3,15 @@
 import { useState } from "react";
 import PaymentButton from "./PaymentButton";
 import { siteInfo } from "../constants/siteInfo";
+import {
+  getTodayInIndia,
+  getVisitDateValidationMessage,
+  isSameDayBookingClosed,
+} from "../lib/bookingTime";
 
 function TicketBookingForm() {
   const [dayType, setDayType] = useState("regular");
+  const [visitDate, setVisitDate] = useState(getTodayInIndia);
   const [adultQuantity, setAdultQuantity] = useState(1);
   const [childQuantity, setChildQuantity] = useState(0);
   const [customer, setCustomer] = useState({
@@ -18,11 +24,15 @@ function TicketBookingForm() {
   const totalAmount =
     pricing.adult * adultQuantity + pricing.child * childQuantity;
   const totalTickets = adultQuantity + childQuantity;
+  const visitDateError = getVisitDateValidationMessage(visitDate);
+  const sameDayClosed = isSameDayBookingClosed(visitDate);
   const isFormComplete =
     customer.name.trim() &&
     customer.email.trim() &&
     customer.phone.trim().length >= 10 &&
-    totalTickets > 0;
+    totalTickets > 0 &&
+    visitDate &&
+    !visitDateError;
 
   const orderDetails = {
     amount: totalAmount,
@@ -30,6 +40,7 @@ function TicketBookingForm() {
     customer_email: customer.email.trim(),
     customer_phone: customer.phone.trim(),
     day_type: dayType,
+    visit_date: visitDate,
     adult_quantity: adultQuantity,
     child_quantity: childQuantity,
     ticket_type: adultQuantity > 0 ? "adult" : "child",
@@ -87,7 +98,20 @@ function TicketBookingForm() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-4">
+        <div>
+          <label className="mb-1.5 block text-sm font-semibold text-[#461AA2]">
+            Visit Date
+          </label>
+          <input
+            type="date"
+            value={visitDate}
+            min={getTodayInIndia()}
+            onChange={(event) => setVisitDate(event.target.value)}
+            className="w-full rounded-2xl border border-[#D4C7F2] bg-white px-4 py-3 text-sm text-gray-900 outline-none focus:border-[#5123B6]"
+          />
+        </div>
+
         <div>
           <label className="mb-1.5 block text-sm font-semibold text-[#461AA2]">
             Visit Day
@@ -135,14 +159,26 @@ function TicketBookingForm() {
         </div>
       </div>
 
+      {visitDateError ? (
+        <div className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-700">
+          {visitDateError}
+        </div>
+      ) : null}
+
       <div className="rounded-[24px] bg-[#F1ECF9] px-4 py-4">
         <div className="flex items-start justify-between gap-4">
           <div className="space-y-1 text-sm text-gray-700">
+            <p>Visit date: {visitDate || "Select a date"}</p>
             <p>Adult ticket x {adultQuantity}</p>
             <p>Child ticket x {childQuantity}</p>
             <p className="text-xs text-gray-500">
               {dayType === "sunday" ? "Sunday pricing" : "Regular pricing"}
             </p>
+            {sameDayClosed ? (
+              <p className="text-xs font-semibold text-red-600">
+                Same-day bookings are closed after 5:00 PM.
+              </p>
+            ) : null}
           </div>
           <p className="text-2xl font-extrabold text-[#5123B6]">
             Rs. {totalAmount}
@@ -159,7 +195,7 @@ function TicketBookingForm() {
       </PaymentButton>
 
       <p className="text-sm text-gray-500">
-        Enter your name, phone, and email to continue to Cashfree checkout.
+        Enter your name, phone, email, and visit date to continue to Cashfree checkout.
       </p>
     </div>
   );

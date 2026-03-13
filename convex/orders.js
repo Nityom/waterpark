@@ -30,6 +30,7 @@ export const createOrder = mutation({
     amount: v.number(),
     currency: v.string(),
     order_note: v.string(),
+    visit_date: v.string(),
     day_type: v.optional(v.string()),
     ticket_type: v.optional(v.string()),
     quantity: v.optional(v.number()),

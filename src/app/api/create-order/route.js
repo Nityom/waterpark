@@ -1,4 +1,9 @@
 import { configureCashfree, getCashfreeMode } from "../../../lib/cashfree";
+import {
+  getTodayInIndia,
+  getVisitDateValidationMessage,
+  isSameDayBookingClosed,
+} from "../../../lib/bookingTime";
 import { createConvexClient, getConvexHttpActionsUrl } from "../../../lib/convex";
 
 export async function POST(req) {
@@ -14,12 +19,28 @@ export async function POST(req) {
       customer_phone,
       ticket_type,
       day_type,
+      visit_date,
       quantity,
     } = body;
 
-    if (!amount || !customer_name || !customer_email || !customer_phone) {
+    if (
+      !amount ||
+      !customer_name ||
+      !customer_email ||
+      !customer_phone ||
+      !visit_date
+    ) {
       return Response.json(
         { error: "Missing required fields" },
+        { status: 400 }
+      );
+    }
+
+    const visitDateError = getVisitDateValidationMessage(visit_date);
+
+    if (visitDateError) {
+      return Response.json(
+        { error: visitDateError },
         { status: 400 }
       );
     }
@@ -54,6 +75,13 @@ export async function POST(req) {
       .replace(/[^a-zA-Z0-9 ]/g, "")
       .replace(/\s+/g, " ");
 
+    if (visit_date === getTodayInIndia() && isSameDayBookingClosed(visit_date)) {
+      return Response.json(
+        { error: "Same-day booking closes at 5:00 PM." },
+        { status: 400 }
+      );
+    }
+
     const orderMeta = {
       return_url: `${normalizedBaseUrl}/payment-success?order_id={order_id}`,
       notify_url: `${getConvexHttpActionsUrl()}/cashfree/webhook`,
@@ -70,7 +98,7 @@ export async function POST(req) {
         customer_phone,
       },
       order_meta: orderMeta,
-      order_note: `${ticketLabel} x${ticketQuantity} (${dayLabel})`,
+      order_note: `${ticketLabel} x${ticketQuantity} (${dayLabel}) - Visit ${visit_date}`,
     };
 
     const response = await Cashfree.PGCreateOrder(orderRequest);
@@ -84,6 +112,7 @@ export async function POST(req) {
       currency: "INR",
       order_note: orderRequest.order_note,
       day_type,
+      visit_date,
       ticket_type,
       quantity: ticketQuantity,
       gateway_order_id: response.data.order_id,
