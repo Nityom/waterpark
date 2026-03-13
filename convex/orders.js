@@ -9,6 +9,102 @@ function buildTicketId(orderId) {
   return `TKT_${orderId.replace(/[^A-Za-z0-9]/g, "").slice(-10)}_${suffix}`;
 }
 
+function parseDateOnly(value) {
+  const [year, month, day] = String(value || "").split("-").map(Number);
+  const date = new Date(Date.UTC(year, (month || 1) - 1, day || 1));
+  return Number.isNaN(date.getTime()) ? null : date;
+}
+
+function buildRange(filterType, referenceDate, fromDate, toDate) {
+  if (fromDate || toDate) {
+    const from = parseDateOnly(fromDate || toDate);
+    const to = parseDateOnly(toDate || fromDate);
+
+    if (from && to) {
+      const start = from <= to ? from : to;
+      const endBase = from <= to ? to : from;
+      const end = new Date(endBase);
+      end.setUTCDate(end.getUTCDate() + 1);
+
+      return {
+        start,
+        end,
+        label: `${start.toISOString().slice(0, 10)} to ${endBase.toISOString().slice(0, 10)}`,
+      };
+    }
+  }
+
+  const safeReference = referenceDate || new Date().toISOString().slice(0, 10);
+  const base = parseDateOnly(safeReference);
+
+  if (!base) {
+    return buildRange(filterType, new Date().toISOString().slice(0, 10));
+  }
+
+  let start = new Date(base);
+  let end = new Date(base);
+
+  if (filterType === "week") {
+    const weekday = start.getUTCDay();
+    const diffToMonday = weekday === 0 ? -6 : 1 - weekday;
+    start.setUTCDate(start.getUTCDate() + diffToMonday);
+    end = new Date(start);
+    end.setUTCDate(end.getUTCDate() + 7);
+  } else if (filterType === "month") {
+    start = new Date(Date.UTC(base.getUTCFullYear(), base.getUTCMonth(), 1));
+    end = new Date(Date.UTC(base.getUTCFullYear(), base.getUTCMonth() + 1, 1));
+  } else if (filterType === "year") {
+    start = new Date(Date.UTC(base.getUTCFullYear(), 0, 1));
+    end = new Date(Date.UTC(base.getUTCFullYear() + 1, 0, 1));
+  } else {
+    end.setUTCDate(end.getUTCDate() + 1);
+  }
+
+  return {
+    start,
+    end,
+    label: safeReference,
+  };
+}
+
+function getOrderTime(order) {
+  const source = order.payment_confirmed_at || order._creationTime;
+
+  if (typeof source === "number") {
+    return source;
+  }
+
+  const parsed = Date.parse(source);
+  return Number.isNaN(parsed) ? 0 : parsed;
+}
+
+function buildChartSeries(filteredOrders) {
+  const buckets = new Map();
+
+  for (const order of filteredOrders) {
+    const key = new Date(getOrderTime(order)).toISOString().slice(0, 10);
+    const current = buckets.get(key) || {
+      orders: 0,
+      revenue: 0,
+      redeemed: 0,
+    };
+
+    current.orders += 1;
+    current.revenue += Number(order.amount || 0);
+    current.redeemed += order.redeemed_at ? 1 : 0;
+    buckets.set(key, current);
+  }
+
+  const labels = Array.from(buckets.keys()).sort();
+
+  return {
+    labels,
+    orders: labels.map((label) => buckets.get(label)?.orders || 0),
+    revenue: labels.map((label) => buckets.get(label)?.revenue || 0),
+    redeemed: labels.map((label) => buckets.get(label)?.redeemed || 0),
+  };
+}
+
 export const getOrderById = query({
   args: {
     orderId: v.string(),
@@ -18,6 +114,95 @@ export const getOrderById = query({
       .query("orders")
       .withIndex("by_order_id", (q) => q.eq("order_id", args.orderId))
       .unique();
+  },
+});
+
+export const getAdminDashboardData = query({
+  args: {
+    filterType: v.union(
+      v.literal("date"),
+      v.literal("week"),
+      v.literal("month"),
+      v.literal("year")
+    ),
+    referenceDate: v.string(),
+    fromDate: v.optional(v.string()),
+    toDate: v.optional(v.string()),
+  },
+  handler: async (ctx, args) => {
+    const orders = await ctx.db.query("orders").collect();
+    const { start, end, label } = buildRange(
+      args.filterType,
+      args.referenceDate,
+      args.fromDate,
+      args.toDate
+    );
+    const filteredOrders = orders
+      .filter((order) => {
+        const orderTime = getOrderTime(order);
+        return orderTime >= start.getTime() && orderTime < end.getTime();
+      })
+      .sort((a, b) => getOrderTime(b) - getOrderTime(a));
+
+    const summary = filteredOrders.reduce(
+      (accumulator, order) => {
+        accumulator.totalOrders += 1;
+        accumulator.totalRevenue += Number(order.amount || 0);
+
+        if (order.payment_status === "SUCCESS") {
+          accumulator.successfulPayments += 1;
+        }
+        if (order.payment_status === "PENDING" || order.payment_status === "INITIATED") {
+          accumulator.pendingPayments += 1;
+        }
+        if (order.payment_status === "FAILED") {
+          accumulator.failedPayments += 1;
+        }
+        if (order.payment_status === "USER_DROPPED") {
+          accumulator.cancelledPayments += 1;
+        }
+        if (order.ticket_generated) {
+          accumulator.ticketsGenerated += 1;
+        }
+        if (order.redeemed_at) {
+          accumulator.redeemedTickets += 1;
+        }
+
+        return accumulator;
+      },
+      {
+        totalOrders: 0,
+        totalRevenue: 0,
+        successfulPayments: 0,
+        pendingPayments: 0,
+        failedPayments: 0,
+        cancelledPayments: 0,
+        ticketsGenerated: 0,
+        redeemedTickets: 0,
+      }
+    );
+
+    const charts = buildChartSeries(filteredOrders);
+
+    return {
+      filterType: args.filterType,
+      referenceDate: label,
+      summary,
+      charts,
+      recentOrders: filteredOrders.slice(0, 12).map((order) => ({
+        order_id: order.order_id,
+        customer_name: order.customer_name,
+        phone: order.phone,
+        amount: order.amount,
+        payment_status: order.payment_status,
+        order_status: order.order_status,
+        visit_date: order.visit_date || null,
+        ticket_id: order.ticket_id || null,
+        ticket_generated: order.ticket_generated,
+        redeemed_at: order.redeemed_at || null,
+        created_at: order.payment_confirmed_at || order._creationTime,
+      })),
+    };
   },
 });
 
