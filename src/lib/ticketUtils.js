@@ -1,10 +1,13 @@
 import { configureCashfree } from "./cashfree";
 import { createConvexClient } from "./convex";
-import { getRedeemedTicket } from "./redemptionStore";
 
 function mapTicketStatus(order) {
   if (!order) {
     return "failed";
+  }
+
+  if (order.redeemed_at) {
+    return "redeemed";
   }
 
   if (order.ticket_generated && order.ticket_id) {
@@ -36,6 +39,14 @@ function mapOrderStatus(paymentStatus) {
   }
 
   return "PROCESSING";
+}
+
+function normalizePaymentId(value) {
+  if (value === null || value === undefined || value === "") {
+    return undefined;
+  }
+
+  return String(value);
 }
 
 function getLatestPayment(payments) {
@@ -78,7 +89,7 @@ async function syncOrderWithCashfree(orderId, order) {
     order_id: orderId,
     payment_status: payment.payment_status,
     order_status: mapOrderStatus(payment.payment_status),
-    payment_id: payment.cf_payment_id || undefined,
+    payment_id: normalizePaymentId(payment.cf_payment_id),
     payment_confirmed_at:
       payment.payment_completion_time ||
       payment.payment_time ||
@@ -105,22 +116,9 @@ export function getTicketVerificationUrl(orderId) {
 
 export async function getTicketDetails(orderId) {
   const convex = createConvexClient();
-
-  const [initialOrderResult, redeemedResult] = await Promise.allSettled([
-    convex.query("orders:getOrderById", { orderId }),
-    getRedeemedTicket(orderId),
-  ]);
-
-  if (initialOrderResult.status !== "fulfilled") {
-    throw initialOrderResult.reason;
-  }
-
-  const syncedOrder = await syncOrderWithCashfree(orderId, initialOrderResult.value);
-  const redeemedRecord =
-    redeemedResult.status === "fulfilled" ? redeemedResult.value : null;
-  const baseStatus = mapTicketStatus(syncedOrder);
-  const status =
-    baseStatus === "verified" && redeemedRecord ? "redeemed" : baseStatus;
+  const initialOrder = await convex.query("orders:getOrderById", { orderId });
+  const syncedOrder = await syncOrderWithCashfree(orderId, initialOrder);
+  const status = mapTicketStatus(syncedOrder);
 
   return {
     orderId: syncedOrder?.order_id || orderId,
@@ -133,7 +131,7 @@ export async function getTicketDetails(orderId) {
     customerPhone: syncedOrder?.phone || "Not provided",
     status,
     paymentStatus: syncedOrder?.payment_status || "FAILED",
-    redeemedAt: redeemedRecord?.redeemedAt || null,
+    redeemedAt: syncedOrder?.redeemed_at || null,
     paymentTime:
       syncedOrder?.payment_confirmed_at || syncedOrder?._creationTime || null,
   };

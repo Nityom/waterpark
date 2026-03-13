@@ -23,13 +23,21 @@ function getPaymentStatus(payload) {
   );
 }
 
+function normalizePaymentId(value) {
+  if (value === null || value === undefined || value === "") {
+    return undefined;
+  }
+
+  return String(value);
+}
+
 function getPaymentId(payload) {
-  return (
+  return normalizePaymentId(
     payload?.data?.payment?.cf_payment_id ||
-    payload?.payment?.cf_payment_id ||
-    payload?.cf_payment_id ||
-    payload?.data?.cf_payment_id ||
-    null
+      payload?.payment?.cf_payment_id ||
+      payload?.cf_payment_id ||
+      payload?.data?.cf_payment_id ||
+      null
   );
 }
 
@@ -86,7 +94,7 @@ http.route({
       order_id: orderId,
       payment_status: paymentStatus,
       order_status: buildOrderStatus(paymentStatus),
-      payment_id: getPaymentId(payload) || undefined,
+      payment_id: getPaymentId(payload),
       payment_confirmed_at: getPaymentTime(payload),
       webhook_payload: payload,
     });

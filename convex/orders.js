@@ -50,6 +50,10 @@ export const createOrder = mutation({
       ticket_id: existing?.ticket_id,
       payment_id: existing?.payment_id,
       payment_confirmed_at: existing?.payment_confirmed_at,
+      redeemed_at: existing?.redeemed_at,
+      redeemed_by_name: existing?.redeemed_by_name,
+      redeemed_by_phone: existing?.redeemed_by_phone,
+      redeemed_by_email: existing?.redeemed_by_email,
       webhook_payload: existing?.webhook_payload,
     };
 
@@ -133,6 +137,50 @@ export const generateTicket = mutation({
     return {
       ticket_id,
       alreadyGenerated: false,
+    };
+  },
+});
+
+export const redeemTicket = mutation({
+  args: {
+    order_id: v.string(),
+    customerName: v.string(),
+    customerPhone: v.string(),
+    customerEmail: v.string(),
+  },
+  handler: async (ctx, args) => {
+    const existing = await ctx.db
+      .query("orders")
+      .withIndex("by_order_id", (q) => q.eq("order_id", args.order_id))
+      .unique();
+
+    if (!existing) {
+      throw new Error(`Order not found: ${args.order_id}`);
+    }
+
+    if (!existing.ticket_generated || !existing.ticket_id) {
+      throw new Error("Only generated tickets can be redeemed");
+    }
+
+    if (existing.redeemed_at) {
+      return {
+        alreadyRedeemed: true,
+        redeemedAt: existing.redeemed_at,
+      };
+    }
+
+    const redeemedAt = new Date().toISOString();
+
+    await ctx.db.patch(existing._id, {
+      redeemed_at: redeemedAt,
+      redeemed_by_name: args.customerName,
+      redeemed_by_phone: args.customerPhone,
+      redeemed_by_email: args.customerEmail,
+    });
+
+    return {
+      alreadyRedeemed: false,
+      redeemedAt,
     };
   },
 });

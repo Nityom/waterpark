@@ -1,6 +1,6 @@
 import Link from "next/link";
 import DownloadTicketButton from "../../components/DownloadTicketButton";
-import TicketQrCard from "../../components/TicketQrCard";
+import TicketQrCard, { getTicketQrSource } from "../../components/TicketQrCard";
 import TicketStatusBadge from "../../components/TicketStatusBadge";
 import { getTicketDetails, getTicketVerificationUrl } from "../../lib/ticketUtils";
 
@@ -58,6 +58,10 @@ export default async function PaymentSuccess({ searchParams }) {
   const shouldShowTicket = Boolean(
     ticket && (ticket.status === "verified" || ticket.status === "redeemed")
   );
+  const verificationUrl = shouldShowTicket
+    ? getTicketVerificationUrl(ticket.orderId)
+    : "";
+  const qrSource = shouldShowTicket ? getTicketQrSource(verificationUrl) : "";
 
   return (
     <main className="min-h-screen bg-[linear-gradient(180deg,#EEF7F1_0%,#FFFFFF_42%,#F7F9FF_100%)] p-4 md:p-8">
@@ -90,7 +94,10 @@ export default async function PaymentSuccess({ searchParams }) {
             </div>
 
             {shouldShowTicket ? (
-              <div className="mt-8 overflow-hidden rounded-[28px] border border-[#D4F0DB] bg-[linear-gradient(135deg,#123B2A_0%,#0F766E_55%,#D7F5DD_100%)] p-[1px]">
+              <div
+                id="ticket-download-card"
+                className="mt-8 overflow-hidden rounded-[28px] border border-[#D4F0DB] bg-[linear-gradient(135deg,#123B2A_0%,#0F766E_55%,#D7F5DD_100%)] p-[1px]"
+              >
                 <div className="rounded-[27px] bg-[linear-gradient(135deg,#0F172A_0%,#1F2937_55%,#1B4332_100%)] p-6 text-white">
                   <div className="flex flex-wrap items-start justify-between gap-4">
                     <div>
@@ -113,56 +120,78 @@ export default async function PaymentSuccess({ searchParams }) {
                     </div>
                   </div>
 
-                  <div className="mt-8 grid gap-4 md:grid-cols-2">
-                    <div className="rounded-3xl bg-white/8 p-5 backdrop-blur">
-                      <p className="text-xs font-bold uppercase tracking-[0.14em] text-white/60">
-                        Guest Name
-                      </p>
-                      <p className="mt-2 text-xl font-bold">{ticket.customerName}</p>
-                      <p className="mt-4 text-xs font-bold uppercase tracking-[0.14em] text-white/60">
-                        Mobile
-                      </p>
-                      <p className="mt-2 text-base font-semibold">{ticket.customerPhone}</p>
-                      <p className="mt-4 text-xs font-bold uppercase tracking-[0.14em] text-white/60">
-                        Email
-                      </p>
-                      <p className="mt-2 break-all text-sm font-semibold">{ticket.customerEmail}</p>
+                  <div className="mt-8 grid gap-4 lg:grid-cols-[1.2fr_0.8fr]">
+                    <div className="grid gap-4 md:grid-cols-2">
+                      <div className="rounded-3xl bg-white/8 p-5 backdrop-blur">
+                        <p className="text-xs font-bold uppercase tracking-[0.14em] text-white/60">
+                          Guest Name
+                        </p>
+                        <p className="mt-2 text-xl font-bold">{ticket.customerName}</p>
+                        <p className="mt-4 text-xs font-bold uppercase tracking-[0.14em] text-white/60">
+                          Mobile
+                        </p>
+                        <p className="mt-2 text-base font-semibold">{ticket.customerPhone}</p>
+                        <p className="mt-4 text-xs font-bold uppercase tracking-[0.14em] text-white/60">
+                          Email
+                        </p>
+                        <p className="mt-2 break-all text-sm font-semibold">{ticket.customerEmail}</p>
+                      </div>
+
+                      <div className="rounded-3xl bg-white/8 p-5 backdrop-blur">
+                        <p className="text-xs font-bold uppercase tracking-[0.14em] text-white/60">
+                          Payment Time
+                        </p>
+                        <p className="mt-2 text-lg font-bold">
+                          {ticket.paymentTime ? new Date(ticket.paymentTime).toLocaleString("en-IN") : "Unavailable"}
+                        </p>
+                        <p className="mt-4 text-xs font-bold uppercase tracking-[0.14em] text-white/60">
+                          Order Reference
+                        </p>
+                        <p className="mt-2 break-all font-mono text-sm">{ticket.orderId}</p>
+                        <p className="mt-4 text-xs font-bold uppercase tracking-[0.14em] text-white/60">
+                          Ticket ID
+                        </p>
+                        <p className="mt-2 break-all font-mono text-sm">{ticket.ticketId}</p>
+                        <p className="mt-4 text-xs font-bold uppercase tracking-[0.14em] text-white/60">
+                          Ticket Status
+                        </p>
+                        <p className="mt-2 text-sm font-semibold uppercase tracking-[0.14em] text-[#86EFAC]">
+                          {ticket.status === "redeemed" ? "Redeemed" : "Valid for Entry"}
+                        </p>
+                      </div>
                     </div>
 
-                    <div className="rounded-3xl bg-white/8 p-5 backdrop-blur">
-                      <p className="text-xs font-bold uppercase tracking-[0.14em] text-white/60">
-                        Payment Time
+                    <div className="rounded-3xl bg-white/8 p-5 text-center backdrop-blur">
+                      <img
+                        src={qrSource}
+                        alt={`QR ticket for ${ticket.customerName}`}
+                        crossOrigin="anonymous"
+                        className="mx-auto h-44 w-44 rounded-2xl bg-white p-3 shadow-sm"
+                      />
+                      <p className="mt-4 text-sm font-semibold text-[#CFFCC5]">
+                        Scan to verify this ticket
                       </p>
-                      <p className="mt-2 text-lg font-bold">
-                        {ticket.paymentTime ? new Date(ticket.paymentTime).toLocaleString("en-IN") : "Unavailable"}
+                      <p className="mt-1 text-xs text-white/65">
+                        Opens the live ticket verification page.
                       </p>
-                      <p className="mt-4 text-xs font-bold uppercase tracking-[0.14em] text-white/60">
-                        Order Reference
-                      </p>
-                      <p className="mt-2 break-all font-mono text-sm">{ticket.orderId}</p>
-                      <p className="mt-4 text-xs font-bold uppercase tracking-[0.14em] text-white/60">
-                        Ticket ID
-                      </p>
-                      <p className="mt-2 break-all font-mono text-sm">{ticket.ticketId}</p>
                     </div>
-                  </div>
-
-                  <div className="mt-8 flex flex-wrap gap-3">
-                    <Link
-                      href={getTicketVerificationUrl(ticket.orderId)}
-                      className="inline-flex items-center justify-center rounded-full bg-[#86EFAC] px-5 py-3 text-sm font-bold text-[#0B3B2D] transition hover:bg-white"
-                    >
-                      Open Verification Page
-                    </Link>
-                    <DownloadTicketButton />
-                    <Link
-                      href="/"
-                      className="inline-flex items-center justify-center rounded-full border border-white/20 px-5 py-3 text-sm font-bold text-white transition hover:bg-white/10"
-                    >
-                      Return Home
-                    </Link>
                   </div>
                 </div>
+              </div>
+            ) : null}
+
+            {shouldShowTicket ? (
+              <div className="mt-8 flex flex-wrap gap-3">
+                <DownloadTicketButton
+                  targetId="ticket-download-card"
+                  fileName={`${ticket.ticketId || ticket.orderId || "ticket"}.pdf`}
+                />
+                <Link
+                  href="/"
+                  className="inline-flex items-center justify-center rounded-full border border-[#D0D5DD] px-5 py-3 text-sm font-bold text-[#344054] transition hover:bg-[#F9FAFB]"
+                >
+                  Return Home
+                </Link>
               </div>
             ) : null}
           </section>
@@ -170,7 +199,7 @@ export default async function PaymentSuccess({ searchParams }) {
           <aside className="space-y-6">
             {shouldShowTicket ? (
               <TicketQrCard
-                verificationUrl={getTicketVerificationUrl(ticket.orderId)}
+                verificationUrl={verificationUrl}
                 customerName={ticket.customerName}
               />
             ) : null}

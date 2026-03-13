@@ -19,11 +19,17 @@ export default function RedeemTicketButton({ orderId }) {
 
       const data = await response.json();
 
+      if (response.status === 409 && data.alreadyRedeemed) {
+        setMessage("Ticket has already been redeemed.");
+        window.location.reload();
+        return;
+      }
+
       if (!response.ok) {
         throw new Error(data.error || "Could not redeem ticket");
       }
 
-      setMessage(data.alreadyRedeemed ? "Ticket was already redeemed." : "Ticket redeemed successfully.");
+      setMessage("Ticket redeemed successfully.");
       window.location.reload();
     } catch (error) {
       setMessage(error.message || "Could not redeem ticket");

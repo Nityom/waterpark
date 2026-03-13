@@ -1,5 +1,5 @@
+import { createConvexClient } from "../../../lib/convex";
 import { getTicketDetails } from "../../../lib/ticketUtils";
-import { redeemTicket } from "../../../lib/redemptionStore";
 
 export async function POST(req) {
   try {
@@ -18,18 +18,30 @@ export async function POST(req) {
       );
     }
 
-    const result = await redeemTicket(orderId, {
+    const convex = createConvexClient();
+    const result = await convex.mutation("orders:redeemTicket", {
+      order_id: orderId,
       customerName: ticket.customerName,
       customerPhone: ticket.customerPhone,
       customerEmail: ticket.customerEmail,
-      note: ticket.note,
-      amount: ticket.amount,
     });
+
+    if (result.alreadyRedeemed) {
+      return Response.json(
+        {
+          success: false,
+          alreadyRedeemed: true,
+          redeemedAt: result.redeemedAt,
+          error: "Ticket has already been redeemed.",
+        },
+        { status: 409 }
+      );
+    }
 
     return Response.json({
       success: true,
-      alreadyRedeemed: result.alreadyRedeemed,
-      redeemedAt: result.record.redeemedAt,
+      alreadyRedeemed: false,
+      redeemedAt: result.redeemedAt,
     });
   } catch (error) {
     return Response.json(
