@@ -17,8 +17,8 @@ const fredoka = Fredoka({
 });
 
 export const metadata = {
-  title: 'Waves Waterpark Wardha | Best Amusement Park & Water Rides',
-  description: 'Looking for the best waterpark in Wardha? Waves Waterpark offers thrilling water slides, kids splash zone, family rides & food. Book tickets online today!',
+  title: 'The Waves Waterpark Wardha | Best Amusement Park & Water Rides',
+  description: 'Looking for the best waterpark in Wardha? The Waves Waterpark offers thrilling water slides, kids splash zone, family rides & food. Book tickets online today!',
   icons: {
     icon: '/logo.png',
   },
@@ -35,7 +35,7 @@ export default function RootLayout({ children }) {
              __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "AmusementPark",
-              "name": "Waves Waterpark",
+              "name": "TheWaves Waterpark",
               "image": "https://thewaves.co.in/hero.jpg",
               "url": "https://thewaves.co.in",
               "telephone": "+918956118571",

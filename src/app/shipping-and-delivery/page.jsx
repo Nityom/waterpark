@@ -2,7 +2,7 @@ import LegalPageLayout from '../../components/LegalPageLayout';
 import { siteInfo } from '../../constants/siteInfo';
 
 export const metadata = {
-  title: 'Shipping and Delivery Policy | Waves Waterpark Wardha'
+  title: 'Shipping and Delivery Policy | The Waves Waterpark Wardha'
 }
 
 export default function ShippingAndDeliveryPage() {

@@ -48,7 +48,7 @@ function Awards() {
 
             {/* Main JustDial Card */}
             <div className="bg-white rounded-[25px] p-6 md:p-8 text-center w-full md:w-72 h-40 md:h-48 flex flex-col items-center justify-center border-2 border-[#00D4D4] shadow-lg">
-              <p className="font-bold text-black text-sm mb-2">Waves</p>
+              <p className="font-bold text-black text-sm mb-2">The Waves</p>
 
               <div className="flex gap-1 mb-2">
                 <span className="text-xl md:text-2xl">⭐⭐⭐⭐⭐</span>
@@ -104,7 +104,7 @@ function Awards() {
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-black leading-tight mb-4 md:mb-6">
               Cars, autos, or buses —<br />
               they all take you<br />
-              to Waves
+              to The Waves
             </h2>
 
             <Image
@@ -149,7 +149,7 @@ function Awards() {
               >
                 <div className="bg-[#461AA2] text-white px-4 md:px-6 pb-4">
                   <ul className="space-y-2 text-xs md:text-sm">
-                    <li>• Follow the directions to Waves</li>
+                    <li>• Follow the directions to The Waves</li>
                     <li>• Parking available near the entrance</li>
                     <li>
                       • Get directions:{" "}
@@ -194,7 +194,7 @@ function Awards() {
               >
                 <div className="bg-[#FF6B35] text-white px-4 md:px-6 pb-4">
                   <ul className="space-y-2 text-xs md:text-sm">
-                    <li>• Ask the driver to drop you at Waves</li>
+                    <li>• Ask the driver to drop you at The Waves</li>
                     <li>• Entry is near the main gate</li>
                   </ul>
                 </div>
@@ -230,7 +230,7 @@ function Awards() {
               >
                 <div className="bg-[#FF1493] text-white px-4 md:px-6 pb-4">
                   <ul className="space-y-2 text-xs md:text-sm">
-                    <li>• Ask the local bus to stop at Waves</li>
+                    <li>• Ask the local bus to stop at The Waves</li>
                     <li>• Entry is a short walk from the road</li>
                   </ul>
                 </div>

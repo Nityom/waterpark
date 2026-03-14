@@ -2,7 +2,7 @@ import LegalPageLayout from '../../components/LegalPageLayout';
 import { siteInfo } from '../../constants/siteInfo';
 
 export const metadata = {
-  title: 'Privacy Policy | Waves Waterpark Wardha'
+  title: 'Privacy Policy | The Waves Waterpark Wardha'
 }
 
 export default function PrivacyPolicyPage() {

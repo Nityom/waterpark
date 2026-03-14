@@ -76,7 +76,7 @@ function normalizeOrderNote(value) {
   }
 
   if (parts.length > 0) {
-    return parts.join(", ") + visitStr;
+    return parts.join("\n") + visitStr;
   }
 
   return note.replace(

@@ -11,7 +11,7 @@ function Gallery() {
     },
     {
       src: "/test-1.jpg",
-      caption: "Having a blast with friends at Waves. Best day ever!",
+      caption: "Having a blast with friends at The Waves. Best day ever!",
       rotation: "rotate-2",
     },
     {

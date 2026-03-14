@@ -60,7 +60,7 @@ export default function GalleryPage() {
                         Our Gallery
                     </h1>
                     <p className="text-lg text-black max-w-2xl mx-auto font-medium">
-                        Take a look at all the memorable and fun moments at Waves Waterpark.
+                        Take a look at all the memorable and fun moments at The Waves Waterpark.
                     </p>
                 </div>
 
@@ -74,7 +74,7 @@ export default function GalleryPage() {
                             <div className="w-full h-48 sm:h-56 md:h-64 overflow-hidden rounded-lg">
                                 <ImageWithSkeleton
                                     src={src}
-                                    alt={`Waves Waterpark Gallery ${index + 1}`}
+                                    alt={`The Waves Waterpark Gallery ${index + 1}`}
                                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                                 />
                             </div>

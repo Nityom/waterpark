@@ -56,14 +56,14 @@ function Footer() {
         {/* Large Waves Logo Text */}
         <div className="relative">
           <h2 className="text-7xl sm:text-8xl md:text-[180px] lg:text-[220px] xl:text-[280px] font-extrabold text-white leading-none tracking-tight opacity-90 text-center">
-            Waves
+            The Waves
 
           </h2>
         </div>
 
         {/* Bottom Line */}
         <div className="border-t border-white/20 mt-6 md:mt-8 pt-4 md:pt-6 text-center text-white text-xs md:text-sm opacity-70">
-          <p>© 2026 Waves Wardha. All rights reserved.</p>
+          <p>© 2026 The Waves Wardha. All rights reserved.</p>
         </div>
       </div>
     </footer>

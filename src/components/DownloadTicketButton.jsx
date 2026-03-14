@@ -263,11 +263,12 @@ export default function DownloadTicketButton({
       pdf.setCharSpace(0);
 
       // Ticket name
-      pdf.setFont("helvetica","bold"); pdf.setFontSize(22);
+      pdf.setFont("helvetica","bold"); pdf.setFontSize(16);
       pdf.setTextColor(...WHITE);
-      const eventLines = pdf.splitTextToSize(ticket.note||"Day Pass", cW-195).slice(0,2);
-      pdf.text(eventLines, cX+30, cY+110);
-      const titleBottom = cY + 110 + eventLines.length * 25;
+      const rawLines = (ticket.note||"Day Pass").split("\n");
+      const eventLines = rawLines.slice(0, 6);
+      pdf.text(eventLines, cX+30, cY+100);
+      const titleBottom = cY + 100 + eventLines.length * 20;
 
       // Sub-label
       pdf.setFont("helvetica","normal"); pdf.setFontSize(8.5);

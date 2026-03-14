@@ -2,7 +2,7 @@ import LegalPageLayout from '../../components/LegalPageLayout';
 import { siteInfo } from '../../constants/siteInfo';
 
 export const metadata = {
-  title: 'Refund and Cancellation Policy | Waves Waterpark Wardha'
+  title: 'Refund and Cancellation Policy | The Waves Waterpark Wardha'
 }
 
 export default function RefundAndCancellationPage() {

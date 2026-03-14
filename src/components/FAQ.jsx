@@ -28,19 +28,19 @@ function FAQ() {
         },
         {
           id: "cost",
-          question: "How much does a Waves ticket cost?",
+          question: "How much does a The Waves ticket cost?",
           answer:
             "Ticket prices start from ₹499 for adults. Check our pricing section for detailed rates and group discounts.",
         },
       ],
     },
     {
-      title: "Getting to Waves",
+      title: "Getting to The Waves",
       icon: "🚗",
       questions: [
         {
           id: "location",
-          question: "Where is Waves located?",
+          question: "Where is The Waves located?",
           answer:
             "We're located at 📍Nagpur-Wardha Highway, Maharashtra.",
         },

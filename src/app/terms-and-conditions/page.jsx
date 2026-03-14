@@ -2,7 +2,7 @@ import LegalPageLayout from '../../components/LegalPageLayout';
 import { siteInfo } from '../../constants/siteInfo';
 
 export const metadata = {
-  title: 'Terms and Conditions | Waves Waterpark Wardha'
+  title: 'Terms and Conditions | The Waves Waterpark Wardha'
 }
 
 export default function TermsAndConditionsPage() {
