@@ -72,11 +72,11 @@ function normalizeOrderNote(value) {
   let visitStr = "";
   const visitMatch = note.match(/visit\s+([\d-]+)/i);
   if (visitMatch) {
-    visitStr = ` - Visit ${visitMatch[1]}`;
+    visitStr = `\nVisit ${visitMatch[1]}`;
   }
 
   if (parts.length > 0) {
-    return parts.join("\n") + visitStr;
+    return parts.join("\n");
   }
 
   return note.replace(

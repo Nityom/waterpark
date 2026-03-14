@@ -310,6 +310,17 @@ export default function DownloadTicketButton({
       const labelW = pdf.getTextWidth(pillLabel);
       pdf.text(pillLabel, badgeX + (badgeW-labelW)/2, pillY+17);
 
+      // ── Visit date — below pill, right-aligned ──────────────────────────────
+      if (ticket.visitDate) {
+        const vd = ticket.visitDate; // "YYYY-MM-DD"
+        const [vy, vm, vday] = vd.split("-");
+        const visitLabel = `Visit ${String(vday).padStart(2,"0")}-${String(vm).padStart(2,"0")}-${String(vy).slice(-2)}`;
+        pdf.setFont("helvetica","bold"); pdf.setFontSize(14);
+        pdf.setTextColor(...WHITE);
+        const visitW = pdf.getTextWidth(visitLabel);
+        pdf.text(visitLabel, badgeX + (badgeW - visitW) / 2, pillY + pillH + 28);
+      }
+
       // ─── Tear line ────────────────────────────────────────────────────────
       const tearY = cY + heroH + 17;
       pdf.setFillColor(38, 12, 95);
