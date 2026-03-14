@@ -15,6 +15,8 @@ function TicketBookingForm() {
   const [visitDate, setVisitDate] = useState(getTodayInIndia);
   const [adultQuantity, setAdultQuantity] = useState(1);
   const [childQuantity, setChildQuantity] = useState(0);
+  const [costumesQuantity, setCostumesQuantity] = useState(0);
+  const [lockerQuantity, setLockerQuantity] = useState(0);
   const [customer, setCustomer] = useState({
     name: "",
     email: "",
@@ -24,7 +26,10 @@ function TicketBookingForm() {
   const dayType = getDayTypeForVisitDate(visitDate);
   const pricing = siteInfo.pricing[dayType];
   const totalAmount =
-    pricing.adult * adultQuantity + pricing.child * childQuantity;
+    pricing.adult * adultQuantity +
+    pricing.child * childQuantity +
+    costumesQuantity * 50 +
+    lockerQuantity * 50;
   const totalTickets = adultQuantity + childQuantity;
   const visitDateError = getVisitDateValidationMessage(visitDate);
   const sameDayClosed = isSameDayBookingClosed(visitDate);
@@ -45,6 +50,8 @@ function TicketBookingForm() {
     visit_date: visitDate,
     adult_quantity: adultQuantity,
     child_quantity: childQuantity,
+    costumes_quantity: costumesQuantity,
+    locker_quantity: lockerQuantity,
     ticket_type: adultQuantity > 0 ? "adult" : "child",
     quantity: totalTickets,
   };
@@ -133,11 +140,12 @@ function TicketBookingForm() {
           <input
             type="number"
             min="0"
-            max="20"
+            max="5"
             value={adultQuantity}
-            onChange={(event) =>
-              setAdultQuantity(Math.max(0, Number(event.target.value) || 0))
-            }
+            onChange={(event) => {
+              const val = Math.max(0, Number(event.target.value) || 0);
+              setAdultQuantity(val > 5 ? 5 : val);
+            }}
             className="w-full rounded-2xl border border-[#D4C7F2] bg-white px-4 py-3 text-sm text-gray-900 outline-none focus:border-[#5123B6]"
           />
         </div>
@@ -149,13 +157,49 @@ function TicketBookingForm() {
           <input
             type="number"
             min="0"
-            max="20"
+            max="3"
             value={childQuantity}
+            onChange={(event) => {
+              const val = Math.max(0, Number(event.target.value) || 0);
+              setChildQuantity(val > 3 ? 3 : val);
+            }}
+            className="w-full rounded-2xl border border-[#D4C7F2] bg-white px-4 py-3 text-sm text-gray-900 outline-none focus:border-[#5123B6]"
+          />
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <div>
+          <label className="mb-1.5 block text-sm font-semibold text-[#461AA2]">
+            Costumes (₹50/person)
+          </label>
+          <input
+            type="number"
+            min="0"
+            max="20"
+            value={costumesQuantity}
             onChange={(event) =>
-              setChildQuantity(Math.max(0, Number(event.target.value) || 0))
+              setCostumesQuantity(Math.max(0, Number(event.target.value) || 0))
             }
             className="w-full rounded-2xl border border-[#D4C7F2] bg-white px-4 py-3 text-sm text-gray-900 outline-none focus:border-[#5123B6]"
           />
+        </div>
+
+        <div>
+          <label className="mb-1.5 block text-sm font-semibold text-[#461AA2]">
+            Lockers (₹50/locker)
+          </label>
+          <input
+            type="number"
+            min="0"
+            max="10"
+            value={lockerQuantity}
+            onChange={(event) =>
+              setLockerQuantity(Math.max(0, Number(event.target.value) || 0))
+            }
+            className="w-full rounded-2xl border border-[#D4C7F2] bg-white px-4 py-3 text-sm text-gray-900 outline-none focus:border-[#5123B6]"
+          />
+          <p className="mt-1 text-xs text-gray-500">1 locker fits 1 nuclear family</p>
         </div>
       </div>
 
@@ -172,6 +216,8 @@ function TicketBookingForm() {
             <p>Visit day: {dayType === "sunday" ? "Sunday" : "Regular"}</p>
             <p>Adult ticket x {adultQuantity}</p>
             <p>Child ticket x {childQuantity}</p>
+            {costumesQuantity > 0 && <p>Costumes x {costumesQuantity}</p>}
+            {lockerQuantity > 0 && <p>Locker x {lockerQuantity}</p>}
             <p className="text-xs text-gray-500">
               {dayType === "sunday" ? "Sunday pricing applied automatically" : "Regular pricing applied automatically"}
             </p>

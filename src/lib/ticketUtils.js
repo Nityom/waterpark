@@ -1,4 +1,4 @@
-﻿import { configureCashfree } from "./cashfree";
+import { configureCashfree } from "./cashfree";
 import { createConvexClient } from "./convex";
 import { formatShortDate } from "./dateFormat";
 
@@ -51,7 +51,35 @@ function normalizePaymentId(value) {
 }
 
 function normalizeOrderNote(value) {
-  return String(value || "Day Pass").replace(
+  const note = String(value || "Day Pass");
+
+  const getQty = (regex) => {
+    const match = note.match(regex);
+    return match ? match[1] : null;
+  };
+
+  const adult = getQty(/adult[^\d]*(\d+)/i);
+  const child = getQty(/child[^\d]*(\d+)/i);
+  const costumes = getQty(/costume[^\d]*(\d+)/i);
+  const lockers = getQty(/locker[^\d]*(\d+)/i);
+
+  const parts = [];
+  if (adult) parts.push(`Adult-${adult}`);
+  if (child) parts.push(`Child-${child}`);
+  if (costumes) parts.push(`Costumes-${costumes}`);
+  if (lockers) parts.push(`Lockers-${lockers}`);
+
+  let visitStr = "";
+  const visitMatch = note.match(/visit\s+([\d-]+)/i);
+  if (visitMatch) {
+    visitStr = ` - Visit ${visitMatch[1]}`;
+  }
+
+  if (parts.length > 0) {
+    return parts.join(", ") + visitStr;
+  }
+
+  return note.replace(
     /\b(\d{4}-\d{2}-\d{2})\b/g,
     (match) => formatShortDate(match)
   );

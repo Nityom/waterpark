@@ -1,4 +1,4 @@
-﻿import { mutationGeneric, queryGeneric } from "convex/server";
+import { mutationGeneric, queryGeneric } from "convex/server";
 import { v } from "convex/values";
 
 const mutation = mutationGeneric;
@@ -340,6 +340,8 @@ export const createOrder = mutation({
     day_type: v.optional(v.string()),
     ticket_type: v.optional(v.string()),
     quantity: v.optional(v.number()),
+    costumes_quantity: v.optional(v.number()),
+    locker_quantity: v.optional(v.number()),
     gateway_order_id: v.optional(v.string()),
   },
   handler: async (ctx, args) => {

@@ -22,6 +22,8 @@ export async function POST(req) {
       quantity,
       adult_quantity,
       child_quantity,
+      costumes_quantity,
+      locker_quantity,
     } = body;
 
     if (
@@ -58,6 +60,8 @@ export async function POST(req) {
     const ticketQuantity = Number(quantity || 1);
     const adultQuantity = Number(adult_quantity || 0);
     const childQuantity = Number(child_quantity || 0);
+    const costumesQuantity = Number(costumes_quantity || 0);
+    const lockerQuantity = Number(locker_quantity || 0);
 
     if (!Number.isInteger(ticketQuantity) || ticketQuantity <= 0) {
       return Response.json(
@@ -87,16 +91,24 @@ export async function POST(req) {
     const ticketParts = [];
 
     if (adultQuantity > 0) {
-      ticketParts.push(`Adult Ticket x${adultQuantity}`);
+      ticketParts.push(`Adults - ${adultQuantity}`);
     }
 
     if (childQuantity > 0) {
-      ticketParts.push(`Child Ticket x${childQuantity}`);
+      ticketParts.push(`Child - ${childQuantity}`);
+    }
+
+    if (costumesQuantity > 0) {
+      ticketParts.push(`Costumes - ${costumesQuantity}`);
+    }
+
+    if (lockerQuantity > 0) {
+      ticketParts.push(`Lockers - ${lockerQuantity}`);
     }
 
     const ticketLabel =
-      ticketParts.join(" + ") ||
-      (ticket_type === "child" ? "Child Ticket" : "Adult Ticket");
+      ticketParts.join(" | ") ||
+      (ticket_type === "child" ? "Child - 1" : "Adults - 1");
     const dayLabel = day_type === "sunday" ? "Sunday" : "Regular";
     const formattedVisitDate = formatShortDate(visit_date);
     const sanitizedCustomerName = customer_name
@@ -120,7 +132,7 @@ export async function POST(req) {
         customer_phone,
       },
       order_meta: orderMeta,
-      order_note: `${ticketLabel} x${ticketQuantity} (${dayLabel}) - Visit ${formattedVisitDate}`,
+      order_note: `${ticketLabel} (${dayLabel}) - Visit ${formattedVisitDate}`,
     };
 
     const response = await Cashfree.PGCreateOrder(orderRequest);
@@ -137,6 +149,8 @@ export async function POST(req) {
       visit_date,
       ticket_type,
       quantity: ticketQuantity,
+      costumes_quantity: costumesQuantity,
+      locker_quantity: lockerQuantity,
       gateway_order_id: response.data.order_id,
     });
 

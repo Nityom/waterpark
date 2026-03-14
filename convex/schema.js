@@ -25,6 +25,8 @@ export default defineSchema({
     day_type: v.optional(v.string()),
     ticket_type: v.optional(v.string()),
     quantity: v.optional(v.number()),
+    costumes_quantity: v.optional(v.number()),
+    locker_quantity: v.optional(v.number()),
     webhook_payload: v.optional(v.any()),
   })
     .index("by_order_id", ["order_id"])
