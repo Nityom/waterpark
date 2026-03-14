@@ -295,9 +295,9 @@ export default async function AdminPage({ searchParams }) {
 
   if (!isAuthenticated) {
     return (
-      <main className="min-h-screen bg-[linear-gradient(180deg,#F3F7F5_0%,#FFFFFF_45%,#F7FAFC_100%)] px-4 py-12">
+      <main className="min-h-screen bg-[#DDFBFF] px-4 py-12">
         <div className="mx-auto max-w-md rounded-[32px] border border-[#D0D5DD] bg-white p-8 shadow-[0_24px_70px_rgba(16,24,40,0.08)]">
-          <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#175C42]">Waves Admin</p>
+          <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#175C42]">The Waves Admin</p>
           <h1 className="mt-3 text-3xl font-extrabold text-[#101828]">Admin Login</h1>
           <div className="mt-8">
             <AdminLoginForm />

@@ -5,8 +5,8 @@ import { useRouter } from "next/navigation";
 
 export default function AdminLoginForm() {
   const router = useRouter();
-  const [email, setEmail] = useState("admin@thewaves.com");
-  const [password, setPassword] = useState("Admin@468");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -45,27 +45,32 @@ export default function AdminLoginForm() {
         </label>
         <input
           type="email"
+          placeholder="Enter admin email"
           value={email}
           onChange={(event) => setEmail(event.target.value)}
           className="w-full rounded-2xl border border-[#D0D5DD] bg-white px-4 py-3 text-sm text-[#101828] outline-none focus:border-[#175C42]"
         />
       </div>
+
       <div>
         <label className="mb-1.5 block text-sm font-semibold text-[#1D2939]">
           Password
         </label>
         <input
           type="password"
+          placeholder="Enter password"
           value={password}
           onChange={(event) => setPassword(event.target.value)}
           className="w-full rounded-2xl border border-[#D0D5DD] bg-white px-4 py-3 text-sm text-[#101828] outline-none focus:border-[#175C42]"
         />
       </div>
+
       {error ? (
         <p className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
           {error}
         </p>
       ) : null}
+
       <button
         type="submit"
         disabled={loading}
