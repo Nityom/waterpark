@@ -28,11 +28,10 @@ function Tickets() {
         <div className="flex flex-col sm:flex-row gap-2 md:gap-3 justify-center mb-6 px-4">
           <button
             onClick={() => setActiveTab("single")}
-            className={`flex items-center justify-center gap-2 px-4 md:px-6 py-2.5 md:py-3 rounded-full text-sm md:text-base font-semibold transition-all ${
-              activeTab === "single"
-                ? "bg-white text-[#461AA2]"
-                : "bg-[#5a2db3] text-white hover:bg-[#6835c4]"
-            }`}
+            className={`flex items-center justify-center gap-2 px-4 md:px-6 py-2.5 md:py-3 rounded-full text-sm md:text-base font-semibold transition-all ${activeTab === "single"
+              ? "bg-white text-[#461AA2]"
+              : "bg-[#5a2db3] text-white hover:bg-[#6835c4]"
+              }`}
           >
             <span className="text-base md:text-lg">👤</span>
             Single Ticket
@@ -40,11 +39,10 @@ function Tickets() {
 
           <button
             onClick={() => setActiveTab("group")}
-            className={`flex items-center justify-center gap-2 px-4 md:px-6 py-2.5 md:py-3 rounded-full text-sm md:text-base font-semibold transition-all ${
-              activeTab === "group"
-                ? "bg-white text-[#461AA2]"
-                : "bg-[#5a2db3] text-white hover:bg-[#6835c4]"
-            }`}
+            className={`flex items-center justify-center gap-2 px-4 md:px-6 py-2.5 md:py-3 rounded-full text-sm md:text-base font-semibold transition-all ${activeTab === "group"
+              ? "bg-white text-[#461AA2]"
+              : "bg-[#5a2db3] text-white hover:bg-[#6835c4]"
+              }`}
           >
             <span className="text-base md:text-lg">👥</span>
             Group Events
@@ -73,7 +71,7 @@ function Tickets() {
                       All day
                     </div>
                     <div className="text-lg md:text-2xl leading-tight">
-                      pass
+                      Ticket
                     </div>
                   </div>
                 </div>
@@ -186,9 +184,9 @@ function Tickets() {
 
               {/* CTA */}
               <div>
-                <button className="bg-[#461AA2] text-white px-6 md:px-8 py-2.5 md:py-3 rounded-full text-sm md:text-base font-semibold hover:bg-[#5a2db3] transition-all shadow-lg w-full lg:w-auto">
-                  Buy Your Daily Pass
-                </button>
+                <a href="/book-tickets" className="bg-[#461AA2] text-white px-6 md:px-8 py-2.5 md:py-3 rounded-full text-sm md:text-base font-semibold hover:bg-[#5a2db3] transition-all shadow-lg w-full lg:w-auto inline-block">
+                  Buy Your Tickets
+                </a>
 
                 <p className="text-xs md:text-sm text-gray-500 mt-2 md:mt-3">
                   Guaranteed entry only when purchased on thewaves.co.in

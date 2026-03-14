@@ -25,6 +25,22 @@ function Hero() {
           Thrill-packed rides & fun-filled family adventure, just 10 km from Wardha on Nagpur Highway.
         </p>
 
+        {/* CTA Buttons */}
+        <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8 md:mb-[50px]">
+          <a
+            href="/book-tickets"
+            className="inline-flex items-center justify-center bg-[#461AA2] text-white px-8 py-3.5 rounded-full text-base font-bold shadow-lg hover:scale-105 hover:shadow-xl transition-all duration-300"
+          >
+            🎟️ Book Tickets Now
+          </a>
+          <a
+            href="/about-us"
+            className="inline-flex items-center justify-center border-2 border-[#461AA2] text-[#461AA2] px-8 py-3.5 rounded-full text-base font-bold hover:bg-[#461AA2] hover:text-white transition-all duration-300"
+          >
+            Explore The Park →
+          </a>
+        </div>
+
         {/* Hero Image */}
         <div className="relative w-full h-[350px] md:h-[600px] rounded-[20px] md:rounded-[30px] overflow-hidden">
           <Image

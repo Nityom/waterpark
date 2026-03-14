@@ -57,12 +57,12 @@ function Navbar() {
           </div>
 
           {/* Buy Tickets */}
-          <a
-            href="#tickets"
+          <Link
+            href="/book-tickets"
             className="bg-white text-[#461AA2] py-2 md:py-3 px-5 md:px-7 rounded-[25px] text-sm md:text-base font-semibold hover:-translate-y-0.5 hover:shadow-lg transition-all mr-12 md:mr-0"
           >
             Buy Tickets
-          </a>
+          </Link>
 
           {/* Hamburger */}
           <button
@@ -111,6 +111,14 @@ function Navbar() {
               onClick={() => setMobileMenuOpen(false)}
             >
               Contact Us
+            </Link>
+
+            <Link
+              href="/book-tickets"
+              className="bg-[#C5FA19] text-[#461AA2] text-2xl font-bold px-8 py-3 rounded-full hover:scale-105 transition-all"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Book Tickets 🎟️
             </Link>
           </div>
         </div>

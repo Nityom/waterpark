@@ -43,7 +43,7 @@ function CTA() {
                 href="/book-tickets"
                 className="inline-flex items-center justify-center bg-[#C5FA19] text-[#461AA2] px-6 md:px-10 py-3 md:py-4 rounded-full text-base md:text-lg font-bold shadow-xl hover:scale-105 hover:bg-white transition-all duration-300"
               >
-                Buy Your Day Pass
+                Buy Your Tickets
               </a>
 
               <a

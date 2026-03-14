@@ -350,7 +350,7 @@ export default async function AdminPage({ searchParams }) {
       <div className="mx-auto max-w-7xl space-y-6">
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div>
-            <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#175C42]">Waves Admin</p>
+            <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#175C42]">The Waves Admin</p>
             <h1 className="mt-2 text-3xl font-extrabold text-[#101828] md:text-5xl">Booking Dashboard</h1>
             <p className="mt-3 max-w-2xl text-sm text-[#667085] md:text-base">
               Live booking overview from Convex for {formatDateRangeLabel(dashboard.referenceDate)}.

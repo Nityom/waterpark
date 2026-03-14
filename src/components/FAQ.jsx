@@ -209,9 +209,9 @@ function FAQ() {
       <span className="text-[#C5FA19]">adventure</span>
     </h3>
 
-    <button className="mt-4 md:mt-6 bg-white text-[#461AA2] px-5 md:px-6 py-2.5 md:py-3 rounded-full text-sm md:text-base font-bold hover:scale-105 transition relative z-10">
+    <a href="/book-tickets" className="mt-4 md:mt-6 bg-white text-[#461AA2] px-5 md:px-6 py-2.5 md:py-3 rounded-full text-sm md:text-base font-bold hover:scale-105 transition relative z-10 inline-block">
       Get Tickets →
-    </button>
+    </a>
 
     {/* 🖼 webp-2 Image */}
     <img
@@ -231,9 +231,9 @@ function FAQ() {
       <span className="text-[#C5FA19]">group event</span>
     </h3>
 
-    <button className="mt-4 md:mt-6 bg-white text-[#461AA2] px-5 md:px-6 py-2.5 md:py-3 rounded-full text-sm md:text-base font-bold hover:scale-105 transition relative z-10">
+    <a href="/book-tickets" className="mt-4 md:mt-6 bg-white text-[#461AA2] px-5 md:px-6 py-2.5 md:py-3 rounded-full text-sm md:text-base font-bold hover:scale-105 transition relative z-10 inline-block">
       Explore Groups →
-    </button>
+    </a>
 
     {/* 🖼 webp-3 Image */}
     <img
