@@ -26,7 +26,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-                  "text": "For testing, ticket prices are currently ₹1."
+    <html lang="en" className={`${instrumentSans.variable} ${fredoka.variable}`}>
       <head>
         {/* Local Business Schema */}
         <script
