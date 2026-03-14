@@ -28,8 +28,8 @@ function TicketBookingForm() {
   const totalAmount =
     pricing.adult * adultQuantity +
     pricing.child * childQuantity +
-    costumesQuantity * 50 +
-    lockerQuantity * 50;
+    costumesQuantity * 1 +
+    lockerQuantity * 1;
   const totalTickets = adultQuantity + childQuantity;
   const visitDateError = getVisitDateValidationMessage(visitDate);
   const sameDayClosed = isSameDayBookingClosed(visitDate);
