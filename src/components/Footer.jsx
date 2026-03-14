@@ -63,7 +63,18 @@ function Footer() {
 
         {/* Bottom Line */}
         <div className="border-t border-white/20 mt-6 md:mt-8 pt-4 md:pt-6 text-center text-white text-xs md:text-sm opacity-70">
-          <p>© 2026 The Waves Wardha. All rights reserved.</p>
+          <p>
+            © 2026 The Waves Wardha. All rights reserved. <br />
+            Designed & Developed by{" "}
+            <a
+              href="https://nityom.tech/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-[#C5FA19] underline font-medium"
+            >
+              Nityom Tikhe
+            </a>
+          </p>
         </div>
       </div>
     </footer>
