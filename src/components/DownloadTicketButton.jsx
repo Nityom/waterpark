@@ -29,15 +29,17 @@ function parseTicketBadges(note, CYAN, LIME, PINK, VIOLET) {
   if (!note) return [];
   const badges = [];
   const patterns = [
-    { re: /adult[^\dx]*x?\s*(\d+)/i,   label: "ADULT",   color: CYAN  },
-    { re: /child[^\dx]*x?\s*(\d+)/i,   label: "CHILD",   color: LIME  },
-    { re: /senior[^\dx]*x?\s*(\d+)/i,  label: "SENIOR",  color: PINK  },
-    { re: /student[^\dx]*x?\s*(\d+)/i, label: "STUDENT", color: VIOLET},
-    { re: /infant[^\dx]*x?\s*(\d+)/i,  label: "INFANT",  color: PINK  },
+    { re: /adult[^\d]*(\d+)/i,   label: "ADULT",    color: CYAN  },
+    { re: /child[^\d]*(\d+)/i,   label: "CHILD",    color: LIME  },
+    { re: /costume[^\d]*(\d+)/i, label: "COSTUMES", color: PINK  },
+    { re: /locker[^\d]*(\d+)/i,  label: "LOCKERS",  color: VIOLET},
+    { re: /senior[^\d]*(\d+)/i,  label: "SENIOR",   color: PINK  },
+    { re: /student[^\d]*(\d+)/i, label: "STUDENT",  color: VIOLET},
+    { re: /infant[^\d]*(\d+)/i,  label: "INFANT",   color: PINK  },
   ];
   for (const { re, label, color } of patterns) {
     const m = note.match(re);
-    if (m) badges.push({ label, qty: `×${m[1]}`, color });
+    if (m && Number(m[1]) > 0) badges.push({ label, qty: `×${m[1]}`, color });
   }
   // fallback: if nothing matched but has "x<n>" pattern
   if (badges.length === 0) {
@@ -126,7 +128,22 @@ export default function DownloadTicketButton({
       lH += 16 + 12 + measureH(ticket.customerEmail, col1W, 10); // email
 
       // Ticket type badge row (if any) — 28pt per row of badges
-      if (ticketBadges.length > 0) lH += 20 + 26;
+      if (ticketBadges.length > 0) {
+        lH += 20;
+        let bx = col1X;
+        let rows = 1;
+        for (const badge of ticketBadges) {
+          const bLabel   = `${badge.label}  ${badge.qty}`;
+          pdfM.setFont("helvetica","bold"); pdfM.setFontSize(8);
+          const bW = pdfM.getTextWidth(bLabel) + 20;
+          if (bx + bW > qrPanelX - 12) {
+            rows++;
+            bx = col1X;
+          }
+          bx += bW + 8;
+        }
+        lH += (rows * 26);
+      }
 
       // Right col heights
       let rH = bodyTop;
@@ -373,6 +390,10 @@ export default function DownloadTicketButton({
           const bLabel   = `${badge.label}  ${badge.qty}`;
           pdf.setFont("helvetica","bold"); pdf.setFontSize(8);
           const bW = pdf.getTextWidth(bLabel) + 20;
+          if (bx + bW > qrPanelX - 12) {
+            ly += 28;
+            bx = col1X;
+          }
           pdf.setFillColor(...badge.color);
           pdf.setGState(new pdf.GState({opacity: 0.15}));
           pdf.roundedRect(bx, ly, bW, 22, 11, 11, "F");
