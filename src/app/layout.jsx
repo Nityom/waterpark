@@ -77,7 +77,7 @@ export default function RootLayout({ children }) {
                 "name": "What is the ticket price for Waves Waterpark in Wardha?",
                 "acceptedAnswer": {
                   "@type": "Answer",
-                  "text": "For testing, ticket prices are currently ₹1."
+                  "text": "Our standard ticket prices start at ₹499 for kids and ₹599 for adults on weekdays."
                 }
               }, {
                 "@type": "Question",

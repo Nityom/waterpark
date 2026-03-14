@@ -26,13 +26,12 @@ function TicketBookingForm() {
 
   const dayType = getDayTypeForVisitDate(visitDate);
   const pricing = siteInfo.pricing[dayType];
-  const addOnPricing = siteInfo.addOnPricing;
   const totalAmount =
     pricing.adult * adultQuantity +
     pricing.child * childQuantity +
-    costumesQuantity * addOnPricing.costumes +
-    lockerQuantity * addOnPricing.locker +
-    lunchQuantity * addOnPricing.lunch;
+    costumesQuantity * 50 +
+    lockerQuantity * 50 +
+    lunchQuantity * 150;
   const totalTickets = adultQuantity + childQuantity;
   const visitDateError = getVisitDateValidationMessage(visitDate);
   const sameDayClosed = isSameDayBookingClosed(visitDate);
@@ -175,7 +174,7 @@ function TicketBookingForm() {
       <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
         <div>
           <label className="mb-1.5 block text-sm font-semibold text-[#461AA2]">
-            Costumes (₹{addOnPricing.costumes}/person)
+            Costumes (₹50/person)
           </label>
           <input
             type="number"
@@ -191,7 +190,7 @@ function TicketBookingForm() {
 
         <div>
           <label className="mb-1.5 block text-sm font-semibold text-[#461AA2]">
-            Lockers (₹{addOnPricing.locker}/locker)
+            Lockers (₹50/locker)
           </label>
           <input
             type="number"
@@ -208,7 +207,7 @@ function TicketBookingForm() {
 
         <div>
           <label className="mb-1.5 block text-sm font-semibold text-[#461AA2]">
-            Lunch Veg Thali (₹{addOnPricing.lunch})
+            Lunch Veg Thali (₹150)
           </label>
           <input
             type="number"
