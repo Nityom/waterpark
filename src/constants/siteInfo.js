@@ -14,12 +14,12 @@ export const siteInfo = {
   },
   pricing: {
     regular: {
-      adult: 1,
-      child: 1,
+      adult: 499,
+      child: 399,
     },
     sunday: {
-      adult: 1,
-      child: 1,
+      adult: 599,
+      child: 499,
     },
   },
 };
