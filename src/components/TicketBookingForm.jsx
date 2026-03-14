@@ -17,6 +17,7 @@ function TicketBookingForm() {
   const [childQuantity, setChildQuantity] = useState(0);
   const [costumesQuantity, setCostumesQuantity] = useState(0);
   const [lockerQuantity, setLockerQuantity] = useState(0);
+  const [lunchQuantity, setLunchQuantity] = useState(0);
   const [customer, setCustomer] = useState({
     name: "",
     email: "",
@@ -25,11 +26,13 @@ function TicketBookingForm() {
 
   const dayType = getDayTypeForVisitDate(visitDate);
   const pricing = siteInfo.pricing[dayType];
+  const addOnPricing = siteInfo.addOnPricing;
   const totalAmount =
     pricing.adult * adultQuantity +
     pricing.child * childQuantity +
-    costumesQuantity * 50 +
-    lockerQuantity * 50;
+    costumesQuantity * addOnPricing.costumes +
+    lockerQuantity * addOnPricing.locker +
+    lunchQuantity * addOnPricing.lunch;
   const totalTickets = adultQuantity + childQuantity;
   const visitDateError = getVisitDateValidationMessage(visitDate);
   const sameDayClosed = isSameDayBookingClosed(visitDate);
@@ -52,6 +55,7 @@ function TicketBookingForm() {
     child_quantity: childQuantity,
     costumes_quantity: costumesQuantity,
     locker_quantity: lockerQuantity,
+    lunch_quantity: lunchQuantity,
     ticket_type: adultQuantity > 0 ? "adult" : "child",
     quantity: totalTickets,
   };
@@ -168,10 +172,10 @@ function TicketBookingForm() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
         <div>
           <label className="mb-1.5 block text-sm font-semibold text-[#461AA2]">
-            Costumes (₹50/person)
+            Costumes (₹{addOnPricing.costumes}/person)
           </label>
           <input
             type="number"
@@ -187,7 +191,7 @@ function TicketBookingForm() {
 
         <div>
           <label className="mb-1.5 block text-sm font-semibold text-[#461AA2]">
-            Lockers (₹50/locker)
+            Lockers (₹{addOnPricing.locker}/locker)
           </label>
           <input
             type="number"
@@ -200,6 +204,25 @@ function TicketBookingForm() {
             className="w-full rounded-2xl border border-[#D4C7F2] bg-white px-4 py-3 text-sm text-gray-900 outline-none focus:border-[#5123B6]"
           />
           <p className="mt-1 text-xs text-gray-500">1 locker fits 1 nuclear family</p>
+        </div>
+
+        <div>
+          <label className="mb-1.5 block text-sm font-semibold text-[#461AA2]">
+            Lunch Veg Thali (₹{addOnPricing.lunch})
+          </label>
+          <input
+            type="number"
+            min="0"
+            max="20"
+            value={lunchQuantity}
+            onChange={(event) =>
+              setLunchQuantity(Math.max(0, Number(event.target.value) || 0))
+            }
+            className="w-full rounded-2xl border border-[#D4C7F2] bg-white px-4 py-3 text-sm text-gray-900 outline-none focus:border-[#5123B6]"
+          />
+          <p className="mt-1 text-xs text-gray-500">
+            Dal, roti, rice, sabzi, salad, papad and one sweet.
+          </p>
         </div>
       </div>
 
@@ -218,6 +241,7 @@ function TicketBookingForm() {
             <p>Child ticket x {childQuantity}</p>
             {costumesQuantity > 0 && <p>Costumes x {costumesQuantity}</p>}
             {lockerQuantity > 0 && <p>Locker x {lockerQuantity}</p>}
+            {lunchQuantity > 0 && <p>Lunch Veg Thali x {lunchQuantity}</p>}
             <p className="text-xs text-gray-500">
               {dayType === "sunday" ? "Sunday pricing applied automatically" : "Regular pricing applied automatically"}
             </p>

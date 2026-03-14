@@ -24,6 +24,7 @@ export async function POST(req) {
       child_quantity,
       costumes_quantity,
       locker_quantity,
+      lunch_quantity,
     } = body;
 
     if (
@@ -62,6 +63,7 @@ export async function POST(req) {
     const childQuantity = Number(child_quantity || 0);
     const costumesQuantity = Number(costumes_quantity || 0);
     const lockerQuantity = Number(locker_quantity || 0);
+    const lunchQuantity = Number(lunch_quantity || 0);
 
     if (!Number.isInteger(ticketQuantity) || ticketQuantity <= 0) {
       return Response.json(
@@ -79,6 +81,20 @@ export async function POST(req) {
     ) {
       return Response.json(
         { error: "Invalid adult/child ticket split" },
+        { status: 400 }
+      );
+    }
+
+    if (
+      !Number.isInteger(costumesQuantity) ||
+      !Number.isInteger(lockerQuantity) ||
+      !Number.isInteger(lunchQuantity) ||
+      costumesQuantity < 0 ||
+      lockerQuantity < 0 ||
+      lunchQuantity < 0
+    ) {
+      return Response.json(
+        { error: "Invalid add-on quantity" },
         { status: 400 }
       );
     }
@@ -104,6 +120,10 @@ export async function POST(req) {
 
     if (lockerQuantity > 0) {
       ticketParts.push(`Lockers - ${lockerQuantity}`);
+    }
+
+    if (lunchQuantity > 0) {
+      ticketParts.push(`Lunch Veg Thali - ${lunchQuantity}`);
     }
 
     const ticketLabel =
@@ -151,6 +171,7 @@ export async function POST(req) {
       quantity: ticketQuantity,
       costumes_quantity: costumesQuantity,
       locker_quantity: lockerQuantity,
+      lunch_quantity: lunchQuantity,
       gateway_order_id: response.data.order_id,
     });
 

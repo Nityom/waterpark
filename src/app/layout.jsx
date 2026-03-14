@@ -26,7 +26,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${instrumentSans.variable} ${fredoka.variable}`}>
+                  "text": "For testing, ticket prices are currently ₹1."
       <head>
         {/* Local Business Schema */}
         <script
@@ -77,7 +77,7 @@ export default function RootLayout({ children }) {
                 "name": "What is the ticket price for Waves Waterpark in Wardha?",
                 "acceptedAnswer": {
                   "@type": "Answer",
-                  "text": "Our standard ticket prices start at ₹499 for kids and ₹599 for adults on weekdays."
+                  "text": "For testing, ticket prices are currently ₹1."
                 }
               }, {
                 "@type": "Question",

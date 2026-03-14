@@ -342,6 +342,7 @@ export const createOrder = mutation({
     quantity: v.optional(v.number()),
     costumes_quantity: v.optional(v.number()),
     locker_quantity: v.optional(v.number()),
+    lunch_quantity: v.optional(v.number()),
     gateway_order_id: v.optional(v.string()),
   },
   handler: async (ctx, args) => {

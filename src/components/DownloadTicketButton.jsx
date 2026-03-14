@@ -23,7 +23,7 @@ function loadImageAsDataUrl(url) {
  * Parses ticket note to extract type + quantity badges.
  * e.g. "Adult Ticket x1 (Regular) - Visit 2026-03-13"
  *   → [{ label: "ADULT", qty: "×1", color: CYAN }]
- * Supports Adult / Child / Senior / Student keywords.
+ * Supports Adult / Child / Costumes / Lockers / Lunch keywords.
  */
 function parseTicketBadges(note, CYAN, LIME, PINK, VIOLET) {
   if (!note) return [];
@@ -33,6 +33,7 @@ function parseTicketBadges(note, CYAN, LIME, PINK, VIOLET) {
     { re: /child[^\d]*(\d+)/i,   label: "CHILD",    color: LIME  },
     { re: /costume[^\d]*(\d+)/i, label: "COSTUMES", color: PINK  },
     { re: /locker[^\d]*(\d+)/i,  label: "LOCKERS",  color: VIOLET},
+    { re: /lunch[^\d]*(\d+)/i,   label: "LUNCH",    color: CYAN  },
     { re: /senior[^\d]*(\d+)/i,  label: "SENIOR",   color: PINK  },
     { re: /student[^\d]*(\d+)/i, label: "STUDENT",  color: VIOLET},
     { re: /infant[^\d]*(\d+)/i,  label: "INFANT",   color: PINK  },

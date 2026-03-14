@@ -50,6 +50,13 @@ export default function BookTicketsPage() {
                   <p className="mt-1">Adult: Rs. {siteInfo.pricing.sunday.adult}</p>
                   <p>Child: Rs. {siteInfo.pricing.sunday.child}</p>
                 </div>
+                <div className="rounded-2xl bg-white/10 p-4">
+                  <p className="font-semibold">Add-ons</p>
+                  <p className="mt-1">Lunch Veg Thali: Rs. {siteInfo.addOnPricing.lunch}</p>
+                  <p className="text-xs text-white/80">
+                    Dal, roti, rice, sabzi, salad, papad and one sweet.
+                  </p>
+                </div>
                 <div className="rounded-2xl bg-[#C5FA19] p-4 text-[#2B0F6B]">
                   <p className="font-bold">Free below 3 ft</p>
                   <p className="mt-1 text-sm font-medium">

@@ -30,7 +30,7 @@ function FAQ() {
           id: "cost",
           question: "How much does a The Waves ticket cost?",
           answer:
-            "Ticket prices start from ₹499 for adults. Check our pricing section for detailed rates and group discounts.",
+            "For testing, ticket prices are currently ₹1. Check our pricing section for the latest rates.",
         },
       ],
     },

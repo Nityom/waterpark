@@ -27,6 +27,7 @@ export default defineSchema({
     quantity: v.optional(v.number()),
     costumes_quantity: v.optional(v.number()),
     locker_quantity: v.optional(v.number()),
+    lunch_quantity: v.optional(v.number()),
     webhook_payload: v.optional(v.any()),
   })
     .index("by_order_id", ["order_id"])

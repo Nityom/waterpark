@@ -62,18 +62,14 @@ function normalizeOrderNote(value) {
   const child = getQty(/child[^\d]*(\d+)/i);
   const costumes = getQty(/costume[^\d]*(\d+)/i);
   const lockers = getQty(/locker[^\d]*(\d+)/i);
+  const lunch = getQty(/lunch[^\d]*(\d+)/i);
 
   const parts = [];
   if (adult) parts.push(`Adult-${adult}`);
   if (child) parts.push(`Child-${child}`);
   if (costumes) parts.push(`Costumes-${costumes}`);
   if (lockers) parts.push(`Lockers-${lockers}`);
-
-  let visitStr = "";
-  const visitMatch = note.match(/visit\s+([\d-]+)/i);
-  if (visitMatch) {
-    visitStr = `\nVisit ${visitMatch[1]}`;
-  }
+  if (lunch) parts.push(`Lunch Veg Thali-${lunch}`);
 
   if (parts.length > 0) {
     return parts.join("\n");
