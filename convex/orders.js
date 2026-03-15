@@ -124,6 +124,10 @@ function normalizeSearchTerm(value) {
   return String(value || "").trim().toLowerCase();
 }
 
+function isSuccessfulPayment(order) {
+  return String(order?.payment_status || "").toUpperCase() === "SUCCESS";
+}
+
 function buildChartSeries(filteredOrders) {
   const buckets = new Map();
 
@@ -136,7 +140,9 @@ function buildChartSeries(filteredOrders) {
     };
 
     current.orders += 1;
-    current.revenue += Number(order.amount || 0);
+    if (isSuccessfulPayment(order)) {
+      current.revenue += Number(order.amount || 0);
+    }
     current.redeemed += order.redeemed_at ? 1 : 0;
     buckets.set(key, current);
   }
@@ -265,7 +271,9 @@ export const getAdminDashboardData = query({
     const summary = filteredOrders.reduce(
       (accumulator, order) => {
         accumulator.totalOrders += 1;
-        accumulator.totalRevenue += Number(order.amount || 0);
+        if (isSuccessfulPayment(order)) {
+          accumulator.totalRevenue += Number(order.amount || 0);
+        }
 
         if (order.payment_status === "SUCCESS") {
           accumulator.successfulPayments += 1;
