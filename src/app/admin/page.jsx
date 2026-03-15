@@ -5,6 +5,7 @@ import AdminFilterForm from "../../components/AdminFilterForm";
 import AdminLoginForm from "../../components/AdminLoginForm";
 import AdminLogoutButton from "../../components/AdminLogoutButton";
 import { ADMIN_COOKIE_NAME, ADMIN_COOKIE_VALUE } from "../../lib/adminAuth";
+import { getTodayInIndia } from "../../lib/bookingTime";
 import { createConvexClient } from "../../lib/convex";
 import { formatDateRangeLabel, formatDateTimeShort, formatShortDate } from "../../lib/dateFormat";
 
@@ -312,7 +313,7 @@ export default async function AdminPage({ searchParams }) {
   const filterType = ["date", "week", "month", "year"].includes(resolvedSearchParams?.filter)
     ? resolvedSearchParams.filter
     : "date";
-  const today = new Date().toISOString().slice(0, 10);
+  const today = getTodayInIndia();
   const referenceDate = resolvedSearchParams?.date || today;
   const fromDate = resolvedSearchParams?.from || "";
   const toDate = resolvedSearchParams?.to || "";

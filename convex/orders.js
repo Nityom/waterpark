@@ -4,6 +4,14 @@ import { v } from "convex/values";
 const mutation = mutationGeneric;
 const query = queryGeneric;
 const ADMIN_PAGE_SIZE = 10;
+const INDIA_TIME_ZONE = "Asia/Kolkata";
+const INDIA_OFFSET_MS = 5.5 * 60 * 60 * 1000;
+const indiaDateFormatter = new Intl.DateTimeFormat("en-CA", {
+  timeZone: INDIA_TIME_ZONE,
+  year: "numeric",
+  month: "2-digit",
+  day: "2-digit",
+});
 
 function buildTicketId(orderId) {
   const suffix = Math.random().toString(36).slice(2, 8).toUpperCase();
@@ -14,6 +22,25 @@ function parseDateOnly(value) {
   const [year, month, day] = String(value || "").split("-").map(Number);
   const date = new Date(Date.UTC(year, (month || 1) - 1, day || 1));
   return Number.isNaN(date.getTime()) ? null : date;
+}
+
+function formatDateOnly(date) {
+  const year = date.getUTCFullYear();
+  const month = String(date.getUTCMonth() + 1).padStart(2, "0");
+  const day = String(date.getUTCDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
+function getTodayInIndia() {
+  return indiaDateFormatter.format(new Date());
+}
+
+function toIndiaDayStart(dateOnly) {
+  return new Date(dateOnly.getTime() - INDIA_OFFSET_MS);
+}
+
+function getIndiaDateKey(value) {
+  return indiaDateFormatter.format(new Date(value));
 }
 
 function formatShortDate(value) {
@@ -65,46 +92,46 @@ function buildRange(filterType, referenceDate, fromDate, toDate) {
     if (from && to) {
       const start = from <= to ? from : to;
       const endBase = from <= to ? to : from;
-      const end = new Date(endBase);
-      end.setUTCDate(end.getUTCDate() + 1);
+      const endExclusive = new Date(endBase);
+      endExclusive.setUTCDate(endExclusive.getUTCDate() + 1);
 
       return {
-        start,
-        end,
-        label: `${start.toISOString().slice(0, 10)} to ${endBase.toISOString().slice(0, 10)}`,
+        start: toIndiaDayStart(start),
+        end: toIndiaDayStart(endExclusive),
+        label: `${formatDateOnly(start)} to ${formatDateOnly(endBase)}`,
       };
     }
   }
 
-  const safeReference = referenceDate || new Date().toISOString().slice(0, 10);
+  const safeReference = referenceDate || getTodayInIndia();
   const base = parseDateOnly(safeReference);
 
   if (!base) {
-    return buildRange(filterType, new Date().toISOString().slice(0, 10));
+    return buildRange(filterType, getTodayInIndia());
   }
 
-  let start = new Date(base);
-  let end = new Date(base);
+  let startDate = new Date(base);
+  let endExclusiveDate = new Date(base);
 
   if (filterType === "week") {
-    const weekday = start.getUTCDay();
+    const weekday = startDate.getUTCDay();
     const diffToMonday = weekday === 0 ? -6 : 1 - weekday;
-    start.setUTCDate(start.getUTCDate() + diffToMonday);
-    end = new Date(start);
-    end.setUTCDate(end.getUTCDate() + 7);
+    startDate.setUTCDate(startDate.getUTCDate() + diffToMonday);
+    endExclusiveDate = new Date(startDate);
+    endExclusiveDate.setUTCDate(endExclusiveDate.getUTCDate() + 7);
   } else if (filterType === "month") {
-    start = new Date(Date.UTC(base.getUTCFullYear(), base.getUTCMonth(), 1));
-    end = new Date(Date.UTC(base.getUTCFullYear(), base.getUTCMonth() + 1, 1));
+    startDate = new Date(Date.UTC(base.getUTCFullYear(), base.getUTCMonth(), 1));
+    endExclusiveDate = new Date(Date.UTC(base.getUTCFullYear(), base.getUTCMonth() + 1, 1));
   } else if (filterType === "year") {
-    start = new Date(Date.UTC(base.getUTCFullYear(), 0, 1));
-    end = new Date(Date.UTC(base.getUTCFullYear() + 1, 0, 1));
+    startDate = new Date(Date.UTC(base.getUTCFullYear(), 0, 1));
+    endExclusiveDate = new Date(Date.UTC(base.getUTCFullYear() + 1, 0, 1));
   } else {
-    end.setUTCDate(end.getUTCDate() + 1);
+    endExclusiveDate.setUTCDate(endExclusiveDate.getUTCDate() + 1);
   }
 
   return {
-    start,
-    end,
+    start: toIndiaDayStart(startDate),
+    end: toIndiaDayStart(endExclusiveDate),
     label: safeReference,
   };
 }
@@ -132,7 +159,7 @@ function buildChartSeries(filteredOrders) {
   const buckets = new Map();
 
   for (const order of filteredOrders) {
-    const key = new Date(getOrderTime(order)).toISOString().slice(0, 10);
+    const key = getIndiaDateKey(getOrderTime(order));
     const current = buckets.get(key) || {
       orders: 0,
       revenue: 0,
