@@ -62,10 +62,14 @@ export function formatDateRangeLabel(label) {
     return "-";
   }
 
-  if (!String(label).includes(" to ")) {
-    return formatShortDate(label);
+  const normalized = String(label);
+
+  if (!normalized.includes(" to ")) {
+    return /^\d{4}-\d{2}-\d{2}$/.test(normalized)
+      ? formatShortDate(normalized)
+      : normalized;
   }
 
-  const [from, to] = String(label).split(" to ");
+  const [from, to] = normalized.split(" to ");
   return `${formatShortDate(from)} to ${formatShortDate(to)}`;
 }

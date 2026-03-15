@@ -108,6 +108,7 @@ function Pagination({ pagination, query, pageKey }) {
 
 function OverviewFilterBar({ filterType, referenceDate, fromDate, toDate, visitDate, visitorsSearchTerm }) {
   const filterOptions = [
+    { label: "All", value: "all" },
     { label: "Date", value: "date" },
     { label: "Week", value: "week" },
     { label: "Month", value: "month" },
@@ -196,7 +197,7 @@ function TicketsFilterBar({ visitDate, visitorsSearchTerm, query }) {
   );
 }
 
-function RecentOrdersFilterBar({ query }) {
+function AllOrdersFilterBar({ query }) {
   return (
     <AdminFilterForm
       className="mt-5 flex flex-wrap items-end gap-3 rounded-[24px] border border-[#EAECF0] bg-[#F8FAFC] p-4"
@@ -212,7 +213,7 @@ function RecentOrdersFilterBar({ query }) {
         {
           type: "text",
           name: "search",
-          label: "Search Recent Orders",
+          label: "Search All Orders",
           defaultValue: query.searchTerm,
           placeholder: "Search by name, number, order id, or date",
           wrapperClassName: "min-w-[280px] flex-1",
@@ -310,7 +311,7 @@ export default async function AdminPage({ searchParams }) {
   }
 
   const resolvedSearchParams = await searchParams;
-  const filterType = ["date", "week", "month", "year"].includes(resolvedSearchParams?.filter)
+  const filterType = ["all", "date", "week", "month", "year"].includes(resolvedSearchParams?.filter)
     ? resolvedSearchParams.filter
     : "date";
   const today = getTodayInIndia();
@@ -408,14 +409,14 @@ export default async function AdminPage({ searchParams }) {
         />
 
         <OrdersTable
-          title="Recent Orders"
-          description="Latest orders inside the selected filter window. Search recent orders by name, number, order id, or date and page through large result sets."
-          orders={dashboard.recentOrders}
-          pagination={dashboard.recentOrdersPagination}
+          title="All Orders"
+          description="All orders across the system. Search by name, number, order id, or date and page through large result sets."
+          orders={dashboard.allOrders}
+          pagination={dashboard.allOrdersPagination}
           paginationKey="recentPage"
           paginationQuery={{ ...baseQuery, recentPage, ticketsPage }}
           filters={
-            <RecentOrdersFilterBar
+            <AllOrdersFilterBar
               query={{
                 filterType,
                 referenceDate,

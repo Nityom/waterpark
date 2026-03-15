@@ -85,6 +85,14 @@ function formatDateTimeShort(value) {
 }
 
 function buildRange(filterType, referenceDate, fromDate, toDate) {
+  if (filterType === "all") {
+    return {
+      start: new Date(0),
+      end: new Date(8640000000000000),
+      label: "All time",
+    };
+  }
+
   if (fromDate || toDate) {
     const from = parseDateOnly(fromDate || toDate);
     const to = parseDateOnly(toDate || fromDate);
@@ -260,6 +268,7 @@ export const getOrderById = query({
 export const getAdminDashboardData = query({
   args: {
     filterType: v.union(
+      v.literal("all"),
       v.literal("date"),
       v.literal("week"),
       v.literal("month"),
@@ -343,8 +352,13 @@ export const getAdminDashboardData = query({
       .sort((a, b) => getOrderTime(a) - getOrderTime(b))
       .map(mapOrderForAdmin);
 
+    const allOrders = orders
+      .filter((order) => matchesSearch(order, searchTerm))
+      .sort((a, b) => getOrderTime(b) - getOrderTime(a))
+      .map(mapOrderForAdmin);
+
     const paginatedTickets = paginate(ticketsForSelectedDate, Math.trunc(args.ticketsPage || 1));
-    const paginatedRecentOrders = paginate(filteredOrders.map(mapOrderForAdmin), Math.trunc(args.recentPage || 1));
+    const paginatedAllOrders = paginate(allOrders, Math.trunc(args.recentPage || 1));
 
     return {
       filterType: args.filterType,
@@ -356,8 +370,8 @@ export const getAdminDashboardData = query({
       charts,
       selectedVisitDateTickets: paginatedTickets.items,
       selectedVisitDateTicketsPagination: paginatedTickets.pagination,
-      recentOrders: paginatedRecentOrders.items,
-      recentOrdersPagination: paginatedRecentOrders.pagination,
+      allOrders: paginatedAllOrders.items,
+      allOrdersPagination: paginatedAllOrders.pagination,
     };
   },
 });
