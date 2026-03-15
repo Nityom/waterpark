@@ -114,49 +114,67 @@ function OverviewFilterBar({ filterType, referenceDate, fromDate, toDate, visitD
     { label: "Month", value: "month" },
     { label: "Year", value: "year" },
   ];
+  const allQuery = buildQueryString({
+    filter: "all",
+    visitDate,
+    visitorsSearch: visitorsSearchTerm,
+  });
+  const allHref = allQuery ? `/admin?${allQuery}` : "/admin";
+  const allButtonClassName = filterType === "all"
+    ? "rounded-full border border-[#175C42] bg-[#ECFDF3] px-5 py-3 text-sm font-bold text-[#175C42]"
+    : "rounded-full border border-[#D0D5DD] bg-white px-5 py-3 text-sm font-bold text-[#344054] transition hover:bg-[#F9FAFB]";
 
   return (
-    <AdminFilterForm
-      className="flex flex-wrap items-end gap-3 rounded-[28px] border border-[#D0D5DD] bg-white p-5 shadow-sm"
-      hiddenFields={{ visitDate, visitorsSearch: visitorsSearchTerm }}
-      fields={[
-        {
-          type: "select",
-          name: "filter",
-          label: "Filter",
-          options: filterOptions,
-          defaultValue: filterType,
-          labelClassName: "mb-1.5 block text-xs font-bold uppercase tracking-[0.14em] text-[#667085]",
-          inputClassName: "rounded-2xl border border-[#D0D5DD] bg-white px-4 py-3 text-sm text-[#101828] outline-none focus:border-[#175C42]",
-        },
-        {
-          type: "date",
-          name: "date",
-          label: "Reference Date",
-          defaultValue: referenceDate,
-          labelClassName: "mb-1.5 block text-xs font-bold uppercase tracking-[0.14em] text-[#667085]",
-          inputClassName: "rounded-2xl border border-[#D0D5DD] bg-white px-4 py-3 text-sm text-[#101828] outline-none focus:border-[#175C42]",
-        },
-        {
-          type: "date",
-          name: "from",
-          label: "From Date",
-          defaultValue: fromDate,
-          labelClassName: "mb-1.5 block text-xs font-bold uppercase tracking-[0.14em] text-[#667085]",
-          inputClassName: "rounded-2xl border border-[#D0D5DD] bg-white px-4 py-3 text-sm text-[#101828] outline-none focus:border-[#175C42]",
-        },
-        {
-          type: "date",
-          name: "to",
-          label: "To Date",
-          defaultValue: toDate,
-          labelClassName: "mb-1.5 block text-xs font-bold uppercase tracking-[0.14em] text-[#667085]",
-          inputClassName: "rounded-2xl border border-[#D0D5DD] bg-white px-4 py-3 text-sm text-[#101828] outline-none focus:border-[#175C42]",
-        },
-      ]}
-      submitLabel="Apply Filter"
-      pendingLabel="Applying..."
-    />
+    <div className="space-y-3">
+      <div className="flex flex-wrap items-center gap-2">
+        <span className="text-xs font-bold uppercase tracking-[0.14em] text-[#667085]">Quick Filter</span>
+        <Link href={allHref} scroll={false} className={allButtonClassName}>
+          All
+        </Link>
+      </div>
+
+      <AdminFilterForm
+        className="flex flex-wrap items-end gap-3 rounded-[28px] border border-[#D0D5DD] bg-white p-5 shadow-sm"
+        hiddenFields={{ visitDate, visitorsSearch: visitorsSearchTerm }}
+        fields={[
+          {
+            type: "select",
+            name: "filter",
+            label: "Filter",
+            options: filterOptions,
+            defaultValue: filterType,
+            labelClassName: "mb-1.5 block text-xs font-bold uppercase tracking-[0.14em] text-[#667085]",
+            inputClassName: "rounded-2xl border border-[#D0D5DD] bg-white px-4 py-3 text-sm text-[#101828] outline-none focus:border-[#175C42]",
+          },
+          {
+            type: "date",
+            name: "date",
+            label: "Reference Date",
+            defaultValue: referenceDate,
+            labelClassName: "mb-1.5 block text-xs font-bold uppercase tracking-[0.14em] text-[#667085]",
+            inputClassName: "rounded-2xl border border-[#D0D5DD] bg-white px-4 py-3 text-sm text-[#101828] outline-none focus:border-[#175C42]",
+          },
+          {
+            type: "date",
+            name: "from",
+            label: "From Date",
+            defaultValue: fromDate,
+            labelClassName: "mb-1.5 block text-xs font-bold uppercase tracking-[0.14em] text-[#667085]",
+            inputClassName: "rounded-2xl border border-[#D0D5DD] bg-white px-4 py-3 text-sm text-[#101828] outline-none focus:border-[#175C42]",
+          },
+          {
+            type: "date",
+            name: "to",
+            label: "To Date",
+            defaultValue: toDate,
+            labelClassName: "mb-1.5 block text-xs font-bold uppercase tracking-[0.14em] text-[#667085]",
+            inputClassName: "rounded-2xl border border-[#D0D5DD] bg-white px-4 py-3 text-sm text-[#101828] outline-none focus:border-[#175C42]",
+          },
+        ]}
+        submitLabel="Apply Filter"
+        pendingLabel="Applying..."
+      />
+    </div>
   );
 }
 
