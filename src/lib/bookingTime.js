@@ -1,5 +1,6 @@
 const BOOKING_TIME_ZONE = "Asia/Kolkata";
 const SAME_DAY_CUTOFF_HOUR = 17;
+const LUNCH_CUTOFF_HOUR = 13;
 
 function getTimeParts(now = new Date()) {
   const parts = new Intl.DateTimeFormat("en-CA", {
@@ -68,6 +69,20 @@ export function isSameDayBookingClosed(visitDate, now = new Date()) {
   }
 
   return hour > SAME_DAY_CUTOFF_HOUR || (hour === SAME_DAY_CUTOFF_HOUR && minute >= 0);
+}
+
+export function isLunchBookingAllowedForSameDay(visitDate, now = new Date()) {
+  if (!visitDate) {
+    return true;
+  }
+
+  const { today, hour } = getTimeParts(now);
+
+  if (visitDate !== today) {
+    return true;
+  }
+
+  return hour < LUNCH_CUTOFF_HOUR;
 }
 
 export function getVisitDateValidationMessage(visitDate, now = new Date()) {

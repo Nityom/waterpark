@@ -245,7 +245,7 @@ function AllOrdersFilterBar({ query }) {
   );
 }
 
-function OrdersTable({ title, description, orders, pagination, paginationKey, paginationQuery, filters }) {
+function OrdersTable({ title, description, orders, pagination, paginationKey, paginationQuery, filters, showLunchColumn = false }) {
   return (
     <section className="rounded-[32px] border border-[#D0D5DD] bg-white p-6 shadow-[0_24px_70px_rgba(16,24,40,0.06)]">
       <div>
@@ -263,6 +263,7 @@ function OrdersTable({ title, description, orders, pagination, paginationKey, pa
               <th className="px-3 py-3">Customer</th>
               <th className="px-3 py-3">Visit</th>
               <th className="px-3 py-3">Amount</th>
+              {showLunchColumn && <th className="px-3 py-3">Lunch</th>}
               <th className="px-3 py-3">Payment</th>
               <th className="px-3 py-3">Ticket</th>
               <th className="px-3 py-3">Redeemed</th>
@@ -272,7 +273,7 @@ function OrdersTable({ title, description, orders, pagination, paginationKey, pa
           <tbody className="divide-y divide-[#F2F4F7] text-sm text-[#101828]">
             {orders.length === 0 ? (
               <tr>
-                <td colSpan="8" className="px-3 py-8 text-center text-sm text-[#667085]">
+                <td colSpan={showLunchColumn ? "9" : "8"} className="px-3 py-8 text-center text-sm text-[#667085]">
                   No orders found.
                 </td>
               </tr>
@@ -286,6 +287,7 @@ function OrdersTable({ title, description, orders, pagination, paginationKey, pa
                   </td>
                   <td className="px-3 py-4">{order.visit_date ? formatShortDate(order.visit_date) : "-"}</td>
                   <td className="px-3 py-4 font-semibold">{formatCurrency(order.amount)}</td>
+                  {showLunchColumn && <td className="px-3 py-4 font-semibold">{order.lunch_quantity || 0}</td>}
                   <td className="px-3 py-4">
                     <span className={`rounded-full px-3 py-1 text-xs font-bold uppercase tracking-[0.12em] ${getPaymentStatusStyle(order.payment_status)}`}>
                       {order.payment_status}
@@ -404,6 +406,10 @@ export default async function AdminPage({ searchParams }) {
 
         <AdminCharts summary={dashboard.summary} charts={dashboard.charts} />
 
+        <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+          <MetricCard label="Lunch Count For Selected Date" value={dashboard.summary.lunchCountForSelectedDate || 0} tone="success" />
+        </section>
+
         <OrdersTable
           title={`Customers Coming On ${formatShortDate(dashboard.selectedVisitDate)}`}
           description="Change the visit date here to see expected visitors for any day, with their payment and ticket status."
@@ -411,6 +417,7 @@ export default async function AdminPage({ searchParams }) {
           pagination={dashboard.selectedVisitDateTicketsPagination}
           paginationKey="ticketsPage"
           paginationQuery={{ ...baseQuery, recentPage, ticketsPage }}
+          showLunchColumn={true}
           filters={
             <TicketsFilterBar
               visitDate={visitDate}

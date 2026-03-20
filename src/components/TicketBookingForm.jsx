@@ -8,6 +8,7 @@ import {
   getTodayInIndia,
   getVisitDateValidationMessage,
   isSameDayBookingClosed,
+  isLunchBookingAllowedForSameDay,
 } from "../lib/bookingTime";
 import { formatShortDate } from "../lib/dateFormat";
 
@@ -35,6 +36,7 @@ function TicketBookingForm() {
   const totalTickets = adultQuantity + childQuantity;
   const visitDateError = getVisitDateValidationMessage(visitDate);
   const sameDayClosed = isSameDayBookingClosed(visitDate);
+  const lunchAllowed = isLunchBookingAllowedForSameDay(visitDate);
   const isFormComplete =
     customer.name.trim() &&
     customer.email.trim() &&
@@ -214,14 +216,20 @@ function TicketBookingForm() {
             min="0"
             max="20"
             value={lunchQuantity}
+            disabled={!lunchAllowed}
             onChange={(event) =>
               setLunchQuantity(Math.max(0, Number(event.target.value) || 0))
             }
-            className="w-full rounded-2xl border border-[#D4C7F2] bg-white px-4 py-3 text-sm text-gray-900 outline-none focus:border-[#5123B6]"
+            className="w-full rounded-2xl border border-[#D4C7F2] bg-white px-4 py-3 text-sm text-gray-900 outline-none focus:border-[#5123B6] disabled:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-60"
           />
           <p className="mt-1 text-xs text-gray-500">
             Dal, roti, rice, sabzi, salad, papad and one sweet.
           </p>
+          {!lunchAllowed && (
+            <p className="mt-2 text-xs font-semibold text-red-600">
+              Lunch is not available after 1:00 PM for same-day bookings.
+            </p>
+          )}
         </div>
       </div>
 

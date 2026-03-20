@@ -9,6 +9,7 @@ function ImageWithSkeleton({
   className = "",
   skeletonClassName = "",
   wrapperClassName = "w-full h-full",
+  sizes = "(max-width: 768px) 140px, 180px",
 }) {
   const [isLoaded, setIsLoaded] = useState(false);
   const [hasError, setHasError] = useState(false);
@@ -42,6 +43,7 @@ function ImageWithSkeleton({
           src={src}
           alt={alt}
           fill
+          sizes={sizes}
           className={`${className} object-contain ${!isLoaded ? "opacity-0" : "opacity-100"
             } transition-opacity duration-300`}
           onLoad={() => setIsLoaded(true)}

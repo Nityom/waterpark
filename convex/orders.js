@@ -230,6 +230,7 @@ function mapOrderForAdmin(order) {
     ticket_generated: order.ticket_generated,
     redeemed_at: order.redeemed_at || null,
     created_at: order.payment_confirmed_at || order._creationTime,
+    lunch_quantity: order.lunch_quantity || 0,
   };
 }
 
@@ -344,6 +345,11 @@ export const getAdminDashboardData = query({
       }
     );
 
+    // Calculate lunch count for selected visit date
+    const lunchCountForSelectedDate = orders
+      .filter((order) => order.visit_date === selectedVisitDate)
+      .reduce((total, order) => total + (Number(order.lunch_quantity) || 0), 0);
+
     const charts = buildChartSeries(filteredOrders);
 
     const ticketsForSelectedDate = orders
@@ -366,7 +372,7 @@ export const getAdminDashboardData = query({
       selectedVisitDate,
       searchTerm: args.searchTerm || "",
       visitorsSearchTerm: args.visitorsSearchTerm || "",
-      summary,
+      summary: { ...summary, lunchCountForSelectedDate },
       charts,
       selectedVisitDateTickets: paginatedTickets.items,
       selectedVisitDateTicketsPagination: paginatedTickets.pagination,

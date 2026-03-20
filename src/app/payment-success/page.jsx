@@ -1,5 +1,5 @@
 import Link from "next/link";
-import DownloadTicketButton from "../../components/DownloadTicketButton";
+import DownloadTicketButtonWrapper from "../../components/DownloadTicketButtonWrapper";
 import TicketQrCard, { getTicketQrSource } from "../../components/TicketQrCard";
 import TicketStatusBadge from "../../components/TicketStatusBadge";
 import { formatDateTimeShort, formatShortDate } from "../../lib/dateFormat";
@@ -145,7 +145,7 @@ export default async function PaymentSuccess({ searchParams }) {
 
             {shouldShowTicket ? (
               <div className="mt-8 flex flex-wrap gap-3">
-                <DownloadTicketButton fileName={`${ticket.ticketId || ticket.orderId || "ticket"}.pdf`} qrSource={qrSource} ticket={ticket} />
+                <DownloadTicketButtonWrapper fileName={`${ticket.ticketId || ticket.orderId || "ticket"}.pdf`} qrSource={qrSource} ticket={ticket} />
                 <Link href="/" className="inline-flex items-center justify-center rounded-full border border-[#D0D5DD] px-5 py-3 text-sm font-bold text-[#344054] transition hover:bg-[#F9FAFB]">Return Home</Link>
               </div>
             ) : null}
