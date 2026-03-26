@@ -5,6 +5,7 @@ import {
 } from "../../../lib/bookingTime";
 import { createConvexClient, getConvexHttpActionsUrl } from "../../../lib/convex";
 import { formatShortDate } from "../../../lib/dateFormat";
+import { calculateConvenienceCharge } from "../../../lib/convenienceCharge";
 
 export async function POST(req) {
   try {
@@ -136,13 +137,17 @@ export async function POST(req) {
       .replace(/[^a-zA-Z0-9 ]/g, "")
       .replace(/\s+/g, " ");
 
+    // Calculate convenience charge (2.3% with proper rounding)
+    const chargeInfo = calculateConvenienceCharge(numericAmount);
+    const finalAmount = chargeInfo.totalAmount;
+
     const orderMeta = {
       return_url: `${normalizedBaseUrl}/payment-success?order_id={order_id}`,
       notify_url: `${getConvexHttpActionsUrl()}/cashfree/webhook`,
     };
 
     const orderRequest = {
-      order_amount: numericAmount,
+      order_amount: finalAmount,
       order_currency: "INR",
       order_id,
       customer_details: {
@@ -162,7 +167,9 @@ export async function POST(req) {
       customer_name: sanitizedCustomerName || "Guest User",
       email: customer_email,
       phone: customer_phone,
-      amount: numericAmount,
+      amount: finalAmount,
+      base_amount: chargeInfo.baseAmount,
+      convenience_charge: chargeInfo.chargeAmount,
       currency: "INR",
       order_note: orderRequest.order_note,
       day_type,

@@ -11,6 +11,7 @@ import {
   isLunchBookingAllowedForSameDay,
 } from "../lib/bookingTime";
 import { formatShortDate } from "../lib/dateFormat";
+import { calculateConvenienceCharge } from "../lib/convenienceCharge";
 
 function TicketBookingForm() {
   const [visitDate, setVisitDate] = useState(getTodayInIndia);
@@ -27,12 +28,15 @@ function TicketBookingForm() {
 
   const dayType = getDayTypeForVisitDate(visitDate);
   const pricing = siteInfo.pricing[dayType];
-  const totalAmount =
+  const subtotalAmount =
     pricing.adult * adultQuantity +
     pricing.child * childQuantity +
     costumesQuantity * 50 +
     lockerQuantity * 50 +
     lunchQuantity * 150;
+  
+  const chargeInfo = calculateConvenienceCharge(subtotalAmount);
+  const totalAmount = chargeInfo.totalAmount;
   const totalTickets = adultQuantity + childQuantity;
   const visitDateError = getVisitDateValidationMessage(visitDate);
   const sameDayClosed = isSameDayBookingClosed(visitDate);
@@ -258,9 +262,17 @@ function TicketBookingForm() {
               </p>
             ) : null}
           </div>
-          <p className="text-2xl font-extrabold text-[#5123B6]">
-            Rs. {totalAmount}
-          </p>
+          <div className="text-right space-y-2">
+            <div className="text-sm">
+              <p className="text-gray-600">Subtotal: <span className="font-semibold">Rs. {subtotalAmount}</span></p>
+              {chargeInfo.chargeAmount > 0 && (
+                <p className="text-gray-600">Convenience (2.3%): <span className="font-semibold">+ Rs. {chargeInfo.chargeAmount}</span></p>
+              )}
+            </div>
+            <p className="text-2xl font-extrabold text-[#5123B6]">
+              Rs. {totalAmount}
+            </p>
+          </div>
         </div>
       </div>
 

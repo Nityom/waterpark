@@ -8,6 +8,8 @@ export default defineSchema({
     email: v.string(),
     phone: v.string(),
     amount: v.number(),
+    base_amount: v.optional(v.number()),
+    convenience_charge: v.optional(v.number()),
     currency: v.string(),
     order_note: v.string(),
     visit_date: v.optional(v.string()),
