@@ -50,7 +50,7 @@ function TicketBookingForm() {
     !visitDateError;
 
   const orderDetails = {
-    amount: totalAmount,
+    amount: subtotalAmount,
     customer_name: customer.name.trim(),
     customer_email: customer.email.trim(),
     customer_phone: customer.phone.trim(),
