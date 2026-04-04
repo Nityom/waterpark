@@ -22,4 +22,7 @@ export const siteInfo = {
       child: 499,
     },
   },
+  addOns: {
+    lunchVegThali: 200,
+  },
 };

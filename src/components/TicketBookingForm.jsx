@@ -28,13 +28,14 @@ function TicketBookingForm() {
 
   const dayType = getDayTypeForVisitDate(visitDate);
   const pricing = siteInfo.pricing[dayType];
+  const lunchPrice = siteInfo.addOns.lunchVegThali;
   const subtotalAmount =
     pricing.adult * adultQuantity +
     pricing.child * childQuantity +
     costumesQuantity * 50 +
     lockerQuantity * 50 +
-    lunchQuantity * 150;
-  
+    lunchQuantity * lunchPrice;
+
   const chargeInfo = calculateConvenienceCharge(subtotalAmount);
   const totalAmount = chargeInfo.totalAmount;
   const totalTickets = adultQuantity + childQuantity;
@@ -213,7 +214,7 @@ function TicketBookingForm() {
 
         <div>
           <label className="mb-1.5 block text-sm font-semibold text-[#461AA2]">
-            Lunch Veg Thali (₹150)
+            Lunch Veg Thali (₹{lunchPrice})
           </label>
           <input
             type="number"

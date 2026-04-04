@@ -52,7 +52,7 @@ export default function BookTicketsPage() {
                 </div>
                 <div className="rounded-2xl bg-white/10 p-4">
                   <p className="font-semibold">Add-ons</p>
-                  <p className="mt-1">Lunch Veg Thali: Rs. 150</p>
+                  <p className="mt-1">Lunch Veg Thali: Rs. {siteInfo.addOns.lunchVegThali}</p>
                   <p className="text-xs text-white/80">
                     Dal, roti, rice, sabzi, salad, papad and one sweet.
                   </p>
