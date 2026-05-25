@@ -345,9 +345,9 @@ export const getAdminDashboardData = query({
       }
     );
 
-    // Calculate lunch count for selected visit date
+    // Calculate lunch count for selected visit date (successful payments only)
     const lunchCountForSelectedDate = orders
-      .filter((order) => order.visit_date === selectedVisitDate)
+      .filter((order) => order.visit_date === selectedVisitDate && order.payment_status === "SUCCESS")
       .reduce((total, order) => total + (Number(order.lunch_quantity) || 0), 0);
 
     const charts = buildChartSeries(filteredOrders);
