@@ -1,4 +1,4 @@
-﻿import Link from "next/link";
+import Link from "next/link";
 import { cookies } from "next/headers";
 import AdminCharts from "../../components/AdminCharts";
 import AdminFilterForm from "../../components/AdminFilterForm";
@@ -8,6 +8,7 @@ import { ADMIN_COOKIE_NAME, ADMIN_COOKIE_VALUE } from "../../lib/adminAuth";
 import { getTodayInIndia } from "../../lib/bookingTime";
 import { createConvexClient } from "../../lib/convex";
 import { formatDateRangeLabel, formatDateTimeShort, formatShortDate } from "../../lib/dateFormat";
+import OrdersTable from "../../components/OrdersTable";
 
 function formatCurrency(value) {
   return new Intl.NumberFormat("en-IN", {
@@ -67,44 +68,7 @@ function buildQueryString(entries) {
   return params.toString();
 }
 
-function Pagination({ pagination, query, pageKey }) {
-  if (!pagination || pagination.totalPages <= 1) {
-    return null;
-  }
 
-  const previousQuery = buildQueryString({
-    ...query,
-    [pageKey]: pagination.page - 1,
-  });
-  const nextQuery = buildQueryString({
-    ...query,
-    [pageKey]: pagination.page + 1,
-  });
-
-  return (
-    <div className="mt-5 flex flex-wrap items-center justify-between gap-3 border-t border-[#EAECF0] pt-4 text-sm text-[#667085]">
-      <p>
-        Page {pagination.page} of {pagination.totalPages} · {pagination.totalItems} records
-      </p>
-      <div className="flex items-center gap-2">
-        {pagination.hasPreviousPage ? (
-          <Link href={`/admin?${previousQuery}`} scroll={false} className="rounded-full border border-[#D0D5DD] px-4 py-2 font-semibold text-[#344054] transition hover:bg-[#F9FAFB]">
-            Previous
-          </Link>
-        ) : (
-          <span className="rounded-full border border-[#EAECF0] px-4 py-2 font-semibold text-[#98A2B3]">Previous</span>
-        )}
-        {pagination.hasNextPage ? (
-          <Link href={`/admin?${nextQuery}`} scroll={false} className="rounded-full border border-[#D0D5DD] px-4 py-2 font-semibold text-[#344054] transition hover:bg-[#F9FAFB]">
-            Next
-          </Link>
-        ) : (
-          <span className="rounded-full border border-[#EAECF0] px-4 py-2 font-semibold text-[#98A2B3]">Next</span>
-        )}
-      </div>
-    </div>
-  );
-}
 
 function OverviewFilterBar({ filterType, referenceDate, fromDate, toDate, visitDate, visitorsSearchTerm }) {
   const filterOptions = [
@@ -242,72 +206,6 @@ function AllOrdersFilterBar({ query }) {
       submitLabel="Search Orders"
       pendingLabel="Searching..."
     />
-  );
-}
-
-function OrdersTable({ title, description, orders, pagination, paginationKey, paginationQuery, filters, showLunchColumn = false }) {
-  return (
-    <section className="rounded-[32px] border border-[#D0D5DD] bg-white p-6 shadow-[0_24px_70px_rgba(16,24,40,0.06)]">
-      <div>
-        <h2 className="text-xl font-extrabold text-[#101828]">{title}</h2>
-        <p className="mt-1 text-sm text-[#667085]">{description}</p>
-      </div>
-
-      {filters || null}
-
-      <div className="mt-6 overflow-x-auto">
-        <table className="min-w-full divide-y divide-[#EAECF0] text-left">
-          <thead>
-            <tr className="text-xs font-bold uppercase tracking-[0.14em] text-[#667085]">
-              <th className="px-3 py-3">Order</th>
-              <th className="px-3 py-3">Customer</th>
-              <th className="px-3 py-3">Visit</th>
-              <th className="px-3 py-3">Amount</th>
-              {showLunchColumn && <th className="px-3 py-3">Lunch</th>}
-              <th className="px-3 py-3">Payment</th>
-              <th className="px-3 py-3">Ticket</th>
-              <th className="px-3 py-3">Redeemed</th>
-              <th className="px-3 py-3">Created</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-[#F2F4F7] text-sm text-[#101828]">
-            {orders.length === 0 ? (
-              <tr>
-                <td colSpan={showLunchColumn ? "9" : "8"} className="px-3 py-8 text-center text-sm text-[#667085]">
-                  No orders found.
-                </td>
-              </tr>
-            ) : (
-              orders.map((order) => (
-                <tr key={order.order_id}>
-                  <td className="px-3 py-4 font-mono text-xs">{order.order_id}</td>
-                  <td className="px-3 py-4">
-                    <p className="font-semibold">{order.customer_name}</p>
-                    <p className="text-xs text-[#667085]">{order.phone}</p>
-                  </td>
-                  <td className="px-3 py-4">{order.visit_date ? formatShortDate(order.visit_date) : "-"}</td>
-                  <td className="px-3 py-4 font-semibold">{formatCurrency(order.amount)}</td>
-                  {showLunchColumn && <td className="px-3 py-4 font-semibold">{order.lunch_quantity || 0}</td>}
-                  <td className="px-3 py-4">
-                    <span className={`rounded-full px-3 py-1 text-xs font-bold uppercase tracking-[0.12em] ${getPaymentStatusStyle(order.payment_status)}`}>
-                      {order.payment_status}
-                    </span>
-                  </td>
-                  <td className="px-3 py-4">
-                    <p className="font-semibold">{order.ticket_generated ? order.ticket_id || "Generated" : "Not Generated"}</p>
-                    <p className="text-xs text-[#667085]">{order.order_status}</p>
-                  </td>
-                  <td className="px-3 py-4">{order.redeemed_at ? formatDateTimeShort(order.redeemed_at) : "No"}</td>
-                  <td className="px-3 py-4">{formatDateTimeShort(order.created_at)}</td>
-                </tr>
-              ))
-            )}
-          </tbody>
-        </table>
-      </div>
-
-      <Pagination pagination={pagination} query={paginationQuery} pageKey={paginationKey} />
-    </section>
   );
 }
 

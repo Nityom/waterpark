@@ -231,6 +231,11 @@ function mapOrderForAdmin(order) {
     redeemed_at: order.redeemed_at || null,
     created_at: order.payment_confirmed_at || order._creationTime,
     lunch_quantity: order.lunch_quantity || 0,
+    quantity: order.quantity || 0,
+    costumes_quantity: order.costumes_quantity || 0,
+    locker_quantity: order.locker_quantity || 0,
+    order_note: order.order_note || "",
+    email: order.email || "",
   };
 }
 
