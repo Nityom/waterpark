@@ -34,7 +34,9 @@ export const siteInfo = {
     },
   },
   carnival: {
+    active: true,          // ← set to false after carnival is over
     date: '2026-06-13',
+    displayDate: '13-06-26',
     displayName: 'Carnival',
   },
 };

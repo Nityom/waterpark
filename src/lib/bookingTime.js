@@ -1,7 +1,9 @@
+import { siteInfo } from "../constants/siteInfo";
+
 const BOOKING_TIME_ZONE = "Asia/Kolkata";
 const SAME_DAY_CUTOFF_HOUR = 17;
 const LUNCH_CUTOFF_HOUR = 13;
-const CARNIVAL_DATE = "2026-06-13";
+const CARNIVAL_DATE = siteInfo.carnival.active ? siteInfo.carnival.date : null;
 
 function getTimeParts(now = new Date()) {
   const parts = new Intl.DateTimeFormat("en-CA", {
@@ -46,7 +48,7 @@ export function getDayTypeForVisitDate(visitDate) {
     return "regular";
   }
 
-  if (visitDate === CARNIVAL_DATE) {
+  if (CARNIVAL_DATE && visitDate === CARNIVAL_DATE) {
     return "carnival";
   }
 

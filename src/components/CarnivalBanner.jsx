@@ -7,7 +7,7 @@ import { siteInfo } from "../constants/siteInfo";
 const POPUP_DURATION = 5; // seconds
 
 function CarnivalBanner() {
-  const [popupOpen, setPopupOpen] = useState(true);
+  const [popupOpen, setPopupOpen] = useState(siteInfo.carnival.active);
   const [countdown, setCountdown] = useState(POPUP_DURATION);
 
   useEffect(() => {

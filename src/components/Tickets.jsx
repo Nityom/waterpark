@@ -153,7 +153,7 @@ function Tickets() {
                         ₹{siteInfo.pricing.regular.child}
                       </span>
                       <p className="text-xs text-gray-600">
-                        ₹{siteInfo.pricing.sunday.child} on Sunday / Carnival
+                        ₹{siteInfo.pricing.sunday.child} on Sunday{siteInfo.carnival.active ? " / Carnival" : ""}
                       </p>
                     </div>
                   </div>
@@ -175,7 +175,7 @@ function Tickets() {
                         ₹{siteInfo.pricing.regular.adult}
                       </span>
                       <p className="text-xs text-gray-600">
-                        ₹{siteInfo.pricing.sunday.adult} on Sunday / Carnival
+                        ₹{siteInfo.pricing.sunday.adult} on Sunday{siteInfo.carnival.active ? " / Carnival" : ""}
                       </p>
                     </div>
                   </div>
@@ -197,7 +197,7 @@ function Tickets() {
                         ₹{siteInfo.addOns.lunchVegThali.regular}
                       </span>
                       <p className="text-xs text-gray-600">
-                        ₹{siteInfo.addOns.lunchVegThali.sunday} on Sunday / Carnival
+                        ₹{siteInfo.addOns.lunchVegThali.sunday} on Sunday{siteInfo.carnival.active ? " / Carnival" : ""}
                       </p>
                     </div>
                   </div>
