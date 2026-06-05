@@ -153,7 +153,7 @@ function Tickets() {
                         ₹{siteInfo.pricing.regular.child}
                       </span>
                       <p className="text-xs text-gray-600">
-                        ₹{siteInfo.pricing.sunday.child} on Sunday
+                        ₹{siteInfo.pricing.sunday.child} on Sunday / Carnival
                       </p>
                     </div>
                   </div>
@@ -175,7 +175,29 @@ function Tickets() {
                         ₹{siteInfo.pricing.regular.adult}
                       </span>
                       <p className="text-xs text-gray-600">
-                        ₹{siteInfo.pricing.sunday.adult} on Sunday
+                        ₹{siteInfo.pricing.sunday.adult} on Sunday / Carnival
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Food */}
+                  <div className="flex items-center justify-between py-2 px-3 md:px-4 bg-orange-50 rounded-xl">
+                    <div className="flex items-center gap-2">
+                      <span className="text-xl md:text-2xl">🍽️</span>
+                      <div>
+                        <p className="font-semibold text-sm md:text-base">
+                          Lunch Veg Thali
+                        </p>
+                        <p className="text-xs text-gray-600">Add-on (optional)</p>
+                      </div>
+                    </div>
+
+                    <div className="text-right">
+                      <span className="text-lg md:text-xl font-bold text-[#461AA2]">
+                        ₹{siteInfo.addOns.lunchVegThali.regular}
+                      </span>
+                      <p className="text-xs text-gray-600">
+                        ₹{siteInfo.addOns.lunchVegThali.sunday} on Sunday / Carnival
                       </p>
                     </div>
                   </div>

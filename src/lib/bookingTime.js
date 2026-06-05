@@ -1,6 +1,7 @@
 const BOOKING_TIME_ZONE = "Asia/Kolkata";
 const SAME_DAY_CUTOFF_HOUR = 17;
 const LUNCH_CUTOFF_HOUR = 13;
+const CARNIVAL_DATE = "2026-06-13";
 
 function getTimeParts(now = new Date()) {
   const parts = new Intl.DateTimeFormat("en-CA", {
@@ -43,6 +44,10 @@ export function getTodayInIndia(now = new Date()) {
 export function getDayTypeForVisitDate(visitDate) {
   if (!visitDate) {
     return "regular";
+  }
+
+  if (visitDate === CARNIVAL_DATE) {
+    return "carnival";
   }
 
   const visitDay = getVisitWeekday(visitDate);

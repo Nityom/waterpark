@@ -27,8 +27,8 @@ function TicketBookingForm() {
   });
 
   const dayType = getDayTypeForVisitDate(visitDate);
-  const pricing = siteInfo.pricing[dayType];
-  const lunchPrice = siteInfo.addOns.lunchVegThali;
+  const pricing = siteInfo.pricing[dayType] ?? siteInfo.pricing.regular;
+  const lunchPrice = siteInfo.addOns.lunchVegThali[dayType] ?? siteInfo.addOns.lunchVegThali.regular;
   const subtotalAmount =
     pricing.adult * adultQuantity +
     pricing.child * childQuantity +
@@ -137,7 +137,7 @@ function TicketBookingForm() {
           </label>
           <input
             type="text"
-            value={dayType === "sunday" ? "Sunday" : "Regular"}
+            value={dayType === "sunday" ? "Sunday" : dayType === "carnival" ? "Carnival 🎪" : "Regular"}
             readOnly
             className="w-full rounded-2xl border border-[#D4C7F2] bg-[#F8F5FF] px-4 py-3 text-sm font-semibold text-[#461AA2] outline-none"
           />
@@ -150,11 +150,10 @@ function TicketBookingForm() {
           <input
             type="number"
             min="0"
-            max="5"
             value={adultQuantity}
             onChange={(event) => {
               const val = Math.max(0, Number(event.target.value) || 0);
-              setAdultQuantity(val > 5 ? 5 : val);
+              setAdultQuantity(val);
             }}
             className="w-full rounded-2xl border border-[#D4C7F2] bg-white px-4 py-3 text-sm text-gray-900 outline-none focus:border-[#5123B6]"
           />
@@ -167,11 +166,10 @@ function TicketBookingForm() {
           <input
             type="number"
             min="0"
-            max="3"
             value={childQuantity}
             onChange={(event) => {
               const val = Math.max(0, Number(event.target.value) || 0);
-              setChildQuantity(val > 3 ? 3 : val);
+              setChildQuantity(val);
             }}
             className="w-full rounded-2xl border border-[#D4C7F2] bg-white px-4 py-3 text-sm text-gray-900 outline-none focus:border-[#5123B6]"
           />
@@ -248,14 +246,14 @@ function TicketBookingForm() {
         <div className="flex items-start justify-between gap-4">
           <div className="space-y-1 text-sm text-gray-700">
             <p>Visit date: {visitDate ? formatShortDate(visitDate) : "Select a date"}</p>
-            <p>Visit day: {dayType === "sunday" ? "Sunday" : "Regular"}</p>
+            <p>Visit day: {dayType === "sunday" ? "Sunday" : dayType === "carnival" ? "Carnival 🎪" : "Regular"}</p>
             <p>Adult ticket x {adultQuantity}</p>
             <p>Child ticket x {childQuantity}</p>
             {costumesQuantity > 0 && <p>Costumes x {costumesQuantity}</p>}
             {lockerQuantity > 0 && <p>Locker x {lockerQuantity}</p>}
             {lunchQuantity > 0 && <p>Lunch Veg Thali x {lunchQuantity}</p>}
             <p className="text-xs text-gray-500">
-              {dayType === "sunday" ? "Sunday pricing applied automatically" : "Regular pricing applied automatically"}
+              {dayType === "sunday" ? "Sunday pricing applied automatically" : dayType === "carnival" ? "Carnival pricing applied automatically" : "Regular pricing applied automatically"}
             </p>
             {sameDayClosed ? (
               <p className="text-xs font-semibold text-red-600">

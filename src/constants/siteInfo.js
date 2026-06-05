@@ -18,11 +18,23 @@ export const siteInfo = {
       child: 399,
     },
     sunday: {
-      adult: 599,
-      child: 499,
+      adult: 600,
+      child: 500,
+    },
+    carnival: {
+      adult: 600,
+      child: 500,
     },
   },
   addOns: {
-    lunchVegThali: 200,
+    lunchVegThali: {
+      regular: 150,
+      sunday: 170,
+      carnival: 170,
+    },
+  },
+  carnival: {
+    date: '2026-06-13',
+    displayName: 'Carnival',
   },
 };

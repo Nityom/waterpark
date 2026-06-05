@@ -1,4 +1,5 @@
 import Hero from '../components/Hero'
+import CarnivalBanner from '../components/CarnivalBanner'
 import Features from '../components/Features'
 import Facilities from '../components/Facilities'
 import Location from '../components/Location'
@@ -17,6 +18,7 @@ export default async function HomePage() {
   return (
     <>
       <Hero/>
+      <CarnivalBanner/>
       <Features/>
       <Facilities/>
       <Location/>
