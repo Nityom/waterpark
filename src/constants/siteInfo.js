@@ -27,11 +27,7 @@ export const siteInfo = {
     },
   },
   addOns: {
-    lunchVegThali: {
-      regular: 150,
-      sunday: 170,
-      carnival: 170,
-    },
+    lunchVegThali: 170,
   },
   carnival: {
     active: true,          // ← set to false after carnival is over

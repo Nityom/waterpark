@@ -28,11 +28,11 @@ function TicketBookingForm() {
 
   const dayType = getDayTypeForVisitDate(visitDate);
   const pricing = siteInfo.pricing[dayType] ?? siteInfo.pricing.regular;
-  const lunchPrice = siteInfo.addOns.lunchVegThali[dayType] ?? siteInfo.addOns.lunchVegThali.regular;
+  const lunchPrice = siteInfo.addOns.lunchVegThali;
   const subtotalAmount =
     pricing.adult * adultQuantity +
     pricing.child * childQuantity +
-    costumesQuantity * 50 +
+    costumesQuantity * 100 +
     lockerQuantity * 50 +
     lunchQuantity * lunchPrice;
 
@@ -179,7 +179,7 @@ function TicketBookingForm() {
       <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
         <div>
           <label className="mb-1.5 block text-sm font-semibold text-[#461AA2]">
-            Costumes (₹50/person)
+            Costumes (₹100/person)
           </label>
           <input
             type="number"

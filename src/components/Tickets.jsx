@@ -194,11 +194,8 @@ function Tickets() {
 
                     <div className="text-right">
                       <span className="text-lg md:text-xl font-bold text-[#461AA2]">
-                        ₹{siteInfo.addOns.lunchVegThali.regular}
+                        ₹{siteInfo.addOns.lunchVegThali}
                       </span>
-                      <p className="text-xs text-gray-600">
-                        ₹{siteInfo.addOns.lunchVegThali.sunday} on Sunday{siteInfo.carnival.active ? " / Carnival" : ""}
-                      </p>
                     </div>
                   </div>
                 </div>
