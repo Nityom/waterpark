@@ -173,7 +173,14 @@ export default function OrdersTable({ title, description, orders, pagination, pa
                     >
                       <td className="px-3 py-4 font-mono text-xs">{order.order_id}</td>
                       <td className="px-3 py-4">
-                        <p className="font-semibold">{order.customer_name}</p>
+                        <div className="flex items-center gap-1.5">
+                          <p className="font-semibold">{order.customer_name}</p>
+                          {(order.booking_type === "turf" || String(order.order_note || "").toLowerCase().includes("turf")) && (
+                            <span className="rounded bg-emerald-100 px-1.5 py-0.5 text-[10px] font-bold text-emerald-800">
+                              🏏 Turf
+                            </span>
+                          )}
+                        </div>
                         <p className="text-xs text-[#667085]">{order.phone}</p>
                       </td>
                       <td className="px-3 py-4">{order.visit_date ? formatShortDate(order.visit_date) : "-"}</td>
@@ -196,29 +203,54 @@ export default function OrdersTable({ title, description, orders, pagination, pa
                         <td colSpan={showLunchColumn ? "9" : "8"} className="p-0 border-b border-[#F2F4F7]">
                           <div className="bg-[#F8FAFC] px-6 py-4">
                             <div className="rounded-2xl border border-[#E2E8F0] bg-white p-5 shadow-sm">
-                              <h4 className="mb-4 text-sm font-bold uppercase tracking-wider text-[#475569]">Order Details</h4>
-                              <div className="grid grid-cols-2 gap-4 md:grid-cols-5">
-                                <div className="rounded-xl bg-[#F1F5F9] p-3 text-center">
-                                  <p className="text-xs font-medium text-[#64748B]">Adults</p>
-                                  <p className="mt-1 text-xl font-bold text-[#0F172A]">{details.adults}</p>
+                              <h4 className="mb-4 text-sm font-bold uppercase tracking-wider text-[#475569]">
+                                {(order.booking_type === "turf" || String(order.order_note || "").toLowerCase().includes("turf"))
+                                  ? "🏏 Cricket Turf Booking Details"
+                                  : "Order Details"}
+                              </h4>
+                              {(order.booking_type === "turf" || String(order.order_note || "").toLowerCase().includes("turf")) ? (
+                                <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
+                                  <div className="rounded-xl bg-[#ECFDF3] p-3 text-center border border-[#A6F4C5]">
+                                    <p className="text-xs font-bold text-[#175C42]">Booking Type</p>
+                                    <p className="mt-1 text-sm font-extrabold text-[#175C42]">Cricket Playground Turf</p>
+                                  </div>
+                                  <div className="rounded-xl bg-[#F1F5F9] p-3 text-center">
+                                    <p className="text-xs font-medium text-[#64748B]">Duration</p>
+                                    <p className="mt-1 text-xl font-bold text-[#0F172A]">{order.turf_hours || order.quantity || 1} hr(s)</p>
+                                  </div>
+                                  <div className="rounded-xl bg-[#F1F5F9] p-3 text-center">
+                                    <p className="text-xs font-medium text-[#64748B]">Slot</p>
+                                    <p className="mt-1 text-sm font-bold text-[#0F172A]">{order.turf_slot || "Slot Confirmed"}</p>
+                                  </div>
+                                  <div className="rounded-xl bg-[#F1F5F9] p-3 text-center">
+                                    <p className="text-xs font-medium text-[#64748B]">Rate</p>
+                                    <p className="mt-1 text-lg font-bold text-[#0F172A]">₹499 / hr</p>
+                                  </div>
                                 </div>
-                                <div className="rounded-xl bg-[#F1F5F9] p-3 text-center">
-                                  <p className="text-xs font-medium text-[#64748B]">Children</p>
-                                  <p className="mt-1 text-xl font-bold text-[#0F172A]">{details.children}</p>
+                              ) : (
+                                <div className="grid grid-cols-2 gap-4 md:grid-cols-5">
+                                  <div className="rounded-xl bg-[#F1F5F9] p-3 text-center">
+                                    <p className="text-xs font-medium text-[#64748B]">Adults</p>
+                                    <p className="mt-1 text-xl font-bold text-[#0F172A]">{details.adults}</p>
+                                  </div>
+                                  <div className="rounded-xl bg-[#F1F5F9] p-3 text-center">
+                                    <p className="text-xs font-medium text-[#64748B]">Children</p>
+                                    <p className="mt-1 text-xl font-bold text-[#0F172A]">{details.children}</p>
+                                  </div>
+                                  <div className="rounded-xl bg-[#F1F5F9] p-3 text-center">
+                                    <p className="text-xs font-medium text-[#64748B]">Costumes</p>
+                                    <p className="mt-1 text-xl font-bold text-[#0F172A]">{details.costumes}</p>
+                                  </div>
+                                  <div className="rounded-xl bg-[#F1F5F9] p-3 text-center">
+                                    <p className="text-xs font-medium text-[#64748B]">Lunch Thalis</p>
+                                    <p className="mt-1 text-xl font-bold text-[#0F172A]">{details.lunch}</p>
+                                  </div>
+                                  <div className="rounded-xl bg-[#F1F5F9] p-3 text-center">
+                                    <p className="text-xs font-medium text-[#64748B]">Lockers</p>
+                                    <p className="mt-1 text-xl font-bold text-[#0F172A]">{details.locker}</p>
+                                  </div>
                                 </div>
-                                <div className="rounded-xl bg-[#F1F5F9] p-3 text-center">
-                                  <p className="text-xs font-medium text-[#64748B]">Costumes</p>
-                                  <p className="mt-1 text-xl font-bold text-[#0F172A]">{details.costumes}</p>
-                                </div>
-                                <div className="rounded-xl bg-[#F1F5F9] p-3 text-center">
-                                  <p className="text-xs font-medium text-[#64748B]">Lunch Thalis</p>
-                                  <p className="mt-1 text-xl font-bold text-[#0F172A]">{details.lunch}</p>
-                                </div>
-                                <div className="rounded-xl bg-[#F1F5F9] p-3 text-center">
-                                  <p className="text-xs font-medium text-[#64748B]">Lockers</p>
-                                  <p className="mt-1 text-xl font-bold text-[#0F172A]">{details.locker}</p>
-                                </div>
-                              </div>
+                              )}
                               {order.order_note && (
                                 <div className="mt-4 border-t border-[#E2E8F0] pt-3">
                                   <p className="text-xs font-medium text-[#64748B]">Order Note</p>

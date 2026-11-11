@@ -167,6 +167,12 @@ export async function getTicketDetails(orderId) {
     redeemedAt: syncedOrder?.redeemed_at || null,
     paymentTime:
       syncedOrder?.payment_confirmed_at || syncedOrder?._creationTime || null,
+    isTurf:
+      syncedOrder?.booking_type === "turf" ||
+      syncedOrder?.ticket_type === "turf" ||
+      String(syncedOrder?.order_note || "").toLowerCase().includes("turf"),
+    turfSlot: syncedOrder?.turf_slot || null,
+    turfHours: syncedOrder?.turf_hours || null,
   };
 }
 

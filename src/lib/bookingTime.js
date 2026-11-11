@@ -107,3 +107,34 @@ export function getVisitDateValidationMessage(visitDate, now = new Date()) {
 
   return "";
 }
+
+export function isTurfSameDayBookingClosed(visitDate, now = new Date()) {
+  if (!visitDate) {
+    return false;
+  }
+
+  const { today, hour } = getTimeParts(now);
+
+  if (visitDate !== today) {
+    return false;
+  }
+
+  return hour >= 23;
+}
+
+export function getTurfVisitDateValidationMessage(visitDate, now = new Date()) {
+  if (!visitDate) {
+    return "Please select your booking date.";
+  }
+
+  if (isPastVisitDate(visitDate, now)) {
+    return "Visit date cannot be in the past.";
+  }
+
+  if (isTurfSameDayBookingClosed(visitDate, now)) {
+    return "Turf booking for today is closed. Operating hours are 9:00 AM - 11:00 PM.";
+  }
+
+  return "";
+}
+

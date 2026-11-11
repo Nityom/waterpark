@@ -2,10 +2,12 @@ import { configureCashfree, getCashfreeMode } from "../../../lib/cashfree";
 import {
   getDayTypeForVisitDate,
   getVisitDateValidationMessage,
+  getTurfVisitDateValidationMessage,
 } from "../../../lib/bookingTime";
 import { createConvexClient, getConvexHttpActionsUrl } from "../../../lib/convex";
 import { formatShortDate } from "../../../lib/dateFormat";
 import { calculateConvenienceCharge } from "../../../lib/convenienceCharge";
+import { parseSlotRange, getSlotBookingStatus } from "../../../lib/turfSlots";
 
 export async function POST(req) {
   try {
@@ -14,6 +16,7 @@ export async function POST(req) {
     const body = await req.json();
 
     const {
+      booking_type,
       amount,
       customer_name,
       customer_email,
@@ -26,7 +29,11 @@ export async function POST(req) {
       costumes_quantity,
       locker_quantity,
       lunch_quantity,
+      turf_slot,
+      turf_hours,
     } = body;
+
+    const isTurf = booking_type === "turf";
 
     if (
       !amount ||
@@ -41,7 +48,9 @@ export async function POST(req) {
       );
     }
 
-    const visitDateError = getVisitDateValidationMessage(visit_date);
+    const visitDateError = isTurf
+      ? getTurfVisitDateValidationMessage(visit_date)
+      : getVisitDateValidationMessage(visit_date);
 
     if (visitDateError) {
       return Response.json(
@@ -59,45 +68,121 @@ export async function POST(req) {
       );
     }
 
-    const ticketQuantity = Number(quantity || 1);
-    const adultQuantity = Number(adult_quantity || 0);
-    const childQuantity = Number(child_quantity || 0);
-    const costumesQuantity = Number(costumes_quantity || 0);
-    const lockerQuantity = Number(locker_quantity || 0);
-    const lunchQuantity = Number(lunch_quantity || 0);
+    let ticketQuantity = Number(quantity || 1);
+    let adultQuantity = 0;
+    let childQuantity = 0;
+    let costumesQuantity = 0;
+    let lockerQuantity = 0;
+    let lunchQuantity = 0;
+    let order_note = "";
+    let finalTicketType = ticket_type || "adult";
+    const hours = Number(turf_hours || quantity || 1);
 
-    if (!Number.isInteger(ticketQuantity) || ticketQuantity <= 0) {
-      return Response.json(
-        { error: "Invalid ticket quantity" },
-        { status: 400 }
-      );
-    }
+    if (isTurf) {
+      if (!Number.isInteger(hours) || hours <= 0) {
+        return Response.json(
+          { error: "Invalid turf hours" },
+          { status: 400 }
+        );
+      }
+      ticketQuantity = hours;
+      finalTicketType = "turf";
+      const slotText = turf_slot || "Slot Confirmed";
 
-    if (
-      !Number.isInteger(adultQuantity) ||
-      !Number.isInteger(childQuantity) ||
-      adultQuantity < 0 ||
-      childQuantity < 0 ||
-      adultQuantity + childQuantity !== ticketQuantity
-    ) {
-      return Response.json(
-        { error: "Invalid adult/child ticket split" },
-        { status: 400 }
-      );
-    }
+      // Collision check against Convex DB to prevent double booking
+      try {
+        const existingBookings = await convex.query("orders:getBookedTurfSlots", {
+          visitDate: visit_date,
+        });
 
-    if (
-      !Number.isInteger(costumesQuantity) ||
-      !Number.isInteger(lockerQuantity) ||
-      !Number.isInteger(lunchQuantity) ||
-      costumesQuantity < 0 ||
-      lockerQuantity < 0 ||
-      lunchQuantity < 0
-    ) {
-      return Response.json(
-        { error: "Invalid add-on quantity" },
-        { status: 400 }
-      );
+        const requestedRange = parseSlotRange(slotText, hours);
+        if (requestedRange) {
+          const conflict = getSlotBookingStatus(requestedRange.startHour, hours, existingBookings || []);
+          if (conflict.isBooked) {
+            return Response.json(
+              {
+                error: `The turf slot "${slotText}" is already booked on ${visit_date}. Please choose another time slot.`,
+              },
+              { status: 409 }
+            );
+          }
+        }
+      } catch (err) {
+        console.warn("Turf slot collision check warning:", err?.message || err);
+      }
+
+      const formattedVisitDate = formatShortDate(visit_date);
+      order_note = `Turf Booking - Cricket Playground | ${hours} hr${hours > 1 ? "s" : ""} (${slotText}) - Visit ${formattedVisitDate}`;
+    } else {
+      adultQuantity = Number(adult_quantity || 0);
+      childQuantity = Number(child_quantity || 0);
+      costumesQuantity = Number(costumes_quantity || 0);
+      lockerQuantity = Number(locker_quantity || 0);
+      lunchQuantity = Number(lunch_quantity || 0);
+
+      if (!Number.isInteger(ticketQuantity) || ticketQuantity <= 0) {
+        return Response.json(
+          { error: "Invalid ticket quantity" },
+          { status: 400 }
+        );
+      }
+
+      if (
+        !Number.isInteger(adultQuantity) ||
+        !Number.isInteger(childQuantity) ||
+        adultQuantity < 0 ||
+        childQuantity < 0 ||
+        adultQuantity + childQuantity !== ticketQuantity
+      ) {
+        return Response.json(
+          { error: "Invalid adult/child ticket split" },
+          { status: 400 }
+        );
+      }
+
+      if (
+        !Number.isInteger(costumesQuantity) ||
+        !Number.isInteger(lockerQuantity) ||
+        !Number.isInteger(lunchQuantity) ||
+        costumesQuantity < 0 ||
+        lockerQuantity < 0 ||
+        lunchQuantity < 0
+      ) {
+        return Response.json(
+          { error: "Invalid add-on quantity" },
+          { status: 400 }
+        );
+      }
+
+      const ticketParts = [];
+
+      if (adultQuantity > 0) {
+        ticketParts.push(`Adults - ${adultQuantity}`);
+      }
+
+      if (childQuantity > 0) {
+        ticketParts.push(`Child - ${childQuantity}`);
+      }
+
+      if (costumesQuantity > 0) {
+        ticketParts.push(`Costumes - ${costumesQuantity}`);
+      }
+
+      if (lockerQuantity > 0) {
+        ticketParts.push(`Lockers - ${lockerQuantity}`);
+      }
+
+      if (lunchQuantity > 0) {
+        ticketParts.push(`Lunch Veg Thali - ${lunchQuantity}`);
+      }
+
+      const ticketLabel =
+        ticketParts.join(" | ") ||
+        (ticket_type === "child" ? "Child - 1" : "Adults - 1");
+      const day_type = getDayTypeForVisitDate(visit_date);
+      const dayLabel = day_type === "sunday" ? "Sunday" : "Regular";
+      const formattedVisitDate = formatShortDate(visit_date);
+      order_note = `${ticketLabel} (${dayLabel}) - Visit ${formattedVisitDate}`;
     }
 
     const day_type = getDayTypeForVisitDate(visit_date);
@@ -105,33 +190,6 @@ export async function POST(req) {
     const customer_id = `CUST_${Date.now()}`;
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || req.nextUrl.origin;
     const normalizedBaseUrl = baseUrl.replace(/\/$/, "");
-    const ticketParts = [];
-
-    if (adultQuantity > 0) {
-      ticketParts.push(`Adults - ${adultQuantity}`);
-    }
-
-    if (childQuantity > 0) {
-      ticketParts.push(`Child - ${childQuantity}`);
-    }
-
-    if (costumesQuantity > 0) {
-      ticketParts.push(`Costumes - ${costumesQuantity}`);
-    }
-
-    if (lockerQuantity > 0) {
-      ticketParts.push(`Lockers - ${lockerQuantity}`);
-    }
-
-    if (lunchQuantity > 0) {
-      ticketParts.push(`Lunch Veg Thali - ${lunchQuantity}`);
-    }
-
-    const ticketLabel =
-      ticketParts.join(" | ") ||
-      (ticket_type === "child" ? "Child - 1" : "Adults - 1");
-    const dayLabel = day_type === "sunday" ? "Sunday" : "Regular";
-    const formattedVisitDate = formatShortDate(visit_date);
     const sanitizedCustomerName = customer_name
       .trim()
       .replace(/[^a-zA-Z0-9 ]/g, "")
@@ -157,7 +215,7 @@ export async function POST(req) {
         customer_phone,
       },
       order_meta: orderMeta,
-      order_note: `${ticketLabel} (${dayLabel}) - Visit ${formattedVisitDate}`,
+      order_note,
     };
 
     const response = await Cashfree.PGCreateOrder(orderRequest);
@@ -174,12 +232,15 @@ export async function POST(req) {
       order_note: orderRequest.order_note,
       day_type,
       visit_date,
-      ticket_type,
+      ticket_type: finalTicketType,
       quantity: ticketQuantity,
       costumes_quantity: costumesQuantity,
       locker_quantity: lockerQuantity,
       lunch_quantity: lunchQuantity,
       gateway_order_id: response.data.order_id,
+      booking_type: isTurf ? "turf" : "waterpark",
+      turf_slot: isTurf ? (turf_slot || undefined) : undefined,
+      turf_hours: isTurf ? hours : undefined,
     });
 
     return Response.json({

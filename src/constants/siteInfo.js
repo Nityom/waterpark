@@ -11,6 +11,7 @@ export const siteInfo = {
   timings: {
     waterPark: '10:00 AM - 2:00 PM',
     adventurePark: '2:00 PM - 5:00 PM',
+    turf: '9:00 AM - 11:00 PM',
   },
   pricing: {
     regular: {
@@ -25,6 +26,14 @@ export const siteInfo = {
       adult: 600,
       child: 500,
     },
+  },
+  turf: {
+    pricePerHour: 499,
+    name: 'Waves Box Cricket Turf',
+    displayName: 'Cricket Playground Turf',
+    timings: '9:00 AM - 11:00 PM',
+    rateDisplay: '₹499 / hour',
+    phone: '+91 9699755795',
   },
   addOns: {
     lunchVegThali: 170,

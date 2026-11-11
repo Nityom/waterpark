@@ -31,7 +31,12 @@ export default defineSchema({
     locker_quantity: v.optional(v.number()),
     lunch_quantity: v.optional(v.number()),
     webhook_payload: v.optional(v.any()),
+    booking_type: v.optional(v.union(v.string(), v.null())),
+    turf_slot: v.optional(v.union(v.string(), v.null())),
+    turf_hours: v.optional(v.union(v.number(), v.null())),
   })
     .index("by_order_id", ["order_id"])
-    .index("by_ticket_id", ["ticket_id"]),
+    .index("by_ticket_id", ["ticket_id"])
+    .index("by_booking_type", ["booking_type"])
+    .index("by_visit_date", ["visit_date"]),
 });

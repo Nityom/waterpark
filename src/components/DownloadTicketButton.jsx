@@ -31,6 +31,8 @@ function parseTicketBadges(note, CYAN, LIME, PINK, VIOLET) {
   const patterns = [
     { re: /adult[^\d]*(\d+)/i,   label: "ADULT",    color: CYAN  },
     { re: /child[^\d]*(\d+)/i,   label: "CHILD",    color: LIME  },
+    { re: /turf[^\d]*(\d+)?/i,   label: "CRICKET TURF", color: LIME },
+    { re: /(\d+)\s*hr/i,        label: "HOURS",    color: CYAN  },
     { re: /costume[^\d]*(\d+)/i, label: "COSTUMES", color: PINK  },
     { re: /locker[^\d]*(\d+)/i,  label: "LOCKERS",  color: VIOLET},
     { re: /lunch[^\d]*(\d+)/i,   label: "LUNCH",    color: CYAN  },
@@ -41,6 +43,9 @@ function parseTicketBadges(note, CYAN, LIME, PINK, VIOLET) {
   for (const { re, label, color } of patterns) {
     const m = note.match(re);
     if (m && Number(m[1]) > 0) badges.push({ label, qty: `×${m[1]}`, color });
+    else if (m && label === "CRICKET TURF" && !badges.some(b => b.label === "CRICKET TURF")) {
+      badges.push({ label, qty: "BOOKING", color });
+    }
   }
   // fallback: if nothing matched but has "x<n>" pattern
   if (badges.length === 0) {
@@ -258,9 +263,10 @@ export default function DownloadTicketButton({
       }
 
       // Park subtitle
+      const isTurf = ticket.isTurf || String(ticket.note || "").toLowerCase().includes("turf");
       pdf.setFont("helvetica","bold"); pdf.setFontSize(7.5);
       pdf.setTextColor(...CYAN); pdf.setCharSpace(2.2);
-      pdf.text("WATERPARK & AMUSEMENT PARK", cX+30, cY+74);
+      pdf.text(isTurf ? "CRICKET PLAYGROUND & SPORTS TURF" : "WATERPARK & AMUSEMENT PARK", cX+30, cY+74);
       pdf.setCharSpace(0);
 
       // Ticket name

@@ -4,6 +4,7 @@ import Features from '../components/Features'
 import Facilities from '../components/Facilities'
 import Location from '../components/Location'
 import Tickets from '../components/Tickets'
+import TurfSection from '../components/TurfSection'
 import Info from '../components/Info'
 import Essentials from '../components/Essentials'
 import Awards from '../components/Awards'
@@ -23,6 +24,7 @@ export default async function HomePage() {
       <Facilities/>
       <Location/>
       <Tickets/>
+      <TurfSection/>
       <Info/>
       <Essentials/>
       <Awards/>

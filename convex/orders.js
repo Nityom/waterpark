@@ -159,6 +159,14 @@ function normalizeSearchTerm(value) {
   return String(value || "").trim().toLowerCase();
 }
 
+function isTurfOrder(order) {
+  return (
+    order?.booking_type === "turf" ||
+    order?.ticket_type === "turf" ||
+    String(order?.order_note || "").toLowerCase().includes("turf")
+  );
+}
+
 function isSuccessfulPayment(order) {
   return String(order?.payment_status || "").toUpperCase() === "SUCCESS";
 }
@@ -208,6 +216,8 @@ function matchesSearch(order, searchTerm) {
     order.ticket_id,
     order.payment_status,
     order.order_status,
+    order.turf_slot,
+    order.order_note,
     formatDateTimeShort(createdAt),
   ]
     .filter(Boolean)
@@ -218,6 +228,7 @@ function matchesSearch(order, searchTerm) {
 }
 
 function mapOrderForAdmin(order) {
+  const isTurf = isTurfOrder(order);
   return {
     order_id: order.order_id,
     customer_name: order.customer_name,
@@ -236,6 +247,9 @@ function mapOrderForAdmin(order) {
     locker_quantity: order.locker_quantity || 0,
     order_note: order.order_note || "",
     email: order.email || "",
+    booking_type: isTurf ? "turf" : "waterpark",
+    turf_slot: order.turf_slot || null,
+    turf_hours: order.turf_hours || (isTurf ? order.quantity || 1 : null),
   };
 }
 
@@ -288,6 +302,9 @@ export const getAdminDashboardData = query({
     visitorsSearchTerm: v.optional(v.string()),
     recentPage: v.optional(v.number()),
     ticketsPage: v.optional(v.number()),
+    turfPage: v.optional(v.number()),
+    turfSearchTerm: v.optional(v.string()),
+    turfDate: v.optional(v.string()),
   },
   handler: async (ctx, args) => {
     const orders = await ctx.db.query("orders").collect();
@@ -300,6 +317,8 @@ export const getAdminDashboardData = query({
 
     const searchTerm = normalizeSearchTerm(args.searchTerm);
     const visitorsSearchTerm = normalizeSearchTerm(args.visitorsSearchTerm);
+    const turfSearchTerm = normalizeSearchTerm(args.turfSearchTerm);
+    const turfDate = String(args.turfDate || "").trim();
     const selectedVisitDate = args.visitDate || args.referenceDate;
 
     const filteredOrders = orders
@@ -309,6 +328,13 @@ export const getAdminDashboardData = query({
       })
       .filter((order) => matchesSearch(order, searchTerm))
       .sort((a, b) => getOrderTime(b) - getOrderTime(a));
+
+    const turfSummary = {
+      totalBookings: 0,
+      totalRevenue: 0,
+      totalHours: 0,
+      successfulBookings: 0,
+    };
 
     const summary = filteredOrders.reduce(
       (accumulator, order) => {
@@ -334,6 +360,15 @@ export const getAdminDashboardData = query({
         }
         if (order.redeemed_at) {
           accumulator.redeemedTickets += 1;
+        }
+
+        if (isTurfOrder(order)) {
+          turfSummary.totalBookings += 1;
+          if (isSuccessfulPayment(order)) {
+            turfSummary.totalRevenue += Number(order.amount || 0);
+            turfSummary.totalHours += Number(order.turf_hours || order.quantity || 1);
+            turfSummary.successfulBookings += 1;
+          }
         }
 
         return accumulator;
@@ -368,21 +403,34 @@ export const getAdminDashboardData = query({
       .sort((a, b) => getOrderTime(b) - getOrderTime(a))
       .map(mapOrderForAdmin);
 
+    // Turf orders section
+    const allTurfOrders = orders
+      .filter((order) => isTurfOrder(order))
+      .filter((order) => (turfDate ? order.visit_date === turfDate : true))
+      .filter((order) => matchesSearch(order, turfSearchTerm))
+      .sort((a, b) => getOrderTime(b) - getOrderTime(a))
+      .map(mapOrderForAdmin);
+
     const paginatedTickets = paginate(ticketsForSelectedDate, Math.trunc(args.ticketsPage || 1));
     const paginatedAllOrders = paginate(allOrders, Math.trunc(args.recentPage || 1));
+    const paginatedTurfOrders = paginate(allTurfOrders, Math.trunc(args.turfPage || 1));
 
     return {
       filterType: args.filterType,
       referenceDate: label,
       selectedVisitDate,
+      selectedTurfDate: turfDate,
       searchTerm: args.searchTerm || "",
       visitorsSearchTerm: args.visitorsSearchTerm || "",
-      summary: { ...summary, lunchCountForSelectedDate },
+      turfSearchTerm: args.turfSearchTerm || "",
+      summary: { ...summary, lunchCountForSelectedDate, turfSummary },
       charts,
       selectedVisitDateTickets: paginatedTickets.items,
       selectedVisitDateTicketsPagination: paginatedTickets.pagination,
       allOrders: paginatedAllOrders.items,
       allOrdersPagination: paginatedAllOrders.pagination,
+      turfOrders: paginatedTurfOrders.items,
+      turfOrdersPagination: paginatedTurfOrders.pagination,
     };
   },
 });
@@ -406,6 +454,9 @@ export const createOrder = mutation({
     locker_quantity: v.optional(v.number()),
     lunch_quantity: v.optional(v.number()),
     gateway_order_id: v.optional(v.string()),
+    booking_type: v.optional(v.union(v.string(), v.null())),
+    turf_slot: v.optional(v.union(v.string(), v.null())),
+    turf_hours: v.optional(v.union(v.number(), v.null())),
   },
   handler: async (ctx, args) => {
     const existing = await ctx.db
@@ -555,4 +606,84 @@ export const redeemTicket = mutation({
     };
   },
 });
+
+export const getBookedTurfSlots = query({
+  args: {
+    visitDate: v.string(),
+  },
+  handler: async (ctx, args) => {
+    const orders = await ctx.db.query("orders").collect();
+    const now = Date.now();
+
+    return orders
+      .filter((o) => {
+        const isTurf = isTurfOrder(o);
+        if (!isTurf || o.visit_date !== args.visitDate) return false;
+
+        const status = String(o.payment_status || "").toUpperCase();
+        if (status === "SUCCESS") return true;
+
+        // Hold slots for active checkout sessions created within the last 20 minutes
+        const isPending = status === "PENDING" || status === "INITIATED";
+        const isRecent = now - getOrderTime(o) < 20 * 60 * 1000;
+        return isPending && isRecent;
+      })
+      .map((o) => ({
+        order_id: o.order_id,
+        turf_slot: o.turf_slot,
+        turf_hours: o.turf_hours || o.quantity || 1,
+        order_note: o.order_note,
+        payment_status: o.payment_status,
+      }));
+  },
+});
+
+export const getTurfOrders = query({
+  args: {
+    matchDate: v.optional(v.string()),
+    searchTerm: v.optional(v.string()),
+  },
+  handler: async (ctx, args) => {
+    const orders = await ctx.db.query("orders").collect();
+    const searchTerm = normalizeSearchTerm(args.searchTerm);
+    const matchDate = args.matchDate ? String(args.matchDate).trim() : null;
+
+    return orders
+      .filter((order) => isTurfOrder(order))
+      .filter((order) => (matchDate ? order.visit_date === matchDate : true))
+      .filter((order) => matchesSearch(order, searchTerm))
+      .sort((a, b) => getOrderTime(b) - getOrderTime(a))
+      .map(mapOrderForAdmin);
+  },
+});
+
+export const updateTurfBooking = mutation({
+  args: {
+    order_id: v.string(),
+    turf_slot: v.optional(v.string()),
+    visit_date: v.optional(v.string()),
+    turf_hours: v.optional(v.number()),
+    order_note: v.optional(v.string()),
+  },
+  handler: async (ctx, args) => {
+    const existing = await ctx.db
+      .query("orders")
+      .withIndex("by_order_id", (q) => q.eq("order_id", args.order_id))
+      .unique();
+
+    if (!existing) {
+      throw new Error(`Turf order not found: ${args.order_id}`);
+    }
+
+    const updates = {};
+    if (args.turf_slot !== undefined) updates.turf_slot = args.turf_slot;
+    if (args.visit_date !== undefined) updates.visit_date = args.visit_date;
+    if (args.turf_hours !== undefined) updates.turf_hours = args.turf_hours;
+    if (args.order_note !== undefined) updates.order_note = args.order_note;
+
+    await ctx.db.patch(existing._id, updates);
+    return await ctx.db.get(existing._id);
+  },
+});
+
 

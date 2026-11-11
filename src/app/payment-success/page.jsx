@@ -97,9 +97,13 @@ export default async function PaymentSuccess({ searchParams }) {
                 <div className="rounded-[27px] bg-[linear-gradient(135deg,#0F172A_0%,#1F2937_55%,#1B4332_100%)] p-6 text-white">
                   <div className="flex flex-wrap items-start justify-between gap-4">
                     <div>
-                      <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#86EFAC]">Entry Ticket</p>
+                      <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#86EFAC]">
+                        {ticket.isTurf ? "Cricket Turf Pass" : "Entry Ticket"}
+                      </p>
                       <h2 className="mt-3 text-2xl font-extrabold md:text-3xl">{ticket.note}</h2>
-                      <p className="mt-2 text-sm text-white/75">Show this ticket at the gate for verification.</p>
+                      <p className="mt-2 text-sm text-white/75">
+                        {ticket.isTurf ? "Show this ticket at the turf counter for ground access." : "Show this ticket at the gate for verification."}
+                      </p>
                     </div>
 
                     <div className="rounded-full border border-white/15 bg-white/10 px-4 py-2 text-right">

@@ -48,6 +48,9 @@ function Navbar() {
             <Link href="/about-us" className="text-white text-base font-medium hover:opacity-80">
               About Us
             </Link>
+            <Link href="/book-turf" className="text-[#C5FA19] font-bold text-base hover:opacity-80 flex items-center gap-1">
+              🏏 Cricket Turf
+            </Link>
             <Link href="/gallery" className="text-white text-base font-medium hover:opacity-80">
               Gallery
             </Link>
@@ -95,6 +98,14 @@ function Navbar() {
               onClick={() => setMobileMenuOpen(false)}
             >
               About Us
+            </Link>
+
+            <Link
+              href="/book-turf"
+              className="text-[#C5FA19] text-2xl font-bold hover:text-white"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              🏏 Cricket Turf
             </Link>
 
             <Link
