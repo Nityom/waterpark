@@ -20,11 +20,11 @@ export default async function HomePage() {
     <>
       <Hero/>
       <CarnivalBanner/>
+      <TurfSection/>
       <Features/>
       <Facilities/>
       <Location/>
       <Tickets/>
-      <TurfSection/>
       <Info/>
       <Essentials/>
       <Awards/>
